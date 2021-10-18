@@ -275,7 +275,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eht-m3-O48">
                                                             <rect key="frame" x="10" y="10" width="354" height="60"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xI4-Gq-2b3">
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flag_default_2" translatesAutoresizingMaskIntoConstraints="NO" id="xI4-Gq-2b3">
                                                                     <rect key="frame" x="10" y="0.0" width="70" height="60"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="70" id="giZ-jU-Xcd"/>
@@ -1808,6 +1808,7 @@
     <resources>
         <image name="close" width="25" height="25"/>
         <image name="flag_default_1" width="125" height="68"/>
+        <image name="flag_default_2" width="125" height="68"/>
         <image name="ground" width="779" height="1398"/>
         <namedColor name="black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
