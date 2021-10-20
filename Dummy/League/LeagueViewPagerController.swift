@@ -1,14 +1,16 @@
 //
-//  MatchesViewController.swift
+//  LeagueViewPagerController.swift
 //  Dummy
 //
-//  Created by Apple on 19/10/21.
+//  Created by Apple on 20/10/21.
 //
 
 import UIKit
 
-class MatchesViewController: UIViewController {
+class LeagueViewPagerController: UIViewController {
 
+  
+    
     var tabs = [ViewPagerTab]()
     var options: ViewPagerOptionsNew?
     var pager:ViewPager?
@@ -33,14 +35,10 @@ class MatchesViewController: UIViewController {
         pager?.build()
         
     }
-    
-    
-    deinit {
-        print("Memory Deallocation")
-    }
+
 }
 
-extension MatchesViewController: ViewPagerDataSource {
+extension LeagueViewPagerController: ViewPagerDataSource {
     
     func numberOfPages() -> Int {
         return tabs.count
@@ -85,7 +83,7 @@ extension MatchesViewController: ViewPagerDataSource {
     }
 }
 
-extension MatchesViewController: ViewPagerDelegate {
+extension LeagueViewPagerController: ViewPagerDelegate {
     
     func willMoveToControllerAtIndex(index:Int) {
         print("Moving to page \(index)")
@@ -110,4 +108,5 @@ extension MatchesViewController: ViewPagerDelegate {
         }
     }
 }
+
 
