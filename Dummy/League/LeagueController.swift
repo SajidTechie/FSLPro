@@ -72,34 +72,34 @@ extension LeagueController: ViewPagerDataSource {
         return tabs.count
     }
     
+    // Provide ViewController for each page
     func viewControllerAtPosition(position:Int) -> UIViewController {
-
-        
-        
-        
         var vc = UIViewController()
         
-        let homeSB: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
+        let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
         
         if position == 0
         {
             
-            vc = homeSB.instantiateViewController(withIdentifier: "UpcomingTabController") as! UpcomingTabController
+            vc = storyBoard.instantiateViewController(withIdentifier: "LeaguesTabController") as! LeaguesTabController
+            let vcLeague = vc as! LeaguesTabController
+            vcLeague.mid = mid
         }
         else if position == 1
         {
-            vc = homeSB.instantiateViewController(withIdentifier: "LiveTabController") as! LiveTabController
+            let teamStoryBoard: UIStoryboard = UIStoryboard(name: "Team", bundle: nil)
+            vc = teamStoryBoard.instantiateViewController(withIdentifier: "MyTeamTabController") as! MyTeamTabController
+            let vcMyTeam = vc as! MyTeamTabController
+            vcMyTeam.mid = mid
         }
         else if position == 2
         {
-            vc = homeSB.instantiateViewController(withIdentifier: "CompletedTabController") as! CompletedTabController
+            vc = storyBoard.instantiateViewController(withIdentifier: "MyLeaguesTabController") as! MyLeaguesTabController
+            let vcMyLeague = vc as! MyLeaguesTabController
+           vcMyLeague.mid = mid
         }
         
         return vc
-        
-        
-        
-        
     }
     
     func tabsForPages() -> [ViewPagerTab] {
@@ -136,7 +136,6 @@ extension LeagueController: ViewPagerDelegate {
         }
     }
 }
-
 
 
 

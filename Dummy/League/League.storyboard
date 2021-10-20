@@ -30,10 +30,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7hY-3o-YuN">
-                                <rect key="frame" x="0.0" y="44" width="414" height="743"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="L8p-Re-q6H">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="743"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LeagueCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LeagueCell" rowHeight="130" id="W6t-eC-uF4" customClass="LeagueCell" customModule="Dummy" customModuleProvider="target">
@@ -238,7 +238,7 @@
                             <constraint firstItem="yuT-e0-Fzp" firstAttribute="trailing" secondItem="7hY-3o-YuN" secondAttribute="trailing" id="91b-Ph-J6K"/>
                             <constraint firstItem="7hY-3o-YuN" firstAttribute="leading" secondItem="yuT-e0-Fzp" secondAttribute="leading" id="B7r-lk-nMg"/>
                             <constraint firstItem="7hY-3o-YuN" firstAttribute="top" secondItem="yuT-e0-Fzp" secondAttribute="top" id="NFw-6d-pKv"/>
-                            <constraint firstItem="yuT-e0-Fzp" firstAttribute="bottom" secondItem="7hY-3o-YuN" secondAttribute="bottom" constant="75" id="vfa-Sv-7NB"/>
+                            <constraint firstItem="yuT-e0-Fzp" firstAttribute="bottom" secondItem="7hY-3o-YuN" secondAttribute="bottom" id="vfa-Sv-7NB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ugm-kl-NAg"/>
@@ -521,13 +521,13 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENTRY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnp-tX-dhe">
-                                                                <rect key="frame" x="0.0" y="0.0" width="138" height="16.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="138" height="16"/>
                                                                 <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="14"/>
                                                                 <color key="textColor" name="black"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C87-cg-lUC">
-                                                                <rect key="frame" x="0.0" y="16.5" width="138" height="33.5"/>
+                                                                <rect key="frame" x="0.0" y="16" width="138" height="34"/>
                                                                 <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="14"/>
                                                                 <color key="textColor" name="black"/>
                                                                 <nil key="highlightedColor"/>
@@ -547,13 +547,13 @@
                                                         <rect key="frame" x="138" y="0.0" width="138" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRICE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEQ-I7-z3k">
-                                                                <rect key="frame" x="0.0" y="0.0" width="138" height="16.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="138" height="16"/>
                                                                 <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="14"/>
                                                                 <color key="textColor" name="black"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLb-Kz-7WP">
-                                                                <rect key="frame" x="0.0" y="16.5" width="138" height="33.5"/>
+                                                                <rect key="frame" x="0.0" y="16" width="138" height="34"/>
                                                                 <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="14"/>
                                                                 <color key="textColor" name="black"/>
                                                                 <nil key="highlightedColor"/>
@@ -573,13 +573,13 @@
                                                         <rect key="frame" x="276" y="0.0" width="138" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WINNER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ggN-Ut-4SI">
-                                                                <rect key="frame" x="0.0" y="0.0" width="138" height="16.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="138" height="16"/>
                                                                 <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="14"/>
                                                                 <color key="textColor" name="black"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MR0-fa-YNA">
-                                                                <rect key="frame" x="0.0" y="16.5" width="138" height="33.5"/>
+                                                                <rect key="frame" x="0.0" y="16" width="138" height="34"/>
                                                                 <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="14"/>
                                                                 <color key="textColor" name="black"/>
                                                                 <nil key="highlightedColor"/>
@@ -785,10 +785,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dX5-Ci-Dfu">
-                                <rect key="frame" x="0.0" y="44" width="414" height="743"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NQo-Xh-D0y">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="743"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LeagueCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LeagueCell" rowHeight="130" id="lik-xM-8gP" customClass="LeagueCell" customModule="Dummy" customModuleProvider="target">
@@ -1007,7 +1007,7 @@
                         <constraints>
                             <constraint firstItem="xqD-VG-45I" firstAttribute="trailing" secondItem="dX5-Ci-Dfu" secondAttribute="trailing" id="5wD-yT-Hfw"/>
                             <constraint firstItem="dX5-Ci-Dfu" firstAttribute="leading" secondItem="xqD-VG-45I" secondAttribute="leading" id="AJ3-gp-9Dx"/>
-                            <constraint firstItem="xqD-VG-45I" firstAttribute="bottom" secondItem="dX5-Ci-Dfu" secondAttribute="bottom" constant="75" id="n32-3e-omz"/>
+                            <constraint firstItem="xqD-VG-45I" firstAttribute="bottom" secondItem="dX5-Ci-Dfu" secondAttribute="bottom" id="n32-3e-omz"/>
                             <constraint firstItem="dX5-Ci-Dfu" firstAttribute="top" secondItem="xqD-VG-45I" secondAttribute="top" id="qTI-8Y-WBY"/>
                         </constraints>
                     </view>
