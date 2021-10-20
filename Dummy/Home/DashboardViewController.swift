@@ -7,17 +7,22 @@
 
 import UIKit
 
-class DashboardViewController: BaseViewController, ViewPagerControllerDelegate {
-
-    var viewPager:ViewPagerController!
-    var options:ViewPagerOptions!
+class DashboardViewController: BaseViewController{//,ViewPagerDelegate
+   
     
-    var tabs = [
-        ViewPagerTab(title: "Upcoming", image: UIImage(named: "")),
-        ViewPagerTab(title: "Live", image: UIImage(named: "")),
-        ViewPagerTab(title: "Completed", image: UIImage(named: ""))
+   
+    //, ViewPagerControllerDelegate
+
+   // var viewPager:ViewPagerController!
+ //   var options:ViewPagerOptionsNew!
+    
+    let tabs = [
+        ViewPagerTab(title: "UPCOMING", image: UIImage(named: "")),
+        ViewPagerTab(title: "LIVE", image: UIImage(named: "")),
+        ViewPagerTab(title: "COMPLETED", image: UIImage(named: ""))
     ]
     
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,75 +30,151 @@ class DashboardViewController: BaseViewController, ViewPagerControllerDelegate {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         addSlideMenuButton()
         
-        
-        self.edgesForExtendedLayout = UIRectEdge.init(rawValue: 4)
-        
-        options = ViewPagerOptions(viewPagerWithFrame: self.view.bounds)
-        options.tabType = ViewPagerTabType.imageWithText
-        options.tabViewImageSize = CGSize(width: 20, height: 20)
-        options.tabViewTextFont = UIFont.systemFont(ofSize: 13)
-        options.isEachTabEvenlyDistributed = true
-        options.tabViewBackgroundDefaultColor = UIColor.white
-        if #available(iOS 11.0, *) {
-            options.tabIndicatorViewBackgroundColor = UIColor.init(named: "ColorRed") ?? UIColor.red
-        } else {
-            options.tabIndicatorViewBackgroundColor = UIColor.red
-        }
-        options.fitAllTabsInView = true
+        let options = ViewPagerOptionsNew()
+        options.tabType = .basic
+        options.distribution = .segmented
+        options.isTabHighlightAvailable = true
+        options.tabViewHeight = 30
         options.tabViewPaddingLeft = 20
         options.tabViewPaddingRight = 20
-        options.isTabHighlightAvailable = false
+        options.tabIndicatorViewBackgroundColor = .white
+        options.tabViewTextDefaultColor = UIColor.init(named: "unselectedTabBlue") ?? UIColor.blue
+        options.tabViewTextHighlightColor = .white
+        options.tabViewTextFont = UIFont(name:"UbuntuMedium",size:14) ?? UIFont.systemFont(ofSize: 14, weight: .medium)
+     
         
-        viewPager = ViewPagerController()
-        viewPager.options = options
-        viewPager.dataSource = self
-        viewPager.delegate = self
         
-        self.addChild(viewPager)
-        self.view.addSubview(viewPager.view)
-        viewPager.didMove(toParent: self)
-  
+        
+        
+        let controller = MatchesViewController()
+        controller.options = options
+        controller.tabs = tabs
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+        
+        
+        
+        
+        //self.edgesForExtendedLayout = UIRectEdge.init(rawValue: 4)
+        
+//        options = ViewPagerOptions(viewPagerWithFrame: self.view.bounds)
+//        options.tabType = ViewPagerTabType.imageWithText
+//        options.tabViewImageSize = CGSize(width: 20, height: 20)
+//        options.tabViewTextFont = UIFont.systemFont(ofSize: 13)
+//        options.isEachTabEvenlyDistributed = true
+//        options.tabViewBackgroundDefaultColor = UIColor.white
+//        if #available(iOS 11.0, *) {
+//            options.tabIndicatorViewBackgroundColor = UIColor.init(named: "ColorRed") ?? UIColor.red
+//        } else {
+//            options.tabIndicatorViewBackgroundColor = UIColor.red
+//        }
+//        options.fitAllTabsInView = true
+//        options.tabViewPaddingLeft = 20
+//        options.tabViewPaddingRight = 20
+//        options.isTabHighlightAvailable = false
+//
+//        viewPager = ViewPagerController()
+//        viewPager.options = options
+//        viewPager.dataSource = self
+//        viewPager.delegate = self
+//
+//        self.addChild(viewPager)
+//        self.view.addSubview(viewPager.view)
+//        viewPager.didMove(toParent: self)
+        
+//        let options = ViewPagerOptionsNew()
+//        options.tabType = ViewPagerTabType.basic
+//        options.distribution = ViewPagerOptionsNew.Distribution.equal
+//
+//        let viewPager = ViewPager(viewController: self)
+//        viewPager.setOptions(options: options)
+//        viewPager.setDataSource(dataSource: self)
+//        viewPager.setDelegate(delegate: self)
+//        viewPager.build()
     }
-  
+   
 }
 
 
 
-extension DashboardViewController: ViewPagerControllerDataSource {
-    
-    func numberOfPages() -> Int {
-        return tabs.count
-    }
-    
-    func viewControllerAtPosition(position:Int) -> UIViewController {
-        var vc = UIViewController()
-        
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
-        
-        if position == 0
-        {
-            
-            vc = storyboard?.instantiateViewController(withIdentifier: "UpcomingTabController") as! UpcomingTabController
-        }
-        else if position == 1
-        {
-            vc = storyboard?.instantiateViewController(withIdentifier: "LiveTabController") as! LiveTabController
-        }
-        else if position == 2
-        {
-            vc = storyboard?.instantiateViewController(withIdentifier: "CompletedTabController") as! CompletedTabController
-        }
-        
-        return vc
-    }
-    
-    func tabsForPages() -> [ViewPagerTab] {
-        return tabs
-    }
-    
-    func startViewPagerAtIndex() -> Int {
-        return 0
-    }
-    
-}
 
+//extension DashboardViewController: ViewPagerControllerDataSource {
+//
+//    func numberOfPages() -> Int {
+//        return tabs.count
+//    }
+//
+//    func viewControllerAtPosition(position:Int) -> UIViewController {
+//        var vc = UIViewController()
+//
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
+//
+//        if position == 0
+//        {
+//
+//            vc = storyboard?.instantiateViewController(withIdentifier: "UpcomingTabController") as! UpcomingTabController
+//        }
+//        else if position == 1
+//        {
+//            vc = storyboard?.instantiateViewController(withIdentifier: "LiveTabController") as! LiveTabController
+//        }
+//        else if position == 2
+//        {
+//            vc = storyboard?.instantiateViewController(withIdentifier: "CompletedTabController") as! CompletedTabController
+//        }
+//
+//        return vc
+//    }
+//
+//    func tabsForPages() -> [ViewPagerTab] {
+//        return tabs
+//    }
+//
+//    func startViewPagerAtIndex() -> Int {
+//        return 0
+//    }
+//
+//}
+
+//extension DashboardViewController : ViewPagerDataSource {
+//    // Provide number of pages required
+//    func numberOfPages() -> Int {
+//        return tabs.count
+//    }
+//
+//
+//    // Provide info for each tab
+//    func tabsForPages() -> [ViewPagerTab] {
+//        return tabs
+//    }
+//
+//    // Yayy! I can start from any page
+//    func startViewPagerAtIndex()->Int {
+//        return 0
+//    }
+//    // Provide ViewController for each page
+//    func viewControllerAtPosition(position:Int) -> UIViewController {
+//        var vc = UIViewController()
+//
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
+//
+//        if position == 0
+//        {
+//
+//            vc = storyboard?.instantiateViewController(withIdentifier: "UpcomingTabController") as! UpcomingTabController
+//        }
+//        else if position == 1
+//        {
+//            vc = storyboard?.instantiateViewController(withIdentifier: "LiveTabController") as! LiveTabController
+//        }
+//        else if position == 2
+//        {
+//            vc = storyboard?.instantiateViewController(withIdentifier: "CompletedTabController") as! CompletedTabController
+//        }
+//
+//        return vc
+//    }
+//
+//
+//}
+//

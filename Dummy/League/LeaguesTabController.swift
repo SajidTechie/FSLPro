@@ -11,8 +11,11 @@ class LeaguesTabController: UIViewController {
     @IBOutlet weak var tableView : UITableView!
     private var presenter: iLeaguePresenter!
     private var leagueForMatch: [LeagueDetailData] = []
+    private var myTeam: [MyTeamNameData] = []
+    private var joinLeague: [JoinedLeagueData] = []
     public var mid = Int()
-    
+    public var tid = Int()
+    public var lid = Int()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,7 +44,37 @@ extension LeaguesTabController : LeaguePresentable {
         
         print("** ** leagueForMatch data ** ** - - - ",leagueForMatch)
         
-        self.tableView.reloadData()
+        myTeam = presenter.myTeam
+        
+        joinLeague = presenter.joinLeague
+        
+        if(joinLeague.count > 0){
+            let statusMsg = joinLeague[0].status ?? "-"
+            print("** ** Join League data ** ** - - - ",statusMsg)
+            
+            let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
+            let vcJoinMsgPopup = storyBoard.instantiateViewController(withIdentifier: "JoinLeagueMsgPopup") as! JoinLeagueMsgPopup
+            vcJoinMsgPopup.joinMsg = statusMsg
+            self.present(vcJoinMsgPopup, animated: true)
+            
+            
+    
+        }
+        
+        
+        if(myTeam.count > 0){
+            tid = myTeam[0].tID ?? -1
+            if(tid != -1){
+                presenter.joinLeague(mid: mid, lid: lid, teamid: tid)
+            }
+        }else{
+            print("** ** myTeam switch tab here ** ** - - - ")
+        }
+        
+        print("** ** myTeam data ** ** - - - ",myTeam)
+        if(leagueForMatch.count > 0){
+            self.tableView.reloadData()
+        }
         
     }
     
@@ -113,6 +146,16 @@ extension LeaguesTabController : LeaguesDelegate {
     
     func joinLeague(cell: LeagueCell) {
         let indexPath = self.tableView.indexPath(for: cell)
+        let position = indexPath?.row ?? -1
+        if(position != -1){
+            lid  = leagueForMatch[position].lgId ?? -1
+            presenter.getMyTeam(mid: mid)//154
+        }
+       
+        
+        
+        
+        
         
         print("HIT\(String(describing: indexPath))")
     }

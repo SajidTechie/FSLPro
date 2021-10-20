@@ -77,10 +77,13 @@ extension LiveTabController : MatchesPresentable {
         {
             matchesList = presenter.matches
        
-            for i in 0...(matchesList.count - 1) {
-                
-                liveScoreMainArr.insert(LiveScoreData(groupName: matchesList[i].groupName ?? "-", matchDate: matchesList[i].matchDate ?? "-", matchName: matchesList[i].matchName ?? "-", mID: matchesList[i].mID ?? 0, position:i, season: matchesList[i].season ?? "-", status: matchesList[i].status ?? 0, teamA: matchesList[i].teamA ?? "-", teamALogo: matchesList[i].teamALogo ?? "-", teamB: matchesList[i].teamB ?? "-", teamBLogo: matchesList[i].teamBLogo ?? "-",teamAScore: "",teamBScore: "",venue: matchesList[i].venue ?? "-"), at: i)
+            if(matchesList.count > 0){
+                for i in 0...(matchesList.count - 1) {
+                    
+                    liveScoreMainArr.insert(LiveScoreData(groupName: matchesList[i].groupName ?? "-", matchDate: matchesList[i].matchDate ?? "-", matchName: matchesList[i].matchName ?? "-", mID: matchesList[i].mID ?? 0, position:i, season: matchesList[i].season ?? "-", status: matchesList[i].status ?? 0, teamA: matchesList[i].teamA ?? "-", teamALogo: matchesList[i].teamALogo ?? "-", teamB: matchesList[i].teamB ?? "-", teamBLogo: matchesList[i].teamBLogo ?? "-",teamAScore: "",teamBScore: "",venue: matchesList[i].venue ?? "-"), at: i)
+                }
             }
+           
             
            // updateLiveScoreApi()
             

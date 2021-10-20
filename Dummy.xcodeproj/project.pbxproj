@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		186E4706271EB07800CA1504 /* ViewPagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E4705271EB07800CA1504 /* ViewPagerController.swift */; };
+		186E470B271EB0D100CA1504 /* ViewPagerOptionsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E470A271EB0D100CA1504 /* ViewPagerOptionsNew.swift */; };
+		186E4710271EB13000CA1504 /* ViewPagerTabViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E470F271EB13000CA1504 /* ViewPagerTabViewNew.swift */; };
+		186E4716271ECC5900CA1504 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E4715271ECC5900CA1504 /* MatchesViewController.swift */; };
 		18DFE9FB270C247C00BA0467 /* JoinLeagueMsgPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DFE9FA270C247C00BA0467 /* JoinLeagueMsgPopup.swift */; };
 		376652DAD3D75E076E893C42 /* Pods_Dummy_DummyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DCF43DCC28745DBA62329B8 /* Pods_Dummy_DummyUITests.framework */; };
 		3ED328400ADB3979D747BE16 /* Pods_DummyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9C626F9A27C5680583314A /* Pods_DummyTests.framework */; };
@@ -15,7 +19,7 @@
 		6949EB4F26FD90A300B6DC1B /* LeagueInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6949EB4E26FD90A300B6DC1B /* LeagueInteractor.swift */; };
 		6949EB5426FD90B300B6DC1B /* LeaguePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6949EB5326FD90B300B6DC1B /* LeaguePresenter.swift */; };
 		6949EB5926FDA6B000B6DC1B /* CommonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6949EB5826FDA6B000B6DC1B /* CommonDelegate.swift */; };
-		6949EBE426FDDE5A00B6DC1B /* ViewPagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6949EBE026FDDE5900B6DC1B /* ViewPagerController.swift */; };
+		6949EBE426FDDE5A00B6DC1B /* ViewPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6949EBE026FDDE5900B6DC1B /* ViewPager.swift */; };
 		6949EBE526FDDE5A00B6DC1B /* ViewPagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6949EBE126FDDE5900B6DC1B /* ViewPagerOptions.swift */; };
 		6949EBE626FDDE5A00B6DC1B /* ViewPagerTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6949EBE226FDDE5A00B6DC1B /* ViewPagerTab.swift */; };
 		6949EBE726FDDE5A00B6DC1B /* ViewPagerTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6949EBE326FDDE5A00B6DC1B /* ViewPagerTabView.swift */; };
@@ -133,6 +137,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		186E4705271EB07800CA1504 /* ViewPagerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPagerController.swift; sourceTree = "<group>"; };
+		186E470A271EB0D100CA1504 /* ViewPagerOptionsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPagerOptionsNew.swift; sourceTree = "<group>"; };
+		186E470F271EB13000CA1504 /* ViewPagerTabViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPagerTabViewNew.swift; sourceTree = "<group>"; };
+		186E4715271ECC5900CA1504 /* MatchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
 		18DFE9FA270C247C00BA0467 /* JoinLeagueMsgPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinLeagueMsgPopup.swift; sourceTree = "<group>"; };
 		1A69D4ABE0AD2BD636576C7F /* Pods-Dummy-DummyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dummy-DummyUITests.release.xcconfig"; path = "Target Support Files/Pods-Dummy-DummyUITests/Pods-Dummy-DummyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1F9C626F9A27C5680583314A /* Pods_DummyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DummyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,7 +152,7 @@
 		6949EB4E26FD90A300B6DC1B /* LeagueInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueInteractor.swift; sourceTree = "<group>"; };
 		6949EB5326FD90B300B6DC1B /* LeaguePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaguePresenter.swift; sourceTree = "<group>"; };
 		6949EB5826FDA6B000B6DC1B /* CommonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDelegate.swift; sourceTree = "<group>"; };
-		6949EBE026FDDE5900B6DC1B /* ViewPagerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPagerController.swift; sourceTree = "<group>"; };
+		6949EBE026FDDE5900B6DC1B /* ViewPager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPager.swift; sourceTree = "<group>"; };
 		6949EBE126FDDE5900B6DC1B /* ViewPagerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPagerOptions.swift; sourceTree = "<group>"; };
 		6949EBE226FDDE5A00B6DC1B /* ViewPagerTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPagerTab.swift; sourceTree = "<group>"; };
 		6949EBE326FDDE5A00B6DC1B /* ViewPagerTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPagerTabView.swift; sourceTree = "<group>"; };
@@ -319,10 +327,13 @@
 		6949EBDF26FDDE3F00B6DC1B /* ViewPager */ = {
 			isa = PBXGroup;
 			children = (
-				6949EBE026FDDE5900B6DC1B /* ViewPagerController.swift */,
+				6949EBE026FDDE5900B6DC1B /* ViewPager.swift */,
 				6949EBE126FDDE5900B6DC1B /* ViewPagerOptions.swift */,
 				6949EBE226FDDE5A00B6DC1B /* ViewPagerTab.swift */,
 				6949EBE326FDDE5A00B6DC1B /* ViewPagerTabView.swift */,
+				186E4705271EB07800CA1504 /* ViewPagerController.swift */,
+				186E470A271EB0D100CA1504 /* ViewPagerOptionsNew.swift */,
+				186E470F271EB13000CA1504 /* ViewPagerTabViewNew.swift */,
 			);
 			path = ViewPager;
 			sourceTree = "<group>";
@@ -441,6 +452,7 @@
 				69E19C1026F449FA0050CA22 /* UpcomingTabController.swift */,
 				69E19C1526F44A0B0050CA22 /* LiveTabController.swift */,
 				69E19C1A26F44A190050CA22 /* CompletedTabController.swift */,
+				186E4715271ECC5900CA1504 /* MatchesViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -939,8 +951,10 @@
 				6949EB5426FD90B300B6DC1B /* LeaguePresenter.swift in Sources */,
 				6945DF90271AFC9000CECFE8 /* LeagueInfoViewPopup.swift in Sources */,
 				69736F7226FB53C9005F616C /* LeagueStatsCell.swift in Sources */,
+				186E470B271EB0D100CA1504 /* ViewPagerOptionsNew.swift in Sources */,
 				69E19C3A26F44AAC0050CA22 /* BaseCustomView.swift in Sources */,
 				69E19CCA26F4B9540050CA22 /* CustomError.swift in Sources */,
+				186E4716271ECC5900CA1504 /* MatchesViewController.swift in Sources */,
 				6949EBE526FDDE5A00B6DC1B /* ViewPagerOptions.swift in Sources */,
 				69E19C3126F44AAC0050CA22 /* Utility.swift in Sources */,
 				69736F1226FAF2E5005F616C /* TeamRankData.swift in Sources */,
@@ -961,6 +975,7 @@
 				69F82ACB26F5D5A7009CF720 /* ScorecardData.swift in Sources */,
 				69736F8626FB542E005F616C /* CaptainSelectionCell.swift in Sources */,
 				69736F8726FB542E005F616C /* TeamSelectionCell.swift in Sources */,
+				186E4710271EB13000CA1504 /* ViewPagerTabViewNew.swift in Sources */,
 				697145F426F1C51700166A3A /* ViewController.swift in Sources */,
 				69738289270DC6A000EDB309 /* LiveScoreMainController.swift in Sources */,
 				6949EBE626FDDE5A00B6DC1B /* ViewPagerTab.swift in Sources */,
@@ -969,7 +984,7 @@
 				69E19CCF26F4BA640050CA22 /* MatchesData.swift in Sources */,
 				69736EFE26FAF0EB005F616C /* LeagueEntryDetailsData.swift in Sources */,
 				6949EBE726FDDE5A00B6DC1B /* ViewPagerTabView.swift in Sources */,
-				6949EBE426FDDE5A00B6DC1B /* ViewPagerController.swift in Sources */,
+				6949EBE426FDDE5A00B6DC1B /* ViewPager.swift in Sources */,
 				69736F0D26FAF292005F616C /* TeamPointsData.swift in Sources */,
 				695BC7F326F3068C00B0B02D /* MenuViewController.swift in Sources */,
 				695BC80D26F30A2C00B0B02D /* BaseViewController.swift in Sources */,
@@ -1008,6 +1023,7 @@
 				697145FA26F1C51700166A3A /* Dummy.xcdatamodeld in Sources */,
 				69F82AC926F5C2E1009CF720 /* MatchesPresenter.swift in Sources */,
 				69736F3826FB0720005F616C /* TeamsInteractor.swift in Sources */,
+				186E4706271EB07800CA1504 /* ViewPagerController.swift in Sources */,
 				69738281270DA83800EDB309 /* LiveScoreTabController.swift in Sources */,
 				697145F226F1C51700166A3A /* SceneDelegate.swift in Sources */,
 				69736FA126FB553D005F616C /* TTabBarViewController.swift in Sources */,
