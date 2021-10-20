@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Dlq-3e-DPn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Dlq-3e-DPn">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -191,10 +191,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XTz-4A-HHN">
-                                <rect key="frame" x="0.0" y="44" width="414" height="743"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nMn-JU-dGf">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="743"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="UpcomingViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="UpcomingViewCell" rowHeight="140" id="HNy-Z5-lsi" customClass="UpcomingViewCell" customModule="Dummy" customModuleProvider="target">
@@ -214,7 +214,7 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="104" height="108"/>
                                                                             <subviews>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="jvO-Sm-mVl">
-                                                                                    <rect key="frame" x="4" y="20" width="96" height="70"/>
+                                                                                    <rect key="frame" x="4" y="20.5" width="96" height="69.5"/>
                                                                                     <subviews>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yuY-cQ-hgU" customClass="RoundView" customModule="Dummy" customModuleProvider="target">
                                                                                             <rect key="frame" x="4" y="0.0" width="88" height="50"/>
@@ -253,7 +253,7 @@
                                                                                             </userDefinedRuntimeAttributes>
                                                                                         </view>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8F-7w-DEZ">
-                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="12"/>
+                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="11.5"/>
                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="10"/>
                                                                                             <color key="textColor" name="black"/>
                                                                                             <nil key="highlightedColor"/>
@@ -289,7 +289,7 @@
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxq-Ek-ZUs">
-                                                                                            <rect key="frame" x="0.0" y="45" width="156" height="12"/>
+                                                                                            <rect key="frame" x="0.0" y="45" width="156" height="11.5"/>
                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="10"/>
                                                                                             <color key="textColor" name="black"/>
                                                                                             <nil key="highlightedColor"/>
@@ -318,7 +318,7 @@
                                                                             <rect key="frame" x="270" y="0.0" width="104" height="108"/>
                                                                             <subviews>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="b2t-3T-ueu">
-                                                                                    <rect key="frame" x="4" y="20" width="96" height="70"/>
+                                                                                    <rect key="frame" x="4" y="20.5" width="96" height="69.5"/>
                                                                                     <subviews>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HxV-AR-kQ9">
                                                                                             <rect key="frame" x="4" y="0.0" width="88" height="50"/>
@@ -337,7 +337,7 @@
                                                                                             </constraints>
                                                                                         </view>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5tl-vs-nc3">
-                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="12"/>
+                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="11.5"/>
                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="10"/>
                                                                                             <color key="textColor" name="black"/>
                                                                                             <nil key="highlightedColor"/>
@@ -458,7 +458,7 @@
                                         </prototypes>
                                     </tableView>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRW-RS-kPj" customClass="NoDataView" customModule="Dummy" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="743"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -479,7 +479,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Bg3-5o-KMf" firstAttribute="trailing" secondItem="XTz-4A-HHN" secondAttribute="trailing" id="5tU-gA-Mgd"/>
-                            <constraint firstItem="Bg3-5o-KMf" firstAttribute="bottom" secondItem="XTz-4A-HHN" secondAttribute="bottom" constant="75" id="V65-bb-Okh"/>
+                            <constraint firstItem="Bg3-5o-KMf" firstAttribute="bottom" secondItem="XTz-4A-HHN" secondAttribute="bottom" id="V65-bb-Okh"/>
                             <constraint firstItem="XTz-4A-HHN" firstAttribute="top" secondItem="Bg3-5o-KMf" secondAttribute="top" id="Yn5-Ra-aQz"/>
                             <constraint firstItem="XTz-4A-HHN" firstAttribute="leading" secondItem="Bg3-5o-KMf" secondAttribute="leading" id="pz4-Xl-esi"/>
                         </constraints>
@@ -502,10 +502,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w6U-kJ-Y2S">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="787"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0r2-0G-9nw">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="787"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CompletedViewCell" rowHeight="140" id="Hlr-2L-4lU" customClass="CompletedViewCell" customModule="Dummy" customModuleProvider="target">
@@ -525,7 +525,7 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="104" height="108"/>
                                                                             <subviews>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ewG-oi-Pec">
-                                                                                    <rect key="frame" x="4" y="20" width="96" height="70"/>
+                                                                                    <rect key="frame" x="4" y="20.5" width="96" height="69.5"/>
                                                                                     <subviews>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YZ6-9n-5qR" customClass="RoundView" customModule="Dummy" customModuleProvider="target">
                                                                                             <rect key="frame" x="4" y="0.0" width="88" height="50"/>
@@ -558,7 +558,7 @@
                                                                                             </userDefinedRuntimeAttributes>
                                                                                         </view>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCM-z8-djc">
-                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="12"/>
+                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="11.5"/>
                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="10"/>
                                                                                             <color key="textColor" name="black"/>
                                                                                             <nil key="highlightedColor"/>
@@ -582,28 +582,28 @@
                                                                             <rect key="frame" x="104" y="0.0" width="166" height="108"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVK-2l-XVy">
-                                                                                    <rect key="frame" x="5" y="5" width="156" height="14"/>
+                                                                                    <rect key="frame" x="5" y="5" width="156" height="13.5"/>
                                                                                     <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="12"/>
                                                                                     <color key="textColor" name="black"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ifz-ve-fLt" userLabel="vwScore">
-                                                                                    <rect key="frame" x="2" y="63" width="162" height="24"/>
+                                                                                    <rect key="frame" x="2" y="64" width="162" height="23"/>
                                                                                     <subviews>
                                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="q1d-wG-3sG">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="162" height="24"/>
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="162" height="23"/>
                                                                                             <subviews>
                                                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="TVf-qH-wq0">
-                                                                                                    <rect key="frame" x="0.0" y="0.0" width="78.5" height="24"/>
+                                                                                                    <rect key="frame" x="0.0" y="0.0" width="78.5" height="23"/>
                                                                                                     <subviews>
                                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IsM-kX-n4a">
-                                                                                                            <rect key="frame" x="0.0" y="0.0" width="78.5" height="12"/>
+                                                                                                            <rect key="frame" x="0.0" y="0.0" width="78.5" height="11.5"/>
                                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="10"/>
                                                                                                             <color key="textColor" name="black"/>
                                                                                                             <nil key="highlightedColor"/>
                                                                                                         </label>
                                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WMs-ol-7oU">
-                                                                                                            <rect key="frame" x="0.0" y="12" width="78.5" height="12"/>
+                                                                                                            <rect key="frame" x="0.0" y="11.5" width="78.5" height="11.5"/>
                                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="10"/>
                                                                                                             <color key="textColor" name="black"/>
                                                                                                             <nil key="highlightedColor"/>
@@ -611,16 +611,16 @@
                                                                                                     </subviews>
                                                                                                 </stackView>
                                                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WDb-It-7C5">
-                                                                                                    <rect key="frame" x="83.5" y="0.0" width="78.5" height="24"/>
+                                                                                                    <rect key="frame" x="83.5" y="0.0" width="78.5" height="23"/>
                                                                                                     <subviews>
                                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jI7-uQ-Wiu">
-                                                                                                            <rect key="frame" x="0.0" y="0.0" width="78.5" height="12"/>
+                                                                                                            <rect key="frame" x="0.0" y="0.0" width="78.5" height="11.5"/>
                                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="10"/>
                                                                                                             <color key="textColor" name="black"/>
                                                                                                             <nil key="highlightedColor"/>
                                                                                                         </label>
                                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMX-KA-bCB">
-                                                                                                            <rect key="frame" x="0.0" y="12" width="78.5" height="12"/>
+                                                                                                            <rect key="frame" x="0.0" y="11.5" width="78.5" height="11.5"/>
                                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="10"/>
                                                                                                             <color key="textColor" name="black"/>
                                                                                                             <nil key="highlightedColor"/>
@@ -669,7 +669,7 @@
                                                                             <rect key="frame" x="270" y="0.0" width="104" height="108"/>
                                                                             <subviews>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="i96-WW-WrV">
-                                                                                    <rect key="frame" x="4" y="20" width="96" height="70"/>
+                                                                                    <rect key="frame" x="4" y="20.5" width="96" height="69.5"/>
                                                                                     <subviews>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kac-6Y-kPb" customClass="RoundView" customModule="Dummy" customModuleProvider="target">
                                                                                             <rect key="frame" x="4" y="0.0" width="88" height="50"/>
@@ -693,7 +693,7 @@
                                                                                             </userDefinedRuntimeAttributes>
                                                                                         </view>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHo-Hp-E3q">
-                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="12"/>
+                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="11.5"/>
                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="10"/>
                                                                                             <color key="textColor" name="black"/>
                                                                                             <nil key="highlightedColor"/>
@@ -786,7 +786,7 @@
                                         </prototypes>
                                     </tableView>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ph-0Z-itm" customClass="NoDataView" customModule="Dummy" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="787"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -809,7 +809,7 @@
                             <constraint firstItem="w6U-kJ-Y2S" firstAttribute="leading" secondItem="J1e-A9-MH0" secondAttribute="leading" id="2re-NY-MUC"/>
                             <constraint firstItem="w6U-kJ-Y2S" firstAttribute="trailing" secondItem="J1e-A9-MH0" secondAttribute="trailing" id="6qO-Gb-akz"/>
                             <constraint firstItem="w6U-kJ-Y2S" firstAttribute="top" secondItem="xdm-jj-XOz" secondAttribute="top" id="gb5-FT-CKh"/>
-                            <constraint firstItem="J1e-A9-MH0" firstAttribute="bottom" secondItem="w6U-kJ-Y2S" secondAttribute="bottom" constant="75" id="xnb-fu-ARz"/>
+                            <constraint firstItem="J1e-A9-MH0" firstAttribute="bottom" secondItem="w6U-kJ-Y2S" secondAttribute="bottom" id="xnb-fu-ARz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="c2r-Qk-ZqG"/>
@@ -830,10 +830,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TU6-tF-clY">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="787"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PL3-hx-2Rk">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="787"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CompletedViewCell" rowHeight="140" id="vu5-je-rW3" customClass="CompletedViewCell" customModule="Dummy" customModuleProvider="target">
@@ -853,7 +853,7 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="104" height="108"/>
                                                                             <subviews>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="P6x-vX-WyK">
-                                                                                    <rect key="frame" x="4" y="20" width="96" height="70"/>
+                                                                                    <rect key="frame" x="4" y="20.5" width="96" height="69.5"/>
                                                                                     <subviews>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fk1-bg-9gL" customClass="RoundView" customModule="Dummy" customModuleProvider="target">
                                                                                             <rect key="frame" x="4" y="0.0" width="88" height="50"/>
@@ -886,7 +886,7 @@
                                                                                             </userDefinedRuntimeAttributes>
                                                                                         </view>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wch-K9-1Xg">
-                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="12"/>
+                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="11.5"/>
                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="10"/>
                                                                                             <color key="textColor" name="black"/>
                                                                                             <nil key="highlightedColor"/>
@@ -910,28 +910,28 @@
                                                                             <rect key="frame" x="104" y="0.0" width="166" height="108"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iov-LZ-buA">
-                                                                                    <rect key="frame" x="5" y="5" width="156" height="14"/>
+                                                                                    <rect key="frame" x="5" y="5" width="156" height="13.5"/>
                                                                                     <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="12"/>
                                                                                     <color key="textColor" name="black"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQD-kz-DZo" userLabel="vwScore">
-                                                                                    <rect key="frame" x="2" y="63" width="162" height="24"/>
+                                                                                    <rect key="frame" x="2" y="64" width="162" height="23"/>
                                                                                     <subviews>
                                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zmp-su-p8x">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="162" height="24"/>
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="162" height="23"/>
                                                                                             <subviews>
                                                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2jR-Fm-90F">
-                                                                                                    <rect key="frame" x="0.0" y="0.0" width="78.5" height="24"/>
+                                                                                                    <rect key="frame" x="0.0" y="0.0" width="78.5" height="23"/>
                                                                                                     <subviews>
                                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m4g-nc-oZ0">
-                                                                                                            <rect key="frame" x="0.0" y="0.0" width="78.5" height="12"/>
+                                                                                                            <rect key="frame" x="0.0" y="0.0" width="78.5" height="11.5"/>
                                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="10"/>
                                                                                                             <color key="textColor" name="black"/>
                                                                                                             <nil key="highlightedColor"/>
                                                                                                         </label>
                                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MDO-P8-9RN">
-                                                                                                            <rect key="frame" x="0.0" y="12" width="78.5" height="12"/>
+                                                                                                            <rect key="frame" x="0.0" y="11.5" width="78.5" height="11.5"/>
                                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="10"/>
                                                                                                             <color key="textColor" name="black"/>
                                                                                                             <nil key="highlightedColor"/>
@@ -939,16 +939,16 @@
                                                                                                     </subviews>
                                                                                                 </stackView>
                                                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="w3q-VX-m9R">
-                                                                                                    <rect key="frame" x="83.5" y="0.0" width="78.5" height="24"/>
+                                                                                                    <rect key="frame" x="83.5" y="0.0" width="78.5" height="23"/>
                                                                                                     <subviews>
                                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AJh-oh-ea9">
-                                                                                                            <rect key="frame" x="0.0" y="0.0" width="78.5" height="12"/>
+                                                                                                            <rect key="frame" x="0.0" y="0.0" width="78.5" height="11.5"/>
                                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="10"/>
                                                                                                             <color key="textColor" name="black"/>
                                                                                                             <nil key="highlightedColor"/>
                                                                                                         </label>
                                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8H-bS-rj3">
-                                                                                                            <rect key="frame" x="0.0" y="12" width="78.5" height="12"/>
+                                                                                                            <rect key="frame" x="0.0" y="11.5" width="78.5" height="11.5"/>
                                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="10"/>
                                                                                                             <color key="textColor" name="black"/>
                                                                                                             <nil key="highlightedColor"/>
@@ -997,7 +997,7 @@
                                                                             <rect key="frame" x="270" y="0.0" width="104" height="108"/>
                                                                             <subviews>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="i34-qV-VqW">
-                                                                                    <rect key="frame" x="4" y="20" width="96" height="70"/>
+                                                                                    <rect key="frame" x="4" y="20.5" width="96" height="69.5"/>
                                                                                     <subviews>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qmK-3V-SEd" customClass="RoundView" customModule="Dummy" customModuleProvider="target">
                                                                                             <rect key="frame" x="4" y="0.0" width="88" height="50"/>
@@ -1021,7 +1021,7 @@
                                                                                             </userDefinedRuntimeAttributes>
                                                                                         </view>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pva-aW-p0c">
-                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="12"/>
+                                                                                            <rect key="frame" x="0.0" y="58" width="96" height="11.5"/>
                                                                                             <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="10"/>
                                                                                             <color key="textColor" name="black"/>
                                                                                             <nil key="highlightedColor"/>
@@ -1114,7 +1114,7 @@
                                         </prototypes>
                                     </tableView>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="91q-6O-1OV" customClass="NoDataView" customModule="Dummy" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="787"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -1137,7 +1137,7 @@
                             <constraint firstItem="TU6-tF-clY" firstAttribute="trailing" secondItem="7Sn-qT-dfQ" secondAttribute="trailing" id="4ej-gn-Kpb"/>
                             <constraint firstItem="TU6-tF-clY" firstAttribute="top" secondItem="g9u-oS-K2O" secondAttribute="top" id="RK4-Qr-Ny6"/>
                             <constraint firstItem="TU6-tF-clY" firstAttribute="leading" secondItem="7Sn-qT-dfQ" secondAttribute="leading" id="W7n-dS-BdK"/>
-                            <constraint firstItem="7Sn-qT-dfQ" firstAttribute="bottom" secondItem="TU6-tF-clY" secondAttribute="bottom" constant="75" id="Y4d-Eg-HOI"/>
+                            <constraint firstItem="7Sn-qT-dfQ" firstAttribute="bottom" secondItem="TU6-tF-clY" secondAttribute="bottom" id="Y4d-Eg-HOI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="8Du-uQ-U9F"/>
