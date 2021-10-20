@@ -7,18 +7,12 @@
 import UIKit
 
 
-class JoinLeagueMsgPopup: BaseViewController {
+class JoinLeagueMsgPopup: UIViewController {
 
     @IBOutlet weak var lblMessage : UILabel!
-    @IBOutlet weak var btnClose : UIButton!
-    var strPunchTime = String()
-    var punchType = String()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-    
+    //@IBOutlet weak var btnClose : UIButton!
+    var joinMsg = String()
+   
     
     @IBAction func clicked_close(_ sender: UIButton) {
      dismiss(animated: true, completion: nil)
@@ -33,5 +27,23 @@ class JoinLeagueMsgPopup: BaseViewController {
 //        //Re direct to Dashboard
 //         })
     }
+
+    @IBAction func btnClose(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if(joinMsg.isEmpty){
+            lblMessage.text = "League Joined !"
+        }else{
+            lblMessage.text = joinMsg
+        }
+        
+        
+
+    }
+    
   
 }
