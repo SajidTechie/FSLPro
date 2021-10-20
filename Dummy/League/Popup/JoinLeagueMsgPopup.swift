@@ -14,14 +14,11 @@ class JoinLeagueMsgPopup: BaseViewController {
     var strPunchTime = String()
     var punchType = String()
     
-
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
     }
+    
     
     @IBAction func clicked_close(_ sender: UIButton) {
      dismiss(animated: true, completion: nil)

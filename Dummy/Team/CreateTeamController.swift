@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateTeamController: UIViewController, Presentable, TeamSelectionDelegate {
+class CreateTeamController: UIViewController, Presentable, TeamSelectionDelegate,CommonDelegate {
     
     
     @IBOutlet weak var tblPlayer : UITableView!
@@ -50,12 +50,15 @@ class CreateTeamController: UIViewController, Presentable, TeamSelectionDelegate
     
     var finalPlayerCount = 0
     
+    public var mid = Int()
+    public var tid = Int()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         presenter = TeamsPresenter(view: self)
         presenter.initInteractor()
-        presenter.matchAllPlayer(mid: 98)
+        presenter.matchAllPlayer(mid: mid)
         
         // - - -  fetch it from API
         maxBatsman = 7
@@ -106,8 +109,11 @@ class CreateTeamController: UIViewController, Presentable, TeamSelectionDelegate
         
         self.tblPlayer.dataSource = self
         self.tblPlayer.delegate = self
-        
+      
     }
+    
+    
+   
     
     
     func createTabs(){
@@ -292,6 +298,8 @@ class CreateTeamController: UIViewController, Presentable, TeamSelectionDelegate
         var selectedPlayerList =  allTeamList.filter { it in
             (it.selected ?? false)
         }
+        vcAddCaptain.mid = mid
+        vcAddCaptain.tid = tid
         vcAddCaptain.selectedPlayerList = selectedPlayerList
         self.navigationController!.pushViewController(vcAddCaptain, animated: true)
     }

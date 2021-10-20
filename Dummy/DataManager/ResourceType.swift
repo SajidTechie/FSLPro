@@ -15,7 +15,7 @@ enum ResourceType {
     case getMatchAllPlayer(mid: Int)
     case getLiveScore(mid: Int)
     case getSelectedTeamList(mid: Int,teamid: Int)
-    case updateTeam(mid: Int,teamid: Int)
+    case updateTeam(mid: Int,teamid: Int,teamDetail:[playerDetailObj])
     case getLeaguesForMatch(mid: Int)
     case getMatchRules
     case getMatchScoreCard(mid: Int)
@@ -48,7 +48,7 @@ extension ResourceType: TargetType {
             return "match/\(mid)/score"
         case .getSelectedTeamList(mid: let mid, teamid: let teamid):
             return "match/\(mid)/player/\(teamid)"
-        case .updateTeam(mid: let mid, teamid: let teamid):
+        case .updateTeam(mid: let mid, teamid: let teamid,_):
             return "match/\(mid)/team/\(teamid)"
         case .getLeaguesForMatch(mid: let mid):
             return "match/\(mid)/league"
@@ -87,17 +87,23 @@ extension ResourceType: TargetType {
     
     var task: Task {
         switch self {
-        case .matches,.myTeam,.getMatchAllPlayer,.getLiveScore,.getSelectedTeamList,.getLeaguesForMatch,.getMatchRules,.getMatchScoreCard,.aboutMatch,.getTeamRank,.joinLeague,.getMyJoinedLeaguesDetail,.getMyJoinedLeagues,.getLeagueEntryDetails,.getLeaderBoard,.getTeamPoints,.updateTeam:
+        case .matches,.myTeam,.getMatchAllPlayer,.getLiveScore,.getSelectedTeamList,.getLeaguesForMatch,.getMatchRules,.getMatchScoreCard,.aboutMatch,.getTeamRank,.joinLeague,.getMyJoinedLeaguesDetail,.getMyJoinedLeagues,.getLeagueEntryDetails,.getLeaderBoard,.getTeamPoints:
             return .requestPlain
+            
+        case let .updateTeam(_,_,teamDetail):
+            return .requestJSONEncodable(teamDetail)
             
         }
     }
+    
+    
     var headers: [String : String]? {
         return ["Authorization":"Bearer \(Constant.AUTH_TOKEN)"]
     }
     
-    
+
     var sampleData: Data {
         return Data()
-    }
+      }
+   
 }

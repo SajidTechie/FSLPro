@@ -21,7 +21,7 @@ protocol iTeamsPresenter: iPresenter {
     func matchAllPlayer(mid:Int)
     var matchAllPlayerData: [MatchAllPlayerData] {get set}
     
-    func createEditTeam(mid: Int, teamid: Int)
+    func createEditTeam(mid: Int, teamid: Int, teamDetails: [playerDetailObj])
     var createEditTeamData: [CreateEditTeamData] {get set}
     
     func selectedTeam(mid: Int, teamid: Int)
@@ -98,11 +98,11 @@ class TeamsPresenter: iTeamsPresenter {
         }
     }
     
-    func createEditTeam(mid: Int, teamid: Int) {
+    func createEditTeam(mid: Int, teamid: Int, teamDetails: [playerDetailObj]) {
         view?.willLoadData()
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.createEditTeam(mid: mid, teamid: teamid)
+                try interactor.createEditTeam(mid: mid, teamid: teamid, teamDetails: teamDetails)
             }
             catch
                 CustomError.DatabaseError {

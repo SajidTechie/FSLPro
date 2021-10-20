@@ -16,7 +16,7 @@ protocol iTeamsInteractor {
     init(presenter: TeamsInteractable)
    
     func myTeamName(mid:Int)
-    func createEditTeam(mid:Int,teamid: Int)
+    func createEditTeam(mid:Int,teamid: Int,teamDetails:[playerDetailObj])
     func selectedTeam(mid:Int,teamid: Int)
     func teamPoints(mid: Int,teamid: Int)
     func teamRank(mid:Int)
@@ -25,6 +25,7 @@ protocol iTeamsInteractor {
 }
 
 class TeamsInteractor: iTeamsInteractor {
+  
    private weak var presenter: TeamsInteractable?
 
     required init(presenter: TeamsInteractable) {
@@ -51,8 +52,8 @@ class TeamsInteractor: iTeamsInteractor {
     }
     
     
-    func createEditTeam(mid: Int, teamid: Int) {
-        RemoteClient.request(of: CreateEditTeamData.self, target: ResourceType.updateTeam(mid: mid, teamid: teamid), success: { [weak self] result in
+    func createEditTeam(mid: Int, teamid: Int,teamDetails: [playerDetailObj]) {
+        RemoteClient.request(of: CreateEditTeamData.self, target: ResourceType.updateTeam(mid: mid, teamid: teamid, teamDetail: teamDetails), success: { [weak self] result in
             guard let ws = self else {return}
             switch result {
             case .success(let data):

@@ -408,7 +408,6 @@
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="clickPreview:" destination="CKr-Yi-Vfh" eventType="touchUpInside" id="gB0-So-p8k"/>
-                                                    <action selector="clickPreview:" destination="uZF-ag-qvw" eventType="touchUpInside" id="w4H-KF-fRK"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IcN-ku-WHy" customClass="RoundButton" customModule="Dummy" customModuleProvider="target">

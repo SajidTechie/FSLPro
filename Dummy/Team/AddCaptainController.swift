@@ -7,19 +7,44 @@
 
 import UIKit
 
-class AddCaptainController: UIViewController,CaptainSelectionDelegate {
- 
+struct playerDetailObj:Codable{
+    var PID:Int
+    var Role: String
+    var extRole: String
     
+    init(PID:Int,Role:String,extRole:String)
+    {
+        self.PID = PID
+        self.Role = Role
+        self.extRole = extRole
+    }
+}
+
+
+class AddCaptainController: UIViewController,CaptainSelectionDelegate,Presentable {
+
+ 
+    private var presenter: iTeamsPresenter!
     @IBOutlet weak var btnPreview: UIButton!
     @IBOutlet weak var btnSave: UIButton!
     @IBOutlet weak var tblPlayer : UITableView!
     var selectedPlayerList: [MatchAllPlayerData] = []
+    var savedPlayerList: [MatchAllPlayerData] = []
     var captainPosition = -1
+    public var mid = Int()
+    public var tid = Int()
+    var teamDetail: [playerDetailObj] = []
+    private var createEditTeam: [CreateEditTeamData] = []
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        presenter = TeamsPresenter(view: self)
+        presenter.initInteractor()
+        
+        savedPlayerList.removeAll()
+        savedPlayerList.append(contentsOf: selectedPlayerList)
+      
         // Do any additional setup after loading the view.
         self.tblPlayer.dataSource = self
         self.tblPlayer.delegate = self
@@ -28,17 +53,27 @@ class AddCaptainController: UIViewController,CaptainSelectionDelegate {
 
     @IBAction func clickPreview(_ sender: UIButton) {
        print("preview clicked")
+
     }
     
     
     @IBAction func clickNext(_ sender: UIButton) {
         print("save clicked")
+        if(captainPosition == -1){
+            Utility.showMessage(title: "Invalid", msg: "Select Captain First")
+        }else{
+            teamDetail.removeAll()
+            for i in 0...((self.savedPlayerList.count) - 1){
+                teamDetail.append(playerDetailObj(PID: savedPlayerList[i].pID ?? 0, Role: savedPlayerList[i].rName ?? "", extRole: savedPlayerList[i].extRole ?? ""))
+            }
+            
+        presenter.createEditTeam(mid: mid, teamid: tid, teamDetails: teamDetail)
+        }
     }
     
     @objc func clickPlayer(sender : UITapGestureRecognizer) {
         if(sender.view!.tag >= 0){
             print("player name : \(selectedPlayerList[sender.view!.tag])")
-            
         }
     }
     
@@ -48,14 +83,44 @@ class AddCaptainController: UIViewController,CaptainSelectionDelegate {
         if(captainPosition != -1){
             selectedPlayerList.indices.forEach({
                 selectedPlayerList[$0].extRole = ""
+                savedPlayerList[$0].extRole = ""
             })
             selectedPlayerList[captainPosition].extRole = "C"
+            savedPlayerList[captainPosition].extRole = "CAP"
         }
         self.tblPlayer.reloadData()
     }
     
     
 }
+
+
+extension AddCaptainController : TeamsPresentable {
+    func willLoadData() {
+        
+    }
+    
+    func didLoadData() {
+        
+        createEditTeam = presenter.createEditTeamData
+        
+        print("createEditTeam - - - ",createEditTeam)
+        
+        if(createEditTeam.count > 0){
+           print("Team saved - - ",createEditTeam)
+            NotificationCenter.default.post(name: NSNotification.Name("TEAM_CREATED"), object: nil, userInfo: nil)
+            
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+                self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+        }
+        
+    }
+    
+    func didFail(error: CustomError) {
+        
+    }
+}
+
 
 
 extension AddCaptainController : UITableViewDataSource,UITableViewDelegate {

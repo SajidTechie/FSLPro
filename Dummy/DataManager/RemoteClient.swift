@@ -19,7 +19,7 @@ enum DResult<T> {
 
 class RemoteClient {
     
-    static let provider = MoyaProvider<ResourceType>()
+    static let provider = MoyaProvider<ResourceType>(plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))])
     
     static func request<K:Decodable>(of: K.Type, target: ResourceType, success successCallBack: @escaping (DResult<K>) -> Void, error errorCallBack: @escaping (CustomError) -> Void, failure failureCallBack: @escaping (CustomError) -> Void) {
         
@@ -68,8 +68,8 @@ class RemoteClient {
                     else if response.statusCode >= 400 && response.statusCode <= 499 {
                         
                         os_log("Server error!", log: Log.networking)
-                        //                        let error = NSError(domain: Constant.kDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Error from server" ])
-                        //                            errorCallBack(CustomError.HTTPError(err: error))
+                                                let error = NSError(domain: "Error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error from server" ])
+                                                    errorCallBack(CustomError.HTTPError(err: error))
                     }
                     else {
                         errorCallBack(CustomError.ServerError)

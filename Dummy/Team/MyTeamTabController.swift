@@ -21,6 +21,7 @@ class MyTeamTabController: UIViewController {
     private var myTeamName: [MyTeamNameData] = []
     
     public var mid = Int()
+    public var tid = -1
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +36,23 @@ class MyTeamTabController: UIViewController {
         let gestureCreateTeam = UITapGestureRecognizer(target: self, action:  #selector(self.clickCreateTeam(sender:)))
         self.vwCreateTeam.addGestureRecognizer(gestureCreateTeam)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(CreateTeamRefresh(_:)), name: NSNotification.Name("TEAM_CREATED"), object: nil)
+        
     }
+    
+    
+    @objc func CreateTeamRefresh(_ notification:Notification){
+        print("Refresh team called")
+        presenter.myTeamName(mid: mid)
+    }
+    
+    
     
     @objc func clickCreateTeam(sender : UITapGestureRecognizer) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Team", bundle: nil)
         let vcCreateTeam = storyBoard.instantiateViewController(withIdentifier: "CreateTeamController") as! CreateTeamController
+        vcCreateTeam.mid = mid
+        vcCreateTeam.tid = tid
         self.navigationController!.pushViewController(vcCreateTeam, animated: true)
     }
     
@@ -76,6 +89,8 @@ extension MyTeamTabController : TeamsPresentable {
             
             lblTeamName.text = myTeamName[0].name ?? ""
             lblCaptainName.text = myTeamName[0].player ?? ""
+            
+            tid = myTeamName[0].tID ?? -1
         }else{
             vwTeamDetail.isHidden = true
             vwCreateTeam.isHidden = false
