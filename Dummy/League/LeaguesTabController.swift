@@ -16,6 +16,7 @@ class LeaguesTabController: UIViewController {
     public var mid = Int()
     public var tid = Int()
     public var lid = Int()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,8 +25,8 @@ class LeaguesTabController: UIViewController {
         
         presenter = LeaguePresenter(view: self)
         presenter.initInteractor()
-        //TODO
-        presenter.getLeaguesForMatch(mid: mid)//154
+        
+        presenter.getLeaguesForMatch(mid: mid,callFrom: Constant.LEAGUES_FOR_MATCH)
         
     }
     
@@ -35,20 +36,37 @@ class LeaguesTabController: UIViewController {
 
 
 extension LeaguesTabController : LeaguePresentable {
-    func willLoadData() {
+    func willLoadData(callFrom:String) {
         
     }
     
-    func didLoadData() {
-        leagueForMatch = presenter.leagueForMatch
+    func didLoadData(callFrom:String){
         
-        print("** ** leagueForMatch data ** ** - - - ",leagueForMatch)
+        if(callFrom == Constant.LEAGUES_FOR_MATCH){
+            leagueForMatch = presenter.leagueForMatch
+            if(leagueForMatch.count > 0){
+                self.tableView.reloadData()
+            }
+            print("** ** leagueForMatch data ** ** - - - ",leagueForMatch)
+        }
         
-        myTeam = presenter.myTeam
+      
         
-        joinLeague = presenter.joinLeague
+        if(callFrom == Constant.MY_TEAM){
+            myTeam = presenter.myTeam
+            
+            if(myTeam.count > 0){
+                tid = myTeam[0].tID ?? -1
+                if(tid != -1){
+                    presenter.joinLeague(mid: mid, lid: lid, teamid: tid, callFrom: Constant.JOIN_LEAGUE)
+                }
+            }else{
+                print("** ** myTeam switch tab here ** ** - - - ")
+            }
+        }
         
-        if(joinLeague.count > 0){
+        if(callFrom == Constant.JOIN_LEAGUE){
+            joinLeague = presenter.joinLeague
             let statusMsg = joinLeague[0].status ?? "-"
             print("** ** Join League data ** ** - - - ",statusMsg)
             
@@ -56,29 +74,12 @@ extension LeaguesTabController : LeaguePresentable {
             let vcJoinMsgPopup = storyBoard.instantiateViewController(withIdentifier: "JoinLeagueMsgPopup") as! JoinLeagueMsgPopup
             vcJoinMsgPopup.joinMsg = statusMsg
             self.present(vcJoinMsgPopup, animated: true)
-            
-            
-    
         }
         
-        
-        if(myTeam.count > 0){
-            tid = myTeam[0].tID ?? -1
-            if(tid != -1){
-                presenter.joinLeague(mid: mid, lid: lid, teamid: tid)
-            }
-        }else{
-            print("** ** myTeam switch tab here ** ** - - - ")
-        }
-        
-        print("** ** myTeam data ** ** - - - ",myTeam)
-        if(leagueForMatch.count > 0){
-            self.tableView.reloadData()
-        }
-        
+     
     }
     
-    func didFail(error: CustomError) {
+    func didFail(error: CustomError,callFrom:String) {
         
     }
 }
@@ -149,13 +150,8 @@ extension LeaguesTabController : LeaguesDelegate {
         let position = indexPath?.row ?? -1
         if(position != -1){
             lid  = leagueForMatch[position].lgId ?? -1
-            presenter.getMyTeam(mid: mid)//154
+            presenter.getMyTeam(mid: mid, callFrom: Constant.MY_TEAM)//154
         }
-       
-        
-        
-        
-        
         
         print("HIT\(String(describing: indexPath))")
     }

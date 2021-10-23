@@ -15,12 +15,13 @@ class MyLeaguesTabController: UIViewController {
     
     private var myJoinedLeagueDetailMain: [LeagueDetailData] = []
     public var mid = Int()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         presenter = LeaguePresenter(view: self)
         presenter.initInteractor()
-        presenter.getMyJoinedLeagues(mid: 154)
+        presenter.getMyJoinedLeagues(mid: mid,callFrom: Constant.MY_JOINED_LEAGUES)
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -30,46 +31,57 @@ class MyLeaguesTabController: UIViewController {
     func updateLeagueApi(){
         if(myJoinedLeagues.count > 0){
             for i in 0...(myJoinedLeagues.count - 1) {
-                
-                presenter.getMyJoinedLeagueDetail(mid: 154, lid: myJoinedLeagues[i].id ?? 0)
-              //  group.enter()
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//                    print("\n - - - \(self.dummArray[i]) - - - - \n")
-//                }
-             //   group.leave()
+                presenter.getMyJoinedLeagueDetail(mid: mid, lid: myJoinedLeagues[i].id ?? 0,position:i, callFrom: Constant.JOINED_LEAGUES_DETAIL)
             }
         }
     }
-    
-    
-    
-    
-    
     
 }
 
 
 
 extension MyLeaguesTabController : LeaguePresentable {
-    func willLoadData() {
+    func willLoadData(callFrom:String) {
     
     }
     
-    func didLoadData() {
-        myJoinedLeagues = presenter.myJoinedLeagues
-        updateLeagueApi()
-        myJoinedLeagueDetail = presenter.myJoinedLeagueDetail
+    func didLoadData(callFrom:String){
         
-        myJoinedLeagueDetailMain.append(contentsOf: myJoinedLeagueDetail)
+        if(callFrom == Constant.MY_JOINED_LEAGUES){
+         
+            
+            myJoinedLeagues = presenter.myJoinedLeagues
+            updateLeagueApi()
+           
+        }
+        if (callFrom == Constant.JOINED_LEAGUES_DETAIL) {
+            myJoinedLeagueDetail = presenter.myJoinedLeagueDetail
+            
+            let position = presenter.leagueDetailPosition
+            
+            myJoinedLeagueDetailMain.append(contentsOf: myJoinedLeagueDetail)
+            
+                    if(myJoinedLeagueDetailMain.count > 0){
+                        myJoinedLeagueDetailMain[0].position = position
+                        myJoinedLeagueDetailMain.sorted(by: { $0.position < $1.position })
+                        
+                        self.tableView.reloadData()
+            
+                    }
+        }
+       
+       
         
         print("** ** my leagues ** ** - - - ",myJoinedLeagues)
-        print("** ** my leagues detail** ** - - - ",myJoinedLeagueDetail)
+        print("** ** my leagues detail** ** - - - ",myJoinedLeagueDetailMain)
+    
+
        
-       self.tableView.reloadData()
+       
      
     }
     
-    func didFail(error: CustomError) {
+    func didFail(error: CustomError,callFrom:String) {
    //401 - -  refresh token
         
     }

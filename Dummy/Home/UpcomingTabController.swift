@@ -33,7 +33,7 @@ class UpcomingTabController: UIViewController  {
         presenter.initInteractor()
         
         // - - - To get upcoming data - - - -
-        presenter.getMatches(mid: 0)
+        presenter.getMatches(mid: 0, callFrom: Constant.UPCOMING_MATCHES)
         
     }
     
@@ -67,11 +67,11 @@ class UpcomingTabController: UIViewController  {
 
 
 extension UpcomingTabController : MatchesPresentable {
-    func willLoadData() {
+    func willLoadData(callFrom:String) {
         
     }
     
-    func didLoadData() {
+    func didLoadData(callFrom:String){
         matchesList = presenter.matches
         print("** ** upcoming matches ** ** - - - ",matchesList)
         
@@ -83,7 +83,7 @@ extension UpcomingTabController : MatchesPresentable {
         
     }
     
-    func didFail(error: CustomError) {
+    func didFail(error: CustomError,callFrom:String) {
         
     }
 }

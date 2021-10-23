@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		181E99B42720110000DB10DD /* LeagueViewPagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E99B32720110000DB10DD /* LeagueViewPagerController.swift */; };
 		186E4706271EB07800CA1504 /* ViewPagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E4705271EB07800CA1504 /* ViewPagerController.swift */; };
 		186E470B271EB0D100CA1504 /* ViewPagerOptionsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E470A271EB0D100CA1504 /* ViewPagerOptionsNew.swift */; };
 		186E4710271EB13000CA1504 /* ViewPagerTabViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E470F271EB13000CA1504 /* ViewPagerTabViewNew.swift */; };
@@ -138,7 +137,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		181E99B32720110000DB10DD /* LeagueViewPagerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueViewPagerController.swift; sourceTree = "<group>"; };
 		186E4705271EB07800CA1504 /* ViewPagerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPagerController.swift; sourceTree = "<group>"; };
 		186E470A271EB0D100CA1504 /* ViewPagerOptionsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPagerOptionsNew.swift; sourceTree = "<group>"; };
 		186E470F271EB13000CA1504 /* ViewPagerTabViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPagerTabViewNew.swift; sourceTree = "<group>"; };
@@ -537,7 +535,6 @@
 				69E19C8926F469810050CA22 /* LeaguesTabController.swift */,
 				69E19C8E26F469900050CA22 /* MyLeaguesTabController.swift */,
 				6970B0BD26FC87A600197CAA /* LeagueController.swift */,
-				181E99B32720110000DB10DD /* LeagueViewPagerController.swift */,
 			);
 			path = League;
 			sourceTree = "<group>";
@@ -960,7 +957,6 @@
 				186E4716271ECC5900CA1504 /* MatchesViewController.swift in Sources */,
 				6949EBE526FDDE5A00B6DC1B /* ViewPagerOptions.swift in Sources */,
 				69E19C3126F44AAC0050CA22 /* Utility.swift in Sources */,
-				181E99B42720110000DB10DD /* LeagueViewPagerController.swift in Sources */,
 				69736F1226FAF2E5005F616C /* TeamRankData.swift in Sources */,
 				696DC76A26F84F9000F223AB /* ScorecardViewController.swift in Sources */,
 				695BC83126F320AE00B0B02D /* StringConstant.swift in Sources */,

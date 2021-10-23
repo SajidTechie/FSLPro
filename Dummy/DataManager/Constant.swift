@@ -8,7 +8,7 @@
 import Foundation
 class Constant {
 
-    static let AUTH_TOKEN = "34FCF3F7C42E7E4F1718F5D89F4F966DC240F8F33BBE73D8811F87E5A28C2A83"
+    static let AUTH_TOKEN = "1A526A5F0794DCB3ABC0129CA44ABC887237FFB1B86AEAA5C5FD8B179DDC6E7C"
     static let TYPE_NO_DATA = 10000
   //  static let BASE_URL = "https://fslpro.com/api"
     static let BASE_URL = "https://data.fslpro.com"
@@ -21,5 +21,29 @@ class Constant {
     // ------- ---------------- -------------------------- --------------------------------
     static let LIVE_REFRESH_RATE = 20000 //20 secs
     static let TICK_TOCK_INTERVAL = 1000
+    
+    
+    static let MY_TEAM = "MY_TEAM"
+    static let UPCOMING_MATCHES = "UPCOMING_MATCHES"
+    static let LEAGUES_FOR_MATCH = "LEAGUES_FOR_MATCH"
+    static let MY_JOINED_LEAGUES = "MY_JOINED_LEAGUES"
+    static let LEAGUE_ENTRY_DETAILS = "LEAGUE_ENTRY_DETAILS"
+    static let MY_TEAM_RANK = "MY_TEAM_RANK"
+    static let LEADER_BOARD = "LEADER_BOARD"
+    static let TEAM_POINTS = "TEAM_POINTS"
+    static let SEND_SMS = "SEND_SMS"
+    static let VERIFY_OTP = "VERIFY_OTP"
+    static let USER_PROFILE = "USER_PROFILE"
+    static let EDIT_PROFILE = "EDIT_PROFILE"
+    static let TOKEN_REFRESH = "TOKEN_REFRESH"
+    static let INITIAL_TOKEN = "INITIAL_TOKEN"
+    static let JOINED_LEAGUES_DETAIL = "JOINED_LEAGUES_DETAIL"
+    static let SCORECARD = "SCORECARD"
+    static let ABOUT_MATCH = "ABOUT_MATCH"
+    static let CREATE_EDIT_TEAM = "CREATE_EDIT_TEAM"
+    static let SELECTED_TEAM_PLAYERS = "SELECTED_TEAM_PLAYERS"
+    static let JOIN_LEAGUE = "JOIN_LEAGUE"
+    static let LIVE_SCORE = "LIVE_SCORE"
+
 }
 

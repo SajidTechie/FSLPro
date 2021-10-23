@@ -8,9 +8,9 @@
 import Foundation
 
 protocol Presentable: AnyObject {
-    func willLoadData()
-    func didLoadData()
-    func didFail(error: CustomError)
+    func willLoadData(callFrom:String)
+    func didLoadData(callFrom:String)
+    func didFail(error: CustomError,callFrom:String)
 }
 
 protocol iPresenter {

@@ -25,7 +25,7 @@ class LiveTabController: UIViewController {
         
         presenter = MatchesPresenter(view: self)
         presenter.initInteractor()
-        presenter.getMatches(mid: 1)
+        presenter.getMatches(mid: 1, callFrom: Constant.UPCOMING_MATCHES)
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -54,7 +54,7 @@ class LiveTabController: UIViewController {
         if(matchesList.count > 0){
           //  liveScoreMainArr.removeAll()
             for i in 0...(matchesList.count - 1) {
-                presenter.getLiveScore(mid: matchesList[i].mID ?? 0,position:i)
+                presenter.getLiveScore(mid: matchesList[i].mID ?? 0,position:i, callFrom: Constant.LIVE_SCORE)
             }
             
             callLiveMatch = true
@@ -68,10 +68,10 @@ class LiveTabController: UIViewController {
 
 
 extension LiveTabController : MatchesPresentable {
-    func willLoadData() {
+    func willLoadData(callFrom:String) {
     }
     
-    func didLoadData() {
+    func didLoadData(callFrom:String){
         
         if(callLiveMatch == false)
         {
@@ -126,7 +126,7 @@ extension LiveTabController : MatchesPresentable {
     
     
     
-    func didFail(error: CustomError) {
+    func didFail(error: CustomError,callFrom:String) {
         
     }
 }
@@ -148,7 +148,7 @@ extension LiveTabController : UITableViewDataSource,UITableViewDelegate {
         cell.lblMatch.text = liveScoreMainArr[indexPath.row].groupName
         
         cell.imvTeamALogo.sd_setImage(with: URL(string: Constant.WEBSITE_URL + (liveScoreMainArr[indexPath.row].teamALogo ?? "")), placeholderImage: UIImage(named: Constant.NO_IMAGE_ICON))
-        cell.imvTeamBLogo.sd_setImage(with: URL(string: Constant.WEBSITE_URL + (liveScoreMainArr[indexPath.row].teamALogo ?? "")), placeholderImage: UIImage(named: Constant.NO_IMAGE_ICON))
+        cell.imvTeamBLogo.sd_setImage(with: URL(string: Constant.WEBSITE_URL + (liveScoreMainArr[indexPath.row].teamBLogo ?? "")), placeholderImage: UIImage(named: Constant.NO_IMAGE_ICON))
         
         if(liveScoreMainArr[indexPath.row].teamAScore?.contains(",") == true){
             let teamA = liveScoreMainArr[indexPath.row].teamAScore?.split(separator: ",")

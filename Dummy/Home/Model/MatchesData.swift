@@ -19,6 +19,7 @@ struct Match : Codable {
         let teamB : String?
         let teamBLogo : String?
         let venue : String?
+        var teamAScore,teamBScore : String?
 
         enum CodingKeys: String, CodingKey {
                 case groupName = "GroupName"
@@ -32,6 +33,8 @@ struct Match : Codable {
                 case teamB = "TeamB"
                 case teamBLogo = "TeamBLogo"
                 case venue = "Venue"
+                case teamAScore = "TeamAScore"
+                case teamBScore = "TeamBScore"
         }
     
         init(from decoder: Decoder) throws {
@@ -47,6 +50,8 @@ struct Match : Codable {
                 teamB = try values.decodeIfPresent(String.self, forKey: .teamB)
                 teamBLogo = try values.decodeIfPresent(String.self, forKey: .teamBLogo)
                 venue = try values.decodeIfPresent(String.self, forKey: .venue)
+            teamAScore = try values.decodeIfPresent(String.self, forKey: .teamAScore)
+            teamBScore = try values.decodeIfPresent(String.self, forKey: .teamBScore)
         }
     
 }

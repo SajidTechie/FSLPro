@@ -33,19 +33,21 @@ class ScorecardViewController: UIViewController {
     var options:ViewPagerOptions!
     var arrInningsTabs = [String]()
     var initPosition = 0
- 
+    
     var callFrom = ""
     
     var bye = 0
-       var lb = 0
-       var wide = 0
-       var nb = 0
-       var pen = 0
-       var totalExtra = 0
-
-       var totalRuns = 0
-       var totalOvers = 0.0
-       var totalWickets = 0
+    var lb = 0
+    var wide = 0
+    var nb = 0
+    var pen = 0
+    var totalExtra = 0
+    
+    var totalRuns = 0
+    var totalOvers = 0.0
+    var totalWickets = 0
+    
+    public var mid = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +61,7 @@ class ScorecardViewController: UIViewController {
         }else{
             presenter = ScorecardListPresenter(view: self)
             presenter.initInteractor()
-            presenter.getScorecard(mid: 71)
+            presenter.getScorecard(mid: mid,callFrom: Constant.SCORECARD)
         }
         
         self.tblBatsman.dataSource = self
@@ -69,7 +71,7 @@ class ScorecardViewController: UIViewController {
         self.tblBatsman.delegate = self
         self.tblBowler.delegate = self
         self.tblFow.delegate = self
-      
+        
     }
     
     
@@ -79,7 +81,7 @@ class ScorecardViewController: UIViewController {
         
         scorecard = scorecardObj["scorecard"] as? [ScorecardMain] ?? []
         print("LIVE SCORECARD - - - - - ",scorecard)
-       
+        
         if((scorecard.count > 0) && (scorecard[0].score?.count ?? 0 > 0)){
             createTabs(isDynamic: true)
         }else{
@@ -174,32 +176,32 @@ class ScorecardViewController: UIViewController {
     
     
     func setExtraDetails(data: ScorecardScore?) {
-           bye = data?.xtra?.bye ?? 0
-           lb = data?.xtra?.legBye ?? 0
-           wide = data?.xtra?.wide ?? 0
-           nb = data?.xtra?.noballRuns ?? 0
-           pen = data?.xtra?.penalty ?? 0
-
-           totalRuns = data?.total ?? 0
-           totalWickets = data?.wickets ?? 0
-           totalOvers = data?.overs ?? 0.0
-
-           totalExtra = bye + lb + wide + nb + pen
-
-           lblExtras.text = "(\(totalExtra) (b \(bye),lb \(lb),w \(wide),nb \(nb),p \(pen))"
-           lblTotal.text = "\(totalRuns) (\(totalWickets) wkts, \(totalOvers) overs"
-       }
+        bye = data?.xtra?.bye ?? 0
+        lb = data?.xtra?.legBye ?? 0
+        wide = data?.xtra?.wide ?? 0
+        nb = data?.xtra?.noballRuns ?? 0
+        pen = data?.xtra?.penalty ?? 0
+        
+        totalRuns = data?.total ?? 0
+        totalWickets = data?.wickets ?? 0
+        totalOvers = data?.overs ?? 0.0
+        
+        totalExtra = bye + lb + wide + nb + pen
+        
+        lblExtras.text = "(\(totalExtra) (b \(bye),lb \(lb),w \(wide),nb \(nb),p \(pen))"
+        lblTotal.text = "\(totalRuns) (\(totalWickets) wkts, \(totalOvers) overs"
+    }
     
 }
 
 
 
 extension ScorecardViewController : ScorecardListPresentable {
-    func willLoadData() {
+    func willLoadData(callFrom:String) {
         
     }
     
-    func didLoadData() {
+    func didLoadData(callFrom:String){
         
         scorecard = presenter.scorecard
         
@@ -216,7 +218,7 @@ extension ScorecardViewController : ScorecardListPresentable {
         
     }
     
-    func didFail(error: CustomError) {
+    func didFail(error: CustomError,callFrom:String) {
         
     }
 }

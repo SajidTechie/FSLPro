@@ -15,16 +15,16 @@ protocol MatchesPresentable: Presentable {
 protocol iMatchesPresenter: iPresenter {
     var view: MatchesPresentable? {get set}
     
-    func getRules()
+    func getRules(callFrom:String)
     var rules: [GetRulesData] {get set}
     
-    func getMatches(mid:Int)
+    func getMatches(mid:Int,callFrom:String)
     var matches: [Match] {get set}
     
-    func getLiveMatches(mid:Int,position:Int)
+    func getLiveMatches(mid:Int,position:Int,callFrom:String)
     var liveMatches: [Match] {get set}
     
-    func getLiveScore(mid:Int,position:Int)
+    func getLiveScore(mid:Int,position:Int,callFrom:String)
     var liveScore: [LiveScoreData] {get set}
   
     var liveMatchesPosition: Int {get set}
@@ -49,76 +49,76 @@ class MatchesPresenter: iMatchesPresenter {
     }
     
     
-    func getMatches(mid:Int)  {
-        view?.willLoadData()
+    func getMatches(mid:Int,callFrom:String)  {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.fetchAllMatches(mid: mid)
+                try interactor.fetchAllMatches(mid: mid,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
                     
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
      
     }
     
     
-    func getLiveMatches(mid:Int,position:Int)  {
-        view?.willLoadData()
+    func getLiveMatches(mid:Int,position:Int,callFrom:String)  {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.fetchAllLiveMatches(mid: mid, position: position)
+                try interactor.fetchAllLiveMatches(mid: mid, position: position,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
                     
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
      
     }
     
     
-    func getRules() {
-        view?.willLoadData()
+    func getRules(callFrom:String) {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.getMatchRules()
+                try interactor.getMatchRules(callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
                     
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
     }
     
     
     
-    func getLiveScore(mid: Int,position:Int) {
-        view?.willLoadData()
+    func getLiveScore(mid: Int,position:Int,callFrom:String) {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.fetchLiveScore(mid: mid,position:position)
+                try interactor.fetchLiveScore(mid: mid,position:position,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
                     
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
     }
@@ -128,22 +128,22 @@ class MatchesPresenter: iMatchesPresenter {
 
 
 extension MatchesPresenter: MatchesInteractable {
-    func didFinishFetchingDataWithPosition(list: [Any], position: Int) {
+    func didFinishFetchingDataWithPosition(list: [Any], position: Int,callFrom:String) {
         liveMatches = list as? [Match] ?? []
         liveScore = list as? [LiveScoreData] ?? []
         liveMatchesPosition = position
-        view?.didLoadData()
+        view?.didLoadData(callFrom: callFrom)
     }
     
-    func didFinishFetchingData(list: [Any]) {
+    func didFinishFetchingData(list: [Any],callFrom:String) {
         matches = list as? [Match] ?? []
         rules = list as? [GetRulesData] ?? []
-        view?.didLoadData()
+        view?.didLoadData(callFrom: callFrom)
     }
     
    
     
-    func didFailFetchingData(error: CustomError) {
-        view?.didFail(error: error)
+    func didFailFetchingData(error: CustomError,callFrom:String) {
+        view?.didFail(error: error,callFrom: callFrom)
     }
 }

@@ -31,7 +31,7 @@ class MyTeamTabController: UIViewController {
         
         presenter = TeamsPresenter(view: self)
         presenter.initInteractor()
-        presenter.myTeamName(mid: mid)
+        presenter.myTeamName(mid: mid, callFrom: Constant.MY_TEAM)
         
         let gestureCreateTeam = UITapGestureRecognizer(target: self, action:  #selector(self.clickCreateTeam(sender:)))
         self.vwCreateTeam.addGestureRecognizer(gestureCreateTeam)
@@ -43,7 +43,7 @@ class MyTeamTabController: UIViewController {
     
     @objc func CreateTeamRefresh(_ notification:Notification){
         print("Refresh team called")
-        presenter.myTeamName(mid: mid)
+        presenter.myTeamName(mid: mid, callFrom: Constant.MY_TEAM)
     }
     
     
@@ -74,11 +74,11 @@ class MyTeamTabController: UIViewController {
 
 
 extension MyTeamTabController : TeamsPresentable {
-    func willLoadData() {
+    func willLoadData(callFrom:String) {
     
     }
     
-    func didLoadData() {
+    func didLoadData(callFrom:String){
         myTeamName = presenter.teamNameData
      
         print("** ** team name ** ** - - - ",myTeamName)
@@ -98,7 +98,7 @@ extension MyTeamTabController : TeamsPresentable {
      
     }
     
-    func didFail(error: CustomError) {
+    func didFail(error: CustomError,callFrom:String) {
    
     }
 }

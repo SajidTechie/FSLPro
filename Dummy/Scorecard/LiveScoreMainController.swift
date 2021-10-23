@@ -71,7 +71,7 @@ class LiveScoreMainController: UIViewController, ViewPagerControllerDelegate {
     @objc func update() {
         // do what should happen when timer triggers an event
       
-        presenter.getScorecard(mid: 144)
+        presenter.getScorecard(mid: mid, callFrom: Constant.SCORECARD)
         
     }
     
@@ -125,11 +125,11 @@ extension LiveScoreMainController: ViewPagerControllerDataSource {
 
 
 extension LiveScoreMainController : ScorecardListPresentable {
-    func willLoadData() {
+    func willLoadData(callFrom:String) {
         
     }
     
-    func didLoadData() {
+    func didLoadData(callFrom:String){
         
         scorecard = presenter.scorecard
         
@@ -139,7 +139,7 @@ extension LiveScoreMainController : ScorecardListPresentable {
         
     }
     
-    func didFail(error: CustomError) {
+    func didFail(error: CustomError,callFrom:String) {
         
     }
 }

@@ -67,7 +67,7 @@ class AddCaptainController: UIViewController,CaptainSelectionDelegate,Presentabl
                 teamDetail.append(playerDetailObj(PID: savedPlayerList[i].pID ?? 0, Role: savedPlayerList[i].rName ?? "", extRole: savedPlayerList[i].extRole ?? ""))
             }
             
-        presenter.createEditTeam(mid: mid, teamid: tid, teamDetails: teamDetail)
+        presenter.createEditTeam(mid: mid, teamid: tid, teamDetails: teamDetail, callFrom: Constant.CREATE_EDIT_TEAM)
         }
     }
     
@@ -96,11 +96,11 @@ class AddCaptainController: UIViewController,CaptainSelectionDelegate,Presentabl
 
 
 extension AddCaptainController : TeamsPresentable {
-    func willLoadData() {
+    func willLoadData(callFrom:String) {
         
     }
     
-    func didLoadData() {
+    func didLoadData(callFrom:String){
         
         createEditTeam = presenter.createEditTeamData
         
@@ -116,7 +116,7 @@ extension AddCaptainController : TeamsPresentable {
         
     }
     
-    func didFail(error: CustomError) {
+    func didFail(error: CustomError,callFrom:String) {
         
     }
 }

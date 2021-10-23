@@ -13,6 +13,7 @@ struct LeagueDetailData : Codable {
         let isOpen : Bool?
         let j : Int?
         let lCurSize : Int?
+        var position = 0
         let lDesc : String?
         let lEntryFees : Double?
         let lgId : Int?

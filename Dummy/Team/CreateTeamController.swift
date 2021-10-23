@@ -58,7 +58,7 @@ class CreateTeamController: UIViewController, Presentable, TeamSelectionDelegate
         
         presenter = TeamsPresenter(view: self)
         presenter.initInteractor()
-        presenter.matchAllPlayer(mid: mid)
+        presenter.matchAllPlayer(mid: mid, callFrom: Constant.SELECTED_TEAM_PLAYERS)
         
         // - - -  fetch it from API
         maxBatsman = 7
@@ -309,11 +309,11 @@ class CreateTeamController: UIViewController, Presentable, TeamSelectionDelegate
 }
 
 extension CreateTeamController : TeamsPresentable {
-    func willLoadData() {
+    func willLoadData(callFrom:String) {
         
     }
     
-    func didLoadData() {
+    func didLoadData(callFrom:String){
         
         allTeamList = presenter.matchAllPlayerData
         
@@ -325,7 +325,7 @@ extension CreateTeamController : TeamsPresentable {
         
     }
     
-    func didFail(error: CustomError) {
+    func didFail(error: CustomError,callFrom:String) {
         
     }
 }

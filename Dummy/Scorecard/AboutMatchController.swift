@@ -23,6 +23,7 @@ class AboutMatchController: UIViewController {
     private var matchInfo: MatchInfo? = nil
     
     var callFrom = ""
+    public var mid = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,7 @@ class AboutMatchController: UIViewController {
         }else{
             presenter = ScorecardListPresenter(view: self)
             presenter.initInteractor()
-            presenter.getMatchInfo(mid: 71)
+            presenter.getMatchInfo(mid: mid, callFrom: Constant.ABOUT_MATCH)
         }
         
     }
@@ -85,11 +86,11 @@ class AboutMatchController: UIViewController {
 
 
 extension AboutMatchController : ScorecardListPresentable {
-    func willLoadData() {
+    func willLoadData(callFrom:String) {
         
     }
     
-    func didLoadData() {
+    func didLoadData(callFrom:String){
         
         let matchData = presenter.matchInfo
         
@@ -104,7 +105,7 @@ extension AboutMatchController : ScorecardListPresentable {
         print("matchInfo - - - ",matchInfo)
     }
     
-    func didFail(error: CustomError) {
+    func didFail(error: CustomError,callFrom:String) {
         
     }
 }

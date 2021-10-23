@@ -13,10 +13,10 @@ protocol ScorecardListPresentable: Presentable {
 protocol iScorecardListPresenter: iPresenter {
     var view: ScorecardListPresentable? {get set}
      
-    func getScorecard(mid:Int)
+    func getScorecard(mid:Int,callFrom:String)
     var scorecard: [ScorecardMain] {get set}
     
-    func getMatchInfo(mid:Int)
+    func getMatchInfo(mid:Int,callFrom:String)
     var matchInfo: [MatchData] {get set}
 }
 
@@ -38,19 +38,19 @@ class ScorecardListPresenter: iScorecardListPresenter {
     
     
     
-    func getScorecard(mid:Int)  {
-        view?.willLoadData()
+    func getScorecard(mid:Int,callFrom:String)  {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.getScorecard(mid: mid)
+                try interactor.getScorecard(mid: mid,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
                     
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
         else {
@@ -59,19 +59,19 @@ class ScorecardListPresenter: iScorecardListPresenter {
     }
     
    
-    func getMatchInfo(mid:Int)  {
-        view?.willLoadData()
+    func getMatchInfo(mid:Int,callFrom:String)  {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.getMatchInfo(mid: mid)
+                try interactor.getMatchInfo(mid: mid,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
                     
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
         else {
@@ -83,13 +83,13 @@ class ScorecardListPresenter: iScorecardListPresenter {
 
 
 extension ScorecardListPresenter: ScorecardListInteractable {
-    func didFinishFetchingData(list: [Any]) {
+    func didFinishFetchingData(list: [Any],callFrom:String) {
         scorecard = list as? [ScorecardMain] ?? []
         matchInfo = list as? [MatchData] ?? []
-        view?.didLoadData()
+        view?.didLoadData(callFrom: callFrom)
     }
     
-    func didFailFetchingData(error: CustomError) {
-        view?.didFail(error: error)
+    func didFailFetchingData(error: CustomError,callFrom:String) {
+        view?.didFail(error: error,callFrom: callFrom)
     }
 }

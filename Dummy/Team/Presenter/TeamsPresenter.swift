@@ -15,22 +15,22 @@ protocol TeamsPresentable: Presentable {
 protocol iTeamsPresenter: iPresenter {
     var view: TeamsPresentable? {get set}
     
-    func myTeamName(mid:Int)
+    func myTeamName(mid:Int,callFrom:String)
     var teamNameData: [MyTeamNameData] {get set}
 
-    func matchAllPlayer(mid:Int)
+    func matchAllPlayer(mid:Int,callFrom:String)
     var matchAllPlayerData: [MatchAllPlayerData] {get set}
     
-    func createEditTeam(mid: Int, teamid: Int, teamDetails: [playerDetailObj])
+    func createEditTeam(mid: Int, teamid: Int, teamDetails: [playerDetailObj],callFrom:String)
     var createEditTeamData: [CreateEditTeamData] {get set}
     
-    func selectedTeam(mid: Int, teamid: Int)
+    func selectedTeam(mid: Int, teamid: Int,callFrom:String)
     var selectedTeamData: [SelectedTeamData] {get set}
 
-    func teamPoints(mid: Int, teamid: Int)
+    func teamPoints(mid: Int, teamid: Int,callFrom:String)
     var teamPointsData: [TeamPointsData] {get set}
     
-    func teamRank(mid:Int)
+    func teamRank(mid:Int,callFrom:String)
     var teamRankData: [TeamRankData] {get set}
   
 }
@@ -63,105 +63,105 @@ class TeamsPresenter: iTeamsPresenter {
     
     
     
-    func myTeamName(mid: Int) {
-        view?.willLoadData()
+    func myTeamName(mid: Int,callFrom:String) {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.myTeamName(mid: mid)
+                try interactor.myTeamName(mid: mid,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
 
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
     }
     
 
-    func matchAllPlayer(mid: Int) {
-        view?.willLoadData()
+    func matchAllPlayer(mid: Int,callFrom:String) {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.matchAllPlayer(mid: mid)
+                try interactor.matchAllPlayer(mid: mid,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
 
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
     }
     
-    func createEditTeam(mid: Int, teamid: Int, teamDetails: [playerDetailObj]) {
-        view?.willLoadData()
+    func createEditTeam(mid: Int, teamid: Int, teamDetails: [playerDetailObj],callFrom:String) {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.createEditTeam(mid: mid, teamid: teamid, teamDetails: teamDetails)
+                try interactor.createEditTeam(mid: mid, teamid: teamid, teamDetails: teamDetails,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
 
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
     }
     
-    func selectedTeam(mid: Int, teamid: Int) {
-        view?.willLoadData()
+    func selectedTeam(mid: Int, teamid: Int,callFrom:String) {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.selectedTeam(mid: mid, teamid: teamid)
+                try interactor.selectedTeam(mid: mid, teamid: teamid,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
 
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
     }
     
-    func teamPoints(mid: Int, teamid: Int) {
-        view?.willLoadData()
+    func teamPoints(mid: Int, teamid: Int,callFrom:String) {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.teamPoints(mid: mid, teamid: teamid)
+                try interactor.teamPoints(mid: mid, teamid: teamid,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
 
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
     }
     
-    func teamRank(mid: Int) {
-        view?.willLoadData()
+    func teamRank(mid: Int,callFrom:String) {
+        view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.teamRank(mid: mid)
+                try interactor.teamRank(mid: mid,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
-                    view?.didFail(error: CustomError.DatabaseError)
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
 
             }
             catch let err {
-                view?.didFail(error: CustomError.HTTPError(err: err))
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
     }
@@ -172,7 +172,7 @@ class TeamsPresenter: iTeamsPresenter {
 
 
 extension TeamsPresenter: TeamsInteractable {
-    func didFinishFetchingData(list: [Any]) {
+    func didFinishFetchingData(list: [Any],callFrom:String) {
      
         matchAllPlayerData = list as? [MatchAllPlayerData] ?? []
         selectedTeamData = list as? [SelectedTeamData] ?? []
@@ -181,11 +181,11 @@ extension TeamsPresenter: TeamsInteractable {
         createEditTeamData = list as? [CreateEditTeamData] ?? []
         teamRankData = list as? [TeamRankData] ?? []
    
-        view?.didLoadData()
+        view?.didLoadData(callFrom: callFrom)
     }
     
     
-    func didFailFetchingData(error: CustomError) {
-        view?.didFail(error: error)
+    func didFailFetchingData(error: CustomError,callFrom:String) {
+        view?.didFail(error: error,callFrom: callFrom)
     }
 }
