@@ -16,7 +16,7 @@ protocol iScorecardListInteractor {
     
     func getScorecard(mid:Int,callFrom:String)
     func getMatchInfo(mid:Int,callFrom:String)
-
+    func getLeaderboardData(mid:Int,lid:Int,callFrom:String)
 }
 
 class ScorecardListInteractor: iScorecardListInteractor {
@@ -65,7 +65,23 @@ class ScorecardListInteractor: iScorecardListInteractor {
         }
     }
     
-
+    func getLeaderboardData(mid: Int,lid:Int,callFrom:String) {
+        RemoteClient.request(of: LeaderboardData.self, target: ResourceType.getLeaderBoard(mid: mid, lid: lid), success: { [weak self] result in
+            guard let ws = self else {return}
+            switch result {
+            case .success(let data):
+                ws.presenter?.didFinishFetchingData(list: data, callFrom: callFrom)
+            case .failure(let error):
+                ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+            }
+            }, error: { [weak self] error in
+                guard let ws = self else {return}
+                ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+        }) {  [weak self]error in
+            guard let ws = self else {return}
+            ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+        }
+    }
    
 }
 

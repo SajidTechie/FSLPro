@@ -18,13 +18,17 @@ protocol iScorecardListPresenter: iPresenter {
     
     func getMatchInfo(mid:Int,callFrom:String)
     var matchInfo: [MatchData] {get set}
+    
+    func getLeaderboardData(mid:Int,lid:Int,callFrom:String)
+    var leaderboardData: [LeaderboardData] {get set}
 }
 
 class ScorecardListPresenter: iScorecardListPresenter {
     
     var scorecard: [ScorecardMain] = []
     var matchInfo: [MatchData] = []
-     
+    var leaderboardData: [LeaderboardData] = []
+    
     weak var view: ScorecardListPresentable?
     var interactor: iScorecardListInteractor!
     
@@ -79,6 +83,27 @@ class ScorecardListPresenter: iScorecardListPresenter {
         }
     }
     
+    
+    func getLeaderboardData(mid:Int,lid:Int,callFrom:String)  {
+        view?.willLoadData(callFrom:callFrom)
+        if (Reachability.isConnectedToNetwork()) {
+            do {
+                try interactor.getLeaderboardData(mid: mid,lid: lid,callFrom:callFrom)
+            }
+            catch
+                CustomError.DatabaseError {
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
+                    
+            }
+            catch let err {
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
+            }
+        }
+        else {
+            
+        }
+    }
+    
 }
 
 
@@ -86,6 +111,7 @@ extension ScorecardListPresenter: ScorecardListInteractable {
     func didFinishFetchingData(list: [Any],callFrom:String) {
         scorecard = list as? [ScorecardMain] ?? []
         matchInfo = list as? [MatchData] ?? []
+        leaderboardData = list as? [LeaderboardData] ?? []
         view?.didLoadData(callFrom: callFrom)
     }
     

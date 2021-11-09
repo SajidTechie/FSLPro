@@ -23,7 +23,7 @@ enum ResourceType {
     case joinLeague(mid: Int,lid: Int,teamid: Int)
     case getMyJoinedLeagues(mid: Int)
     case getMyJoinedLeaguesDetail(mid: Int,lid: Int)
-    case getLeagueEntryDetails(mid: Int,teamid: Int)
+    case getLeagueEntryDetails(mid: Int,lid: Int)
     case getTeamRank(mid: Int)
     case getLeaderBoard(mid: Int,lid: Int)
     case getTeamPoints(mid: Int,teamid: Int)
@@ -66,8 +66,8 @@ extension ResourceType: TargetType {
             return "my/\(mid)"
         case .getMyJoinedLeaguesDetail(mid: let mid, lid: let lid):
             return "match/\(mid)/league/\(lid)"
-        case .getLeagueEntryDetails(mid: let mid, teamid: let teamid):
-            return "my/\(mid)/det/\(teamid)"
+        case .getLeagueEntryDetails(mid: let mid, lid: let lid):
+            return "my/\(mid)/det/\(lid)"
         case .getLeaderBoard(mid: let mid, lid: let lgid):
             return "my/\(mid)/rank/\(lgid)"
         case .getTeamPoints(mid: let mid, teamid: let teamid):

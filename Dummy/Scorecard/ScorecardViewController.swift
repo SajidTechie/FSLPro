@@ -82,14 +82,16 @@ class ScorecardViewController: UIViewController {
         scorecard = scorecardObj["scorecard"] as? [ScorecardMain] ?? []
         print("LIVE SCORECARD - - - - - ",scorecard)
         
-        if((scorecard.count > 0) && (scorecard[0].score?.count ?? 0 > 0)){
-            createTabs(isDynamic: true)
-        }else{
-            createTabs(isDynamic: false)
+        if(scorecard.count > 0){
+            if(scorecard[0].score?.count ?? 0 > 0){
+                createTabs(isDynamic: true)
+            }else{
+                createTabs(isDynamic: false)
+            }
+            
+            setData()
         }
-        
-        setData()
-        
+      
     }
     
     
@@ -125,6 +127,9 @@ class ScorecardViewController: UIViewController {
         options.tabViewTextFont = UIFont.systemFont(ofSize: 13)
         options.isEachTabEvenlyDistributed = true
         options.tabViewBackgroundDefaultColor = UIColor.white
+        
+        
+        
         
         if #available(iOS 11.0, *) {
             options.tabIndicatorViewBackgroundColor = UIColor.init(named: "ColorRed") ?? UIColor.red
@@ -164,8 +169,8 @@ class ScorecardViewController: UIViewController {
         fallOfWickets = list
         
         tblBatsmanHeight.constant = CGFloat((scorecardBat?.count ?? 0) * 60)
-        tblBowlerHeight.constant = CGFloat((scorecardBowl?.count ?? 0) * 60)
-        tblFowHeight.constant = CGFloat((fallOfWickets?.count ?? 0) * 60)
+        tblBowlerHeight.constant = CGFloat((scorecardBowl?.count ?? 0) * 40)
+        tblFowHeight.constant = CGFloat((fallOfWickets?.count ?? 0) * 40)
         
         setExtraDetails(data: scorecard[0].score?[initPosition])
         
@@ -188,8 +193,8 @@ class ScorecardViewController: UIViewController {
         
         totalExtra = bye + lb + wide + nb + pen
         
-        lblExtras.text = "(\(totalExtra) (b \(bye),lb \(lb),w \(wide),nb \(nb),p \(pen))"
-        lblTotal.text = "\(totalRuns) (\(totalWickets) wkts, \(totalOvers) overs"
+        lblExtras.text = "\(totalExtra) (b \(bye),lb \(lb),w \(wide),nb \(nb),p \(pen))"
+        lblTotal.text = "\(totalRuns) (\(totalWickets) wkts, \(totalOvers) overs)"
     }
     
 }
@@ -207,14 +212,14 @@ extension ScorecardViewController : ScorecardListPresentable {
         
         print("scorecard - - - ",scorecard)
         
-        if((scorecard.count > 0) && (scorecard[0].score?.count ?? 0 > 0)){
-            createTabs(isDynamic: true)
-        }else{
-            createTabs(isDynamic: false)
+        if(scorecard.count > 0){
+            if(scorecard[0].score?.count ?? 0 > 0){
+                createTabs(isDynamic: true)
+            }else{
+                createTabs(isDynamic: false)
+            }
+            setData()
         }
-        
-        if(scorecard.count > 0)
-        {setData()}
         
     }
     
@@ -249,7 +254,7 @@ extension ScorecardViewController : UITableViewDataSource,UITableViewDelegate {
         if(tableView.tag == 1){
             let cellBat = tableView.dequeueReusableCell(withIdentifier: "BatsmanViewCell", for: indexPath) as! BatsmanViewCell
             
-            cellBat.lblBattingText.text = scorecardBat?[indexPath.row].fn
+            cellBat.lblBattingText.text = scorecardBat?[indexPath.row].fn ?? "-"
             cellBat.lblBattingRuns.text = String(scorecardBat?[indexPath.row].score ?? 0)
             cellBat.lblBattingBalls.text = String(scorecardBat?[indexPath.row].ball ?? 0)
             cellBat.lblBatting4s.text = String(scorecardBat?[indexPath.row].four ?? 0)
@@ -273,41 +278,41 @@ extension ScorecardViewController : UITableViewDataSource,UITableViewDelegate {
             case  "Run Out":
                 if (scorecardBat?[indexPath.row].runout == nil || scorecardBat?[indexPath.row].runout?.isEmpty == true) {
                     cellBat.lblBattingDismissal.text =
-                        "run out \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer))"
+                        "run out \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer ?? "-"))"
                 } else {
                     cellBat.lblBattingDismissal.text =
-                        "run out \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer))/\(String(describing: scorecardBat?[indexPath.row].runout))"
+                        "run out \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer ?? "-"))/\(String(describing: scorecardBat?[indexPath.row].runout ?? "-"))"
                 }
             case  "Run Out (Sub)":
                 if (scorecardBat?[indexPath.row].runout == nil || scorecardBat?[indexPath.row].runout?.isEmpty == true) {
                     cellBat.lblBattingDismissal.text =
-                        "run out (sub) \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer))"
+                        "run out (sub) \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer ?? "-"))"
                 } else {
                     cellBat.lblBattingDismissal.text =
-                        "run out (sub) \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer))/\(String(describing: scorecardBat?[indexPath.row].runout))"
+                        "run out (sub) \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer ?? "-"))/\(String(describing: scorecardBat?[indexPath.row].runout ?? "-"))"
                 }
             case "Catch Out":
                 if ((scorecardBat?[indexPath.row].catchStumpPlayer) != nil) {
                     cellBat.lblBattingDismissal.text =
-                        "c \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer))) b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer))"
+                        "c \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer ?? "-")) b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer ?? "-"))"
                 } else {
-                    cellBat.lblBattingDismissal.text = "c & b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer))"
+                    cellBat.lblBattingDismissal.text = "c & b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer ?? "-"))"
                 }
             case   "Catch Out (Sub)":
                 cellBat.lblBattingDismissal.text =
-                    "c (sub) \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer))) b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer))"
+                    "c (sub) \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer ?? "-")) b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer ?? "-"))"
             case "Stump Out":
                 cellBat.lblBattingDismissal.text =
-                    "st \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer))) b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer))"
+                    "st \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer ?? "-")) b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer ?? "-"))"
             case  "Stump Out (Sub)":
                 cellBat.lblBattingDismissal.text =
-                    "st (sub) \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer))) b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer))"
+                    "st (sub) \(String(describing: scorecardBat?[indexPath.row].catchStumpPlayer ?? "-")) b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer ?? "-"))"
             case "LBW OUT":
-                cellBat.lblBattingDismissal.text = "lbw \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer))"
+                cellBat.lblBattingDismissal.text = "lbw \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer ?? "-"))"
             case "Bowled":
-                cellBat.lblBattingDismissal.text = "b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer))"
+                cellBat.lblBattingDismissal.text = "b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer ?? "-"))"
             case  "Clean Bowled":
-                cellBat.lblBattingDismissal.text = "b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer))"
+                cellBat.lblBattingDismissal.text = "b \(String(describing: scorecardBat?[indexPath.row].bowlingPlayer ?? "-"))"
             default:
                 cellBat.lblBattingDismissal.text = "not out"
             }
@@ -330,7 +335,7 @@ extension ScorecardViewController : UITableViewDataSource,UITableViewDelegate {
         if(tableView.tag == 3){
             let cellFow = tableView.dequeueReusableCell(withIdentifier: "FOWViewCell", for: indexPath) as! FOWViewCell
             
-            cellFow.lblFallOfWickets.text = fallOfWickets?[indexPath.row].fn
+            cellFow.lblFallOfWickets.text = fallOfWickets?[indexPath.row].fn ?? "-"
             cellFow.lblFallOfWicketsRuns.text = String(fallOfWickets?[indexPath.row].fowScore ?? 0)
             cellFow.lblFallOfWicketsOvers.text = String(fallOfWickets?[indexPath.row].fowBalls ?? 0.0)
             

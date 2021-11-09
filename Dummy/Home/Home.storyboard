@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Dlq-3e-DPn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Dlq-3e-DPn">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -39,7 +39,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RMo-X6-zfJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="247" y="-31"/>
+            <point key="canvasLocation" x="172" y="-19"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="b1J-5Q-JTT">
@@ -70,7 +70,7 @@
                                         <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellMenu" rowHeight="40" id="VHG-PH-Cch">
-                                                <rect key="frame" x="0.0" y="28" width="354" height="40"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="354" height="40"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VHG-PH-Cch" id="7cD-2t-6gu">
                                                     <rect key="frame" x="0.0" y="0.0" width="354" height="40"/>
@@ -180,7 +180,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nvb-6b-LPq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1095.6521739130435" y="-31.473214285714285"/>
+            <point key="canvasLocation" x="1058" y="-19"/>
         </scene>
         <!--Upcoming Tab Controller-->
         <scene sceneID="bVW-TX-bYk">
@@ -198,7 +198,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="UpcomingViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="UpcomingViewCell" rowHeight="140" id="HNy-Z5-lsi" customClass="UpcomingViewCell" customModule="Dummy" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="414" height="140"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="414" height="140"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HNy-Z5-lsi" id="q9I-Hp-s2L">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
@@ -413,7 +413,7 @@
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <real key="value" value="10"/>
+                                                                    <real key="value" value="0.0"/>
                                                                 </userDefinedRuntimeAttribute>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                                                     <real key="value" value="2"/>
@@ -509,7 +509,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CompletedViewCell" rowHeight="140" id="Hlr-2L-4lU" customClass="CompletedViewCell" customModule="Dummy" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="414" height="140"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="414" height="140"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hlr-2L-4lU" id="Oqj-u2-Rlj">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
@@ -837,7 +837,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CompletedViewCell" rowHeight="140" id="vu5-je-rW3" customClass="CompletedViewCell" customModule="Dummy" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="414" height="140"/>
+                                                <rect key="frame" x="0.0" y="44.5" width="414" height="140"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vu5-je-rW3" id="ZNI-0r-N7K">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>

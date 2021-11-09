@@ -62,6 +62,7 @@ extension LeaguesTabController : LeaguePresentable {
                 }
             }else{
                 print("** ** myTeam switch tab here ** ** - - - ")
+                NotificationCenter.default.post(name: NSNotification.Name("LEAGUE_TAB"), object: nil, userInfo: nil)
             }
         }
         

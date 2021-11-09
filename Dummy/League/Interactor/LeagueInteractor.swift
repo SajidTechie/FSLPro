@@ -17,6 +17,7 @@ protocol LeagueInteractable: AnyObject {
 protocol iLeagueInteractor {
     init(presenter: LeagueInteractable)
    
+    func getLeagueEntryDetail(mid: Int,lid: Int,callFrom:String)
     func leagueForMatch(mid:Int,callFrom:String)
     func getMyTeam(mid:Int,callFrom:String)
     func joinLeague(mid: Int,lid: Int,teamid: Int,callFrom:String)
@@ -25,6 +26,7 @@ protocol iLeagueInteractor {
 }
 
 class LeagueInteractor: iLeagueInteractor {
+    
 
    private weak var presenter: LeagueInteractable?
 
@@ -89,6 +91,27 @@ class LeagueInteractor: iLeagueInteractor {
             ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
         }
     }
+    
+    
+    func getLeagueEntryDetail(mid: Int,lid: Int,callFrom:String) {
+
+        RemoteClient.request(of: LeagueEntryDetailsData.self, target: ResourceType.getLeagueEntryDetails(mid: mid, lid: lid), success: { [weak self] result in
+            guard let ws = self else {return}
+            switch result {
+            case .success(let data):
+                ws.presenter?.didFinishFetchingData(list: data, callFrom: callFrom)
+            case .failure(let error):
+                ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+            }
+            }, error: { [weak self] error in
+                guard let ws = self else {return}
+                ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+        }) {  [weak self]error in
+            guard let ws = self else {return}
+            ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+        }
+    }
+    
     
     func getMyTeam(mid: Int,callFrom:String) {
 

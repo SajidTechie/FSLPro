@@ -15,6 +15,7 @@ class MyLeaguesTabController: UIViewController {
     
     private var myJoinedLeagueDetailMain: [LeagueDetailData] = []
     public var mid = Int()
+    public var lid = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,7 +127,11 @@ extension MyLeaguesTabController : UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
+        let vcLeagueEntry = storyBoard.instantiateViewController(withIdentifier: "LeagueEntryDetailController") as! LeagueEntryDetailController
+        vcLeagueEntry.mid = mid
+        vcLeagueEntry.lid = myJoinedLeagueDetailMain[indexPath.row].lgId ?? -1
+        self.present(vcLeagueEntry, animated: true)
     }
     
 }

@@ -9,13 +9,7 @@ import UIKit
 
 class DashboardViewController: BaseViewController{//,ViewPagerDelegate
    
-    
-   
-    //, ViewPagerControllerDelegate
 
-   // var viewPager:ViewPagerController!
- //   var options:ViewPagerOptionsNew!
-    
     let tabs = [
         ViewPagerTab(title: "UPCOMING", image: UIImage(named: "")),
         ViewPagerTab(title: "LIVE", image: UIImage(named: "")),
@@ -23,6 +17,8 @@ class DashboardViewController: BaseViewController{//,ViewPagerDelegate
     ]
     var options: ViewPagerOptionsNew?
     var pager:ViewPager?
+    
+    @IBOutlet weak var vwHorizontalStrip: UIView!
     
     override func loadView() {
         
@@ -57,51 +53,7 @@ class DashboardViewController: BaseViewController{//,ViewPagerDelegate
         pager?.build()
         
         
-//        let controller = MatchesViewController()
-//        controller.options = options
-//        controller.tabs = tabs
-//        self.navigationController?.pushViewController(controller, animated: true)
-        
-        
-        
-        
-        
-        //self.edgesForExtendedLayout = UIRectEdge.init(rawValue: 4)
-        
-//        options = ViewPagerOptions(viewPagerWithFrame: self.view.bounds)
-//        options.tabType = ViewPagerTabType.imageWithText
-//        options.tabViewImageSize = CGSize(width: 20, height: 20)
-//        options.tabViewTextFont = UIFont.systemFont(ofSize: 13)
-//        options.isEachTabEvenlyDistributed = true
-//        options.tabViewBackgroundDefaultColor = UIColor.white
-//        if #available(iOS 11.0, *) {
-//            options.tabIndicatorViewBackgroundColor = UIColor.init(named: "ColorRed") ?? UIColor.red
-//        } else {
-//            options.tabIndicatorViewBackgroundColor = UIColor.red
-//        }
-//        options.fitAllTabsInView = true
-//        options.tabViewPaddingLeft = 20
-//        options.tabViewPaddingRight = 20
-//        options.isTabHighlightAvailable = false
-//
-//        viewPager = ViewPagerController()
-//        viewPager.options = options
-//        viewPager.dataSource = self
-//        viewPager.delegate = self
-//
-//        self.addChild(viewPager)
-//        self.view.addSubview(viewPager.view)
-//        viewPager.didMove(toParent: self)
-        
-//        let options = ViewPagerOptionsNew()
-//        options.tabType = ViewPagerTabType.basic
-//        options.distribution = ViewPagerOptionsNew.Distribution.equal
-//
-//        let viewPager = ViewPager(viewController: self)
-//        viewPager.setOptions(options: options)
-//        viewPager.setDataSource(dataSource: self)
-//        viewPager.setDelegate(delegate: self)
-//        viewPager.build()
+
     }
    
 }

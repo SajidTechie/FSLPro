@@ -17,6 +17,7 @@ protocol MatchesInteractable: AnyObject {
 protocol iMatchesInteractor {
     init(presenter: MatchesInteractable)
    
+    func getTeamRank(mid:Int,callFrom:String)
     func fetchAllMatches(mid:Int,callFrom:String)
     func fetchAllLiveMatches(mid:Int,position:Int,callFrom:String)
     func fetchLiveScore(mid:Int,position:Int,callFrom:String)
@@ -49,6 +50,26 @@ class MatchesInteractor: iMatchesInteractor {
             ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
         }
     }
+    
+    
+    func getTeamRank(mid: Int, callFrom: String) {
+        RemoteClient.request(of: TeamRankData.self, target: ResourceType.getTeamRank(mid: mid), success: { [weak self] result in
+            guard let ws = self else {return}
+            switch result {
+            case .success(let data):
+                ws.presenter?.didFinishFetchingData(list: data, callFrom: callFrom)
+            case .failure(let error):
+                ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+            }
+            }, error: { [weak self] error in
+                guard let ws = self else {return}
+                ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+        }) {  [weak self]error in
+            guard let ws = self else {return}
+            ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+        }
+    }
+    
     
     
     func fetchAllLiveMatches(mid:Int,position:Int,callFrom:String) {

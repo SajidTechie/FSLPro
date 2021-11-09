@@ -11,7 +11,10 @@ class CompletedTabController: UIViewController {
     @IBOutlet weak var tableView : UITableView!
     private var presenter: iMatchesPresenter!
     private var matchesList: [Match] = []
-  
+    private var myTeamRank: [TeamRankData] = []
+    
+    var mid = Int()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,12 +40,34 @@ extension CompletedTabController : MatchesPresentable {
     }
     
     func didLoadData(callFrom:String){
+        
+        if(callFrom == Constant.UPCOMING_MATCHES){
         matchesList = presenter.matches
-     
         print("** ** completed matches ** ** - - - ",matchesList)
-       
         self.tableView.reloadData()
-     
+        }
+        
+        if(callFrom == Constant.MY_TEAM_RANK){
+            
+            myTeamRank = presenter.myTeamRank
+            
+            if(myTeamRank.count > 0){
+                let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
+                let vcLeague = storyBoard.instantiateViewController(withIdentifier: "LeagueDetailViewController") as! LeagueDetailViewController
+                vcLeague.mid = mid
+                vcLeague.myTeamRank = myTeamRank
+                self.navigationController!.pushViewController(vcLeague, animated: true)
+            }else{
+                let storyBoard: UIStoryboard = UIStoryboard(name: "Scorecard", bundle: nil)
+                let vcLeague = storyBoard.instantiateViewController(withIdentifier: "CompletedMatchDetailController") as! CompletedMatchDetailController
+                vcLeague.mid = mid
+                self.navigationController!.pushViewController(vcLeague, animated: true)
+            }
+            
+            print("** ** myTeamRank data ** ** - - - ",myTeamRank)
+            
+        }
+       
     }
     
     func didFail(error: CustomError,callFrom:String) {
@@ -102,6 +127,10 @@ extension CompletedTabController : UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? CompletedViewCell
+        
+        mid = self.matchesList[indexPath.row].mID ?? 0
+        presenter.getTeamRank(mid: mid,callFrom: Constant.MY_TEAM_RANK)
         
     }
     

@@ -8,7 +8,7 @@
 import Foundation
 class Constant {
 
-    static let AUTH_TOKEN = "1A526A5F0794DCB3ABC0129CA44ABC887237FFB1B86AEAA5C5FD8B179DDC6E7C"
+    static let AUTH_TOKEN = "416E050F8EEFA6EF2104A100C4B9662992F080F0D7AB1822C8C515C80B5C3646"
     static let TYPE_NO_DATA = 10000
   //  static let BASE_URL = "https://fslpro.com/api"
     static let BASE_URL = "https://data.fslpro.com"

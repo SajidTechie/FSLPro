@@ -20,6 +20,7 @@ protocol iLeaguePresenter: iPresenter {
     func getMyTeam(mid:Int,callFrom:String)
     var myTeam: [MyTeamNameData] {get set}
     
+    
     func joinLeague(mid: Int,lid: Int,teamid: Int,callFrom:String)
     var joinLeague: [JoinedLeagueData] {get set}
     
@@ -30,6 +31,11 @@ protocol iLeaguePresenter: iPresenter {
     
     func getMyJoinedLeagueDetail(mid: Int,lid: Int,position: Int,callFrom:String)
     var myJoinedLeagueDetail: [LeagueDetailData] {get set}
+    
+    
+    func getLeagueEntryDetail(mid: Int,lid: Int,callFrom:String)
+    var leagueEntryDetail: [LeagueEntryDetailsData] {get set}
+
     
     var leagueDetailPosition: Int {get set}
   
@@ -44,7 +50,7 @@ class LeaguePresenter: iLeaguePresenter {
     var leagueForMatch: [LeagueDetailData] = []
     var myJoinedLeagues: [MyJoinedLeagueData] = []
     var myJoinedLeagueDetail: [LeagueDetailData] = []
-    
+    var leagueEntryDetail: [LeagueEntryDetailsData] = []
     
     
     weak var view: LeaguePresentable?
@@ -75,8 +81,11 @@ class LeaguePresenter: iLeaguePresenter {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
         }
-    
     }
+    
+    
+    
+    
     
     func getMyTeam(mid:Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
@@ -148,6 +157,24 @@ class LeaguePresenter: iLeaguePresenter {
         }
     }
     
+    
+    func getLeagueEntryDetail(mid: Int,lid: Int,callFrom:String)  {
+        view?.willLoadData(callFrom:callFrom)
+        if (Reachability.isConnectedToNetwork()) {
+            do {
+                try interactor.getLeagueEntryDetail(mid: mid,lid:lid,callFrom:callFrom)
+            }
+            catch
+                CustomError.DatabaseError {
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
+                    
+            }
+            catch let err {
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
+            }
+        }
+    }
+    
    
 
 }
@@ -166,8 +193,8 @@ extension LeaguePresenter: LeagueInteractable {
         myTeam = list as? [MyTeamNameData] ?? []
         joinLeague = list as? [JoinedLeagueData] ?? []
         myJoinedLeagues = list as? [MyJoinedLeagueData] ?? []
-        
-
+        leagueEntryDetail = list as? [LeagueEntryDetailsData] ?? []
+     
         view?.didLoadData(callFrom: callFrom)
     }
     

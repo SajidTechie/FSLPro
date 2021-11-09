@@ -15,6 +15,9 @@ protocol MatchesPresentable: Presentable {
 protocol iMatchesPresenter: iPresenter {
     var view: MatchesPresentable? {get set}
     
+    func getTeamRank(mid:Int,callFrom:String)
+    var myTeamRank: [TeamRankData] {get set}
+    
     func getRules(callFrom:String)
     var rules: [GetRulesData] {get set}
     
@@ -36,6 +39,7 @@ class MatchesPresenter: iMatchesPresenter {
     var matches: [Match] = []
     var liveMatches: [Match] = []
     var liveScore: [LiveScoreData] = []
+    var myTeamRank: [TeamRankData] = []
     
     weak var view: MatchesPresentable?
     var interactor: iMatchesInteractor!
@@ -65,6 +69,25 @@ class MatchesPresenter: iMatchesPresenter {
             }
         }
      
+    }
+    
+    
+    func getTeamRank(mid:Int,callFrom:String)  {
+        view?.willLoadData(callFrom:callFrom)
+        if (Reachability.isConnectedToNetwork()) {
+            do {
+                try interactor.getTeamRank(mid: mid,callFrom:callFrom)
+            }
+            catch
+                CustomError.DatabaseError {
+                    view?.didFail(error: CustomError.DatabaseError, callFrom: callFrom)
+                    
+            }
+            catch let err {
+                view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
+            }
+        }
+    
     }
     
     
@@ -138,6 +161,7 @@ extension MatchesPresenter: MatchesInteractable {
     func didFinishFetchingData(list: [Any],callFrom:String) {
         matches = list as? [Match] ?? []
         rules = list as? [GetRulesData] ?? []
+        myTeamRank = list as? [TeamRankData] ?? []
         view?.didLoadData(callFrom: callFrom)
     }
     
