@@ -12,6 +12,8 @@
 		186E4710271EB13000CA1504 /* ViewPagerTabViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E470F271EB13000CA1504 /* ViewPagerTabViewNew.swift */; };
 		186E4716271ECC5900CA1504 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E4715271ECC5900CA1504 /* MatchesViewController.swift */; };
 		18DFE9FB270C247C00BA0467 /* JoinLeagueMsgPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DFE9FA270C247C00BA0467 /* JoinLeagueMsgPopup.swift */; };
+		18F37532273A4F6E00048B41 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18F37531273A4F6E00048B41 /* Auth.storyboard */; };
+		18F37537273A536000048B41 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F37536273A536000048B41 /* LoginController.swift */; };
 		376652DAD3D75E076E893C42 /* Pods_Dummy_DummyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DCF43DCC28745DBA62329B8 /* Pods_Dummy_DummyUITests.framework */; };
 		3ED328400ADB3979D747BE16 /* Pods_DummyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9C626F9A27C5680583314A /* Pods_DummyTests.framework */; };
 		69149B98272C0C9B008864AC /* LeagueDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69149B97272C0C9B008864AC /* LeagueDetailViewController.swift */; };
@@ -149,6 +151,8 @@
 		186E470F271EB13000CA1504 /* ViewPagerTabViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPagerTabViewNew.swift; sourceTree = "<group>"; };
 		186E4715271ECC5900CA1504 /* MatchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
 		18DFE9FA270C247C00BA0467 /* JoinLeagueMsgPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinLeagueMsgPopup.swift; sourceTree = "<group>"; };
+		18F37531273A4F6E00048B41 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Auth.storyboard; path = Dummy/League/Auth.storyboard; sourceTree = SOURCE_ROOT; };
+		18F37536273A536000048B41 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = Dummy/League/LoginController.swift; sourceTree = SOURCE_ROOT; };
 		1A69D4ABE0AD2BD636576C7F /* Pods-Dummy-DummyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dummy-DummyUITests.release.xcconfig"; path = "Target Support Files/Pods-Dummy-DummyUITests/Pods-Dummy-DummyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1F9C626F9A27C5680583314A /* Pods_DummyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DummyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		417FFBE7D26249F31647AF83 /* Pods-Dummy-DummyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dummy-DummyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Dummy-DummyUITests/Pods-Dummy-DummyUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -501,6 +505,8 @@
 			isa = PBXGroup;
 			children = (
 				6971462A26F1CD3700166A3A /* Model */,
+				18F37531273A4F6E00048B41 /* Auth.storyboard */,
+				18F37536273A536000048B41 /* LoginController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -831,6 +837,7 @@
 				695BC82926F31D5500B0B02D /* Color.xcassets in Resources */,
 				695BC7B026F2FCEC00B0B02D /* LeftPanel.storyboard in Resources */,
 				69E19C3726F44AAC0050CA22 /* NoDataView.xib in Resources */,
+				18F37532273A4F6E00048B41 /* Auth.storyboard in Resources */,
 				694C50042711DD9600B75A10 /* ConthraxSB.ttf in Resources */,
 				697145FF26F1C51900166A3A /* LaunchScreen.storyboard in Resources */,
 				697145FC26F1C51900166A3A /* Assets.xcassets in Resources */,
@@ -1029,6 +1036,7 @@
 				69736EF426FAEE80005F616C /* JoinLeagueData.swift in Sources */,
 				69E19CD726F4C49E0050CA22 /* Log.swift in Sources */,
 				696868BE270577F90078753B /* AboutMatchController.swift in Sources */,
+				18F37537273A536000048B41 /* LoginController.swift in Sources */,
 				6970B0BE26FC87A600197CAA /* LeagueController.swift in Sources */,
 				69E19CDC26F4C4D80050CA22 /* NetworkManager.swift in Sources */,
 				69E19C3226F44AAC0050CA22 /* CustomImageView.swift in Sources */,

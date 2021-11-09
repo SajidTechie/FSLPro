@@ -13,8 +13,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
-        let vcHome = storyBoard.instantiateViewController(withIdentifier: "DashboardViewController") as! DashboardViewController
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
+//        let vcHome = storyBoard.instantiateViewController(withIdentifier: "DashboardViewController") as! DashboardViewController
+//        self.navigationController!.pushViewController(vcHome, animated: true)
+        
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Auth", bundle: nil)
+        let vcHome = storyBoard.instantiateViewController(withIdentifier: "LoginController") as! LoginController
         self.navigationController!.pushViewController(vcHome, animated: true)
         
 //        let storyBoard: UIStoryboard = UIStoryboard(name: "Scorecard", bundle: nil)
