@@ -32,7 +32,7 @@ class LeagueEntryDetailController: UIViewController {
 
 
 
-extension LeagueEntryDetailController : ScorecardListPresentable {
+extension LeagueEntryDetailController : LeaguePresentable {
     func willLoadData(callFrom:String) {
         
     }

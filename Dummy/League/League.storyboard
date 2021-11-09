@@ -24,7 +24,7 @@
         <!--My Leagues Tab Controller-->
         <scene sceneID="a0d-6o-UL2">
             <objects>
-                <viewController storyboardIdentifier="MyLeaguesTabController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="F4M-KY-zfl" customClass="MyLeaguesTabController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyLeaguesTabController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="F4M-KY-zfl" customClass="MyLeaguesTabController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MyO-ER-qGK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,10 +46,10 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QbI-ru-STM" customClass="RoundView" customModule="Dummy" customModuleProvider="target">
                                                             <rect key="frame" x="10" y="10" width="394" height="110"/>
                                                             <subviews>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="n8e-9K-5pT">
+                                                                <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="n8e-9K-5pT">
                                                                     <rect key="frame" x="0.0" y="0.0" width="394" height="110"/>
                                                                     <subviews>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="90Z-iP-I7g" userLabel="vwLeftMain">
+                                                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="90Z-iP-I7g" userLabel="vwLeftMain">
                                                                             <rect key="frame" x="0.0" y="0.0" width="242" height="110"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLF-jd-vSd">
@@ -119,19 +119,19 @@
                                                                                 <constraint firstItem="r1T-ge-sAX" firstAttribute="leading" secondItem="90Z-iP-I7g" secondAttribute="leading" constant="10" id="nN1-mn-PCW"/>
                                                                             </constraints>
                                                                         </view>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ch4-BV-Zdm" userLabel="vwRightMain">
+                                                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ch4-BV-Zdm" userLabel="vwRightMain">
                                                                             <rect key="frame" x="244" y="0.0" width="150" height="110"/>
                                                                             <subviews>
-                                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="A4i-8w-kKO">
+                                                                                <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="A4i-8w-kKO">
                                                                                     <rect key="frame" x="5" y="33.5" width="140" height="45"/>
                                                                                     <subviews>
-                                                                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CaN-vk-3KA">
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CaN-vk-3KA">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="140" height="20.5"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                             <color key="textColor" name="white"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
-                                                                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Le1-2j-LOB">
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Le1-2j-LOB">
                                                                                             <rect key="frame" x="0.0" y="24.5" width="140" height="20.5"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                             <color key="textColor" name="white"/>
@@ -253,7 +253,7 @@
         <!--League Entry Detail Controller-->
         <scene sceneID="YP3-yf-MLn">
             <objects>
-                <viewController storyboardIdentifier="LeagueEntryDetailController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dxi-CX-6Cl" customClass="LeagueEntryDetailController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LeagueEntryDetailController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dxi-CX-6Cl" customClass="LeagueEntryDetailController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7tb-WS-QfB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -302,11 +302,11 @@
                                             <constraint firstItem="C5b-1M-JOO" firstAttribute="leading" secondItem="D9E-Ii-gaU" secondAttribute="leading" id="z7l-Dg-rkQ"/>
                                         </constraints>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xm9-ei-x7X">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xm9-ei-x7X">
                                         <rect key="frame" x="20" y="60" width="374" height="758"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LeagueStatsCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="40" id="ObE-DL-6Ry" customClass="LeagueStatsCell" customModule="Dummy" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="LeagueStatsCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LeagueStatsCell" rowHeight="40" id="ObE-DL-6Ry" customClass="LeagueStatsCell" customModule="Dummy" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="44.5" width="374" height="40"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ObE-DL-6Ry" id="H0h-pf-qWu">
@@ -327,7 +327,7 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                     </subviews>
-                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstItem="hWo-Sp-1Ft" firstAttribute="leading" secondItem="Bn8-9u-E5g" secondAttribute="leading" constant="20" id="KUY-aM-zCF"/>
                                                                         <constraint firstItem="hWo-Sp-1Ft" firstAttribute="centerY" secondItem="Bn8-9u-E5g" secondAttribute="centerY" id="op3-eg-mYO"/>
@@ -335,6 +335,7 @@
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qga-F8-VJO">
                                                                     <rect key="frame" x="187" y="0.0" width="187" height="40"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="14"/>
                                                                     <color key="textColor" name="black"/>
                                                                     <nil key="highlightedColor"/>
@@ -1026,7 +1027,7 @@
         <!--League Detail View Controller-->
         <scene sceneID="Rfc-ad-8uN">
             <objects>
-                <viewController storyboardIdentifier="LeagueDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UQp-k6-o0r" customClass="LeagueDetailViewController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LeagueDetailViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UQp-k6-o0r" customClass="LeagueDetailViewController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aoG-82-ZYB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
