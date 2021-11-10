@@ -15,8 +15,9 @@ target 'Dummy' do
    pod 'ReachabilitySwift'
    pod 'Tabman', '~> 2.11'
    pod 'XLPagerTabStrip', '~> 9.0'
-
-
+   pod 'CountryPickerView'
+   pod 'SVPinView', '~> 1.0'
+   
   target 'DummyTests' do
     inherit! :search_paths
     # Pods for testing

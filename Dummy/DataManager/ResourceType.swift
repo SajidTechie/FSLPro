@@ -27,13 +27,30 @@ enum ResourceType {
     case getTeamRank(mid: Int)
     case getLeaderBoard(mid: Int,lid: Int)
     case getTeamPoints(mid: Int,teamid: Int)
+    case sendSMS(teamDetail:[playerDetailObj])
+    case verifyOtp(teamDetail:[playerDetailObj])
+    case initialToken
+    case refreshToken
+    
 }
 
 
 extension ResourceType: TargetType {
-    
+  
     var baseURL: URL {
-        return URL(string:Constant.BASE_URL)!
+        
+        switch self {
+        case .sendSMS(let loginObj):
+            return URL(string:Constant.AUTH_URL)!
+        case .verifyOtp(let loginObj):
+            return URL(string:Constant.AUTH_URL)!
+        case .initialToken:
+            return URL(string:Constant.REFRESH_TOKEN_URL)!
+        case .refreshToken:
+            return URL(string:Constant.REFRESH_TOKEN_URL)!
+        default:
+            return URL(string:Constant.BASE_URL)!
+        }
     }
    
     var path: String {
@@ -72,6 +89,53 @@ extension ResourceType: TargetType {
             return "my/\(mid)/rank/\(lgid)"
         case .getTeamPoints(mid: let mid, teamid: let teamid):
             return "my/\(mid)/team/\(teamid)"
+        case .sendSMS(_):
+            return ""
+        case .verifyOtp(_):
+            return ""
+        case .initialToken:
+            return ""
+        case .refreshToken:
+            return ""
+            
+            
+            
+            
+            
+//            @POST()
+//            suspend fun sendSms(
+//                @Header("authorization") token: String?,
+//                    @Url url : String? = AUTH_URL,
+//                    @Body payload: JsonObject?,
+//            ): Response<SmsResponse>
+//
+//            @POST()
+//            suspend fun verifyOtp(
+//                    @Header("authorization") token: String?,
+//                    @Url url : String? = AUTH_URL,
+//                    @Body payload: JsonObject?,
+//            ): Response<SmsResponse?>
+//            @FormUrlEncoded
+//            @POST()
+//            suspend fun initialToken(
+//                    @Field("grant_type") grantType: String,
+//                    @Field("client_id") clientId: String,
+//                    @Field("client_secret") clientSecret: String,
+//                    @Url url : String? = REFRESH_TOKEN_URL,
+//            ): Response<RefreshTokenResponse>
+//
+//            @FormUrlEncoded
+//            @POST()
+//            suspend fun refreshToken(
+//                    @Field("grant_type") grantType: String,
+//                    @Field("username") mobileNo: String?,
+//                    @Field("password") deviceId: String?,
+//                    @Field("client_id") clientId: String,
+//                    @Field("client_secret") clientSecret: String,
+//                    @Url url : String? = REFRESH_TOKEN_URL,
+//            ): Response<RefreshTokenResponse>
+            
+            
         }
     }
     
@@ -80,9 +144,9 @@ extension ResourceType: TargetType {
         switch self {
         case .matches,.myTeam,.getMatchAllPlayer,.getLiveScore,.getSelectedTeamList,.getLeaguesForMatch,.getMatchRules,.getMatchScoreCard,.aboutMatch,.getTeamRank,.joinLeague,.getMyJoinedLeaguesDetail,.getMyJoinedLeagues,.getLeagueEntryDetails,.getLeaderBoard,.getTeamPoints:
             return .get
-        case .updateTeam:
+        case .updateTeam,.sendSMS,.verifyOtp,.initialToken,.refreshToken:
             return.post
-        }
+    }
     }
     
     var task: Task {
@@ -92,6 +156,18 @@ extension ResourceType: TargetType {
             
         case let .updateTeam(_,_,teamDetail):
             return .requestJSONEncodable(teamDetail)
+            
+        case let .sendSMS(teamDetail):
+            return .requestJSONEncodable(teamDetail)
+            
+        case let .verifyOtp(teamDetail):
+            return .requestJSONEncodable(teamDetail)
+            
+        case let .initialToken:
+            return .requestPlain
+
+        case let .refreshToken:
+            return .requestPlain
             
         }
     }

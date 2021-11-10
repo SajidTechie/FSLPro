@@ -47,6 +47,8 @@
 		695BC80D26F30A2C00B0B02D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695BC80C26F30A2C00B0B02D /* BaseViewController.swift */; };
 		695BC82926F31D5500B0B02D /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 695BC82826F31D5500B0B02D /* Color.xcassets */; };
 		695BC83126F320AE00B0B02D /* StringConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695BC83026F320AE00B0B02D /* StringConstant.swift */; };
+		69659321273B9EA20033C138 /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69659320273B9EA20033C138 /* AuthPresenter.swift */; };
+		69659323273B9EAE0033C138 /* AuthInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69659322273B9EAE0033C138 /* AuthInteractor.swift */; };
 		696868BE270577F90078753B /* AboutMatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696868BD270577F90078753B /* AboutMatchController.swift */; };
 		696AA5AE272D026D0064DFF7 /* LeaderboardDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696AA5AD272D026D0064DFF7 /* LeaderboardDetailController.swift */; };
 		696AA5B0272D23920064DFF7 /* LeaderboardRankController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696AA5AF272D23920064DFF7 /* LeaderboardRankController.swift */; };
@@ -183,6 +185,8 @@
 		695BC80C26F30A2C00B0B02D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		695BC82826F31D5500B0B02D /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		695BC83026F320AE00B0B02D /* StringConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConstant.swift; sourceTree = "<group>"; };
+		69659320273B9EA20033C138 /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
+		69659322273B9EAE0033C138 /* AuthInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInteractor.swift; sourceTree = "<group>"; };
 		696868BD270577F90078753B /* AboutMatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMatchController.swift; sourceTree = "<group>"; };
 		696AA5AD272D026D0064DFF7 /* LeaderboardDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardDetailController.swift; sourceTree = "<group>"; };
 		696AA5AF272D23920064DFF7 /* LeaderboardRankController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardRankController.swift; sourceTree = "<group>"; };
@@ -381,6 +385,22 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		6965931E273B9CF70033C138 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				69659322273B9EAE0033C138 /* AuthInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		6965931F273B9D1C0033C138 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				69659320273B9EA20033C138 /* AuthPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		696DC77326F84FB200F223AB /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,6 +524,8 @@
 		6971462926F1CD3000166A3A /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				6965931F273B9D1C0033C138 /* Presenter */,
+				6965931E273B9CF70033C138 /* Interactor */,
 				6971462A26F1CD3700166A3A /* Model */,
 				18F37531273A4F6E00048B41 /* Auth.storyboard */,
 				18F37536273A536000048B41 /* LoginController.swift */,
@@ -990,6 +1012,7 @@
 				69736F1226FAF2E5005F616C /* TeamRankData.swift in Sources */,
 				696DC76A26F84F9000F223AB /* ScorecardViewController.swift in Sources */,
 				695BC83126F320AE00B0B02D /* StringConstant.swift in Sources */,
+				69659323273B9EAE0033C138 /* AuthInteractor.swift in Sources */,
 				69736ED826FAE832005F616C /* MyTeamNameData.swift in Sources */,
 				697ECC4D27145F7C007ADE70 /* PreviewPopupController.swift in Sources */,
 				69E19C2D26F44AAC0050CA22 /* RoundEditText.swift in Sources */,
@@ -1068,6 +1091,7 @@
 				69E19C4626F44D750050CA22 /* UpcomingViewCell.swift in Sources */,
 				6970B0B926FC879600197CAA /* MyTeamTabController.swift in Sources */,
 				695BC7D926F3036600B0B02D /* RemoteClient.swift in Sources */,
+				69659321273B9EA20033C138 /* AuthPresenter.swift in Sources */,
 				6949EB4F26FD90A300B6DC1B /* LeagueInteractor.swift in Sources */,
 				18DFE9FB270C247C00BA0467 /* JoinLeagueMsgPopup.swift in Sources */,
 				69736EE526FAEAAB005F616C /* GetRulesData.swift in Sources */,

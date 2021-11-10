@@ -37,13 +37,11 @@ class RemoteClient {
                         os_log("Response: %s", log: Log.networking, type: .info, strJson!)
                         
                         do {
-                           
                             let decoder = JSONDecoder()
                             let object: [K] = try decoder.decode([K].self, from: response.data)
                             successCallBack(.success((strJson == "[]") ? [] : object))
                         }
                         catch {
-                            
                             do{
                                 let decoder = JSONDecoder()
                                 let object: K = try decoder.decode(K.self, from: response.data)
@@ -59,8 +57,6 @@ class RemoteClient {
                                 os_log("Parsing error occured", log: Log.networking, type: .error)
                                errorCallBack(CustomError.ParsingError)
                             }
-                            
-                           
                         }
                         
                         
