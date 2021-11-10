@@ -13,14 +13,14 @@ protocol AuthPresentable: Presentable {
 protocol iAuthPresenter: iPresenter {
     var view: AuthPresentable? {get set}
     
-    func getToken(mid:Int,callFrom:String)
-    var myTeamRank: [TeamRankData] {get set}
+    func getInitialToken(callFrom:String)
+    var initialToken: [InitialToken] {get set}
 
 }
 
 class AuthPresenter: iAuthPresenter {
    
-    var myTeamRank: [TeamRankData] = []
+    var initialToken: [InitialToken] = []
     
     weak var view: AuthPresentable?
     var interactor: iAuthInteractor!
@@ -34,11 +34,11 @@ class AuthPresenter: iAuthPresenter {
     }
     
     
-    func getToken(mid:Int,callFrom:String)  {
+    func getInitialToken(callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.fetchAllAuth(mid: mid,callFrom:callFrom)
+                try interactor.getInitialToken(callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
@@ -59,7 +59,7 @@ class AuthPresenter: iAuthPresenter {
 extension AuthPresenter: AuthInteractable {
   
     func didFinishFetchingData(list: [Any],callFrom:String) {
-        myTeamRank = list as? [TeamRankData] ?? []
+        initialToken = list as? [InitialToken] ?? []
         view?.didLoadData(callFrom: callFrom)
     }
     

@@ -48,6 +48,16 @@ class Constant {
     static let SELECTED_TEAM_PLAYERS = "SELECTED_TEAM_PLAYERS"
     static let JOIN_LEAGUE = "JOIN_LEAGUE"
     static let LIVE_SCORE = "LIVE_SCORE"
+    
+    static let GRANT_TYPE = "password"
+    static let TOKEN_TYPE = "Bearer"
+    static let CLIENT_ID = "FSL.MOBILE.ANDRIOD"
+    static let CLIENT_SECRET = "Z2obv!llTT5(N1H0Mm3mia0vG5<GBR"
+
+    static let INITIAL_GRANT_TYPE = "client_credentials"
+    static let INITIAL_CLIENT_ID = "FSL.MOBILE"
+    static let INITIAL_CLIENT_SECRET = "snPi((jv1f7d#P0PfXxZ5ix60*Toz1"
+
 
 }
 

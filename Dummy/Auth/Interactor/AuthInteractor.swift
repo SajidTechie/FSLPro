@@ -14,7 +14,7 @@ protocol AuthInteractable: AnyObject {
 protocol iAuthInteractor {
     init(presenter: AuthInteractable)
  
-    func fetchAllAuth(mid:Int,callFrom:String)
+    func getInitialToken(callFrom:String)
  
 }
 
@@ -26,9 +26,9 @@ class AuthInteractor: iAuthInteractor {
         self.presenter = presenter
     }
 
-    func fetchAllAuth(mid:Int,callFrom:String) {
+    func getInitialToken(callFrom:String) {
 
-        RemoteClient.request(of: Match.self, target: ResourceType.matches(mid: mid), success: { [weak self] result in
+        RemoteClient.request(of: Match.self, target: ResourceType.initialToken, success: { [weak self] result in
             guard let ws = self else {return}
             switch result {
             case .success(let data):

@@ -45,8 +45,6 @@ struct AuthPayloadObj:Codable{
 
 class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPickerViewDataSource {
     
-    
-    
     @IBOutlet weak var textFieldUserName: UITextField!
     @IBOutlet weak var textFieldMobileNo: UITextField!
     
@@ -58,11 +56,17 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     
     @IBOutlet weak var vwOtpMain: SVPinView!
     
+    private var presenter: iAuthPresenter!
+    private var initialToken: [InitialToken] = []
     
     var authPayloadObj : AuthPayloadObj? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        presenter = AuthPresenter(view: self)
+        presenter.initInteractor()
+        
         
         let cp = CountryPickerView(frame: CGRect(x: 10, y: 0, width: 110, height: 20))
         edtMobileNo.leftView = cp
@@ -80,6 +84,7 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
         edtMobileNo.rightViewMode = .always
         self.otpButton = otpButton
         
+        self.otpButton.addTarget(self, action: #selector(clickedOtp), for: .touchUpInside)
         
         cpvTextField.delegate = self
         cpvTextField.dataSource = self
@@ -91,8 +96,9 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     }
     
     
-    
-    
+    @objc func clickedOtp() {
+        presenter.getInitialToken(callFrom: Constant.INITIAL_TOKEN)
+    }
     
     
     func configurePinView() {
@@ -220,7 +226,25 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
         
         
     }
-    
-    
+   
 }
+
+extension LoginController : AuthPresentable {
+    func willLoadData(callFrom:String) {
+        
+    }
+    
+    func didLoadData(callFrom:String){
+        initialToken = presenter.initialToken
+        print("** ** Init Token Response ** ** - - - ",initialToken)
+        
+      
+        
+    }
+    
+    func didFail(error: CustomError,callFrom:String) {
+        
+    }
+}
+
 
