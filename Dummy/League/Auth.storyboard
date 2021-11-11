@@ -63,10 +63,10 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="409"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iat-ge-KYs">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="293"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="383"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="535-W0-OW0">
-                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="292"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="382"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gQB-hi-1cU" userLabel="ViewLbl">
                                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -172,23 +172,26 @@
                                                                                     <userDefinedRuntimeAttribute type="image" keyPath="icon" value="unchecked_correct"/>
                                                                                     <userDefinedRuntimeAttribute type="image" keyPath="iconSelected" value="checked_correct"/>
                                                                                 </userDefinedRuntimeAttributes>
+                                                                                <connections>
+                                                                                    <action selector="clicked_terms:" destination="a3y-gh-v0s" eventType="touchUpInside" id="4KW-8H-m4M"/>
+                                                                                </connections>
                                                                             </button>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C3G-LV-FZG" userLabel="Terms">
-                                                                                <rect key="frame" x="50" y="0.0" width="364" height="30"/>
+                                                                                <rect key="frame" x="60" y="0.0" width="354" height="30"/>
                                                                                 <attributedString key="attributedText">
                                                                                     <fragment content="I agree to all ">
                                                                                         <attributes>
-                                                                                            <color key="NSColor" name="FontDarkText"/>
-                                                                                            <font key="NSFont" size="12" name="AppleSDGothicNeo-Bold"/>
-                                                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                                            <color key="NSColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                            <font key="NSFont" size="12" name="ArialMT"/>
+                                                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                                         </attributes>
                                                                                     </fragment>
                                                                                     <fragment content="Privacy Policy and Terms &amp; Conditions">
                                                                                         <attributes>
-                                                                                            <color key="NSColor" name="FontDarkText"/>
-                                                                                            <font key="NSFont" size="12" name="AppleSDGothicNeo-Bold"/>
+                                                                                            <color key="NSColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                            <font key="NSFont" size="12" name="ArialMT"/>
                                                                                             <font key="NSOriginalFont" size="14" name="AppleSDGothicNeo-Bold"/>
-                                                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                                             <integer key="NSUnderline" value="1"/>
                                                                                         </attributes>
                                                                                     </fragment>
@@ -203,18 +206,17 @@
                                                                             <constraint firstAttribute="height" constant="30" id="EZi-qS-PH0"/>
                                                                             <constraint firstAttribute="trailing" secondItem="C3G-LV-FZG" secondAttribute="trailing" id="MSO-G3-UlD"/>
                                                                             <constraint firstItem="35v-15-wYu" firstAttribute="leading" secondItem="FO3-TX-QZh" secondAttribute="leading" constant="10" id="WMZ-Ak-6h8"/>
-                                                                            <constraint firstItem="C3G-LV-FZG" firstAttribute="leading" secondItem="35v-15-wYu" secondAttribute="trailing" constant="10" id="fcZ-75-Gml"/>
+                                                                            <constraint firstItem="C3G-LV-FZG" firstAttribute="leading" secondItem="35v-15-wYu" secondAttribute="trailing" constant="20" id="fcZ-75-Gml"/>
                                                                             <constraint firstAttribute="bottom" secondItem="C3G-LV-FZG" secondAttribute="bottom" id="kep-3X-OMZ"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sbr-bH-oIC" userLabel="ViewOTP">
-                                                                        <rect key="frame" x="0.0" y="232" width="414" height="60"/>
+                                                                        <rect key="frame" x="0.0" y="232" width="414" height="150"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please type the verification code sent to" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raA-Jv-evM">
                                                                                 <rect key="frame" x="10" y="10" width="394" height="20"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="20" id="6Ll-2x-pjq"/>
-                                                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="Cft-Ic-QMF"/>
                                                                                 </constraints>
                                                                                 <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="14"/>
                                                                                 <color key="textColor" name="black"/>
@@ -247,15 +249,17 @@
                                                                         </subviews>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
+                                                                            <constraint firstItem="iCc-jf-hzK" firstAttribute="top" secondItem="EKa-tJ-DLT" secondAttribute="bottom" constant="20" id="3UF-du-isz"/>
                                                                             <constraint firstAttribute="trailing" secondItem="raA-Jv-evM" secondAttribute="trailing" constant="10" id="4F6-ec-pFk"/>
                                                                             <constraint firstItem="EKa-tJ-DLT" firstAttribute="top" secondItem="raA-Jv-evM" secondAttribute="bottom" constant="10" id="GgT-2F-Nxc"/>
                                                                             <constraint firstItem="iCc-jf-hzK" firstAttribute="centerX" secondItem="sbr-bH-oIC" secondAttribute="centerX" constant="1" id="Lwt-n9-GSU"/>
                                                                             <constraint firstItem="EKa-tJ-DLT" firstAttribute="leading" secondItem="sbr-bH-oIC" secondAttribute="leading" constant="10" id="NMQ-va-UE2"/>
                                                                             <constraint firstAttribute="trailing" secondItem="EKa-tJ-DLT" secondAttribute="trailing" constant="10" id="PSv-4F-aPV"/>
                                                                             <constraint firstItem="raA-Jv-evM" firstAttribute="top" secondItem="sbr-bH-oIC" secondAttribute="top" constant="10" id="VJU-Sr-bCN"/>
-                                                                            <constraint firstAttribute="height" constant="60" id="chW-H5-uMA"/>
+                                                                            <constraint firstAttribute="height" constant="150" id="chW-H5-uMA"/>
                                                                             <constraint firstItem="iCc-jf-hzK" firstAttribute="top" secondItem="EKa-tJ-DLT" secondAttribute="bottom" constant="20" id="nCY-tA-UFa"/>
                                                                             <constraint firstItem="raA-Jv-evM" firstAttribute="leading" secondItem="sbr-bH-oIC" secondAttribute="leading" constant="10" id="orD-Bg-aTf"/>
+                                                                            <constraint firstItem="raA-Jv-evM" firstAttribute="top" secondItem="sbr-bH-oIC" secondAttribute="top" constant="10" id="qOP-8a-rcp"/>
                                                                         </constraints>
                                                                     </view>
                                                                 </subviews>
@@ -316,9 +320,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnTermsNCondition" destination="35v-15-wYu" id="4vC-lb-Sio"/>
                         <outlet property="edtMobileNo" destination="LHa-z2-mTJ" id="22u-1M-tfS"/>
                         <outlet property="textFieldMobileNo" destination="LHa-z2-mTJ" id="xFe-N3-zho"/>
                         <outlet property="textFieldUserName" destination="Sly-uD-Wjn" id="VhH-e8-4OX"/>
+                        <outlet property="vwOTP" destination="sbr-bH-oIC" id="ADh-T4-CO4"/>
                         <outlet property="vwOtpMain" destination="EKa-tJ-DLT" id="35f-mw-iwx"/>
                         <outlet property="vwSelectCountry" destination="LHa-z2-mTJ" id="wzh-Cm-jlA"/>
                     </connections>
@@ -333,9 +339,6 @@
         <image name="fsl_logo" width="190.5" height="190.5"/>
         <image name="login_background" width="640" height="960"/>
         <image name="unchecked_correct" width="25" height="25"/>
-        <namedColor name="FontDarkText">
-            <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="black">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

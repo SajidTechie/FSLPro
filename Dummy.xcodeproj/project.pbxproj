@@ -50,6 +50,7 @@
 		69659321273B9EA20033C138 /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69659320273B9EA20033C138 /* AuthPresenter.swift */; };
 		69659323273B9EAE0033C138 /* AuthInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69659322273B9EAE0033C138 /* AuthInteractor.swift */; };
 		69659325273BC5C90033C138 /* InitialToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69659324273BC5C90033C138 /* InitialToken.swift */; };
+		69659327273BD8280033C138 /* SendSms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69659326273BD8280033C138 /* SendSms.swift */; };
 		696868BE270577F90078753B /* AboutMatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696868BD270577F90078753B /* AboutMatchController.swift */; };
 		696AA5AE272D026D0064DFF7 /* LeaderboardDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696AA5AD272D026D0064DFF7 /* LeaderboardDetailController.swift */; };
 		696AA5B0272D23920064DFF7 /* LeaderboardRankController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696AA5AF272D23920064DFF7 /* LeaderboardRankController.swift */; };
@@ -189,6 +190,7 @@
 		69659320273B9EA20033C138 /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 		69659322273B9EAE0033C138 /* AuthInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInteractor.swift; sourceTree = "<group>"; };
 		69659324273BC5C90033C138 /* InitialToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialToken.swift; sourceTree = "<group>"; };
+		69659326273BD8280033C138 /* SendSms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSms.swift; sourceTree = "<group>"; };
 		696868BD270577F90078753B /* AboutMatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMatchController.swift; sourceTree = "<group>"; };
 		696AA5AD272D026D0064DFF7 /* LeaderboardDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardDetailController.swift; sourceTree = "<group>"; };
 		696AA5AF272D23920064DFF7 /* LeaderboardRankController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardRankController.swift; sourceTree = "<group>"; };
@@ -539,6 +541,7 @@
 			isa = PBXGroup;
 			children = (
 				69659324273BC5C90033C138 /* InitialToken.swift */,
+				69659326273BD8280033C138 /* SendSms.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1066,6 +1069,7 @@
 				6970B0BE26FC87A600197CAA /* LeagueController.swift in Sources */,
 				69E19CDC26F4C4D80050CA22 /* NetworkManager.swift in Sources */,
 				69E19C3226F44AAC0050CA22 /* CustomImageView.swift in Sources */,
+				69659327273BD8280033C138 /* SendSms.swift in Sources */,
 				69E19C8526F469530050CA22 /* LeagueCell.swift in Sources */,
 				695BC7DA26F3036600B0B02D /* MatchesInteractor.swift in Sources */,
 				69E19C8F26F469900050CA22 /* MyLeaguesTabController.swift in Sources */,

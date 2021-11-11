@@ -22,9 +22,8 @@ struct AuthPayloadObj:Codable{
     var it: Bool
     var r: Bool
     var eot: String
-    
     var s: String
-    var t: Int
+    var t: Int? = 0
     
     init(un:String,dm:String,os:String,cc:String,em:String,l:String,it:Bool,r:Bool,eot:String,s:String,t:Int?)
     {
@@ -40,6 +39,20 @@ struct AuthPayloadObj:Codable{
         self.s = s
         self.t = t ?? 0
     }
+    
+//    init(un:String,dm:String,os:String,cc:String,em:String,l:String,it:Bool,r:Bool,eot:String,s:String)
+//    {
+//        self.un = un
+//        self.dm = dm
+//        self.os = os
+//        self.cc = cc
+//        self.em = em
+//        self.l = l
+//        self.it = it
+//        self.r = r
+//        self.eot = eot
+//        self.s = s
+//    }
 }
 
 
@@ -50,6 +63,10 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     
     @IBOutlet weak var vwSelectCountry: UIView!
     @IBOutlet weak var edtMobileNo: UITextField!
+    
+    @IBOutlet weak var btnTermsNCondition: UIButton!
+    @IBOutlet weak var vwOTP: UIView!
+    
     weak var cpvTextField: CountryPickerView!
     
     weak var otpButton: UIButton!
@@ -61,19 +78,34 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     
     var authPayloadObj : AuthPayloadObj? = nil
     
+    var initAccessToken = ""
+    var otpCount = 0
+    var countryCode = ""
+    var countryPhoneCode = ""
+    var langCode = ""
+    var deviceDetail = ""
+    var enteredOtp = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         presenter = AuthPresenter(view: self)
         presenter.initInteractor()
         
+        btnTermsNCondition.isSelected = true
+        vwOTP.isHidden = true
         
         let cp = CountryPickerView(frame: CGRect(x: 10, y: 0, width: 110, height: 20))
         edtMobileNo.leftView = cp
-    
+        
         edtMobileNo.leftViewMode = .always
         self.cpvTextField = cp
         
+         countryCode = self.cpvTextField.selectedCountry.code
+         countryPhoneCode = self.cpvTextField.selectedCountry.phoneCode
+         langCode = "EN"
+         deviceDetail = "\(UIDevice().type.rawValue) (\(Utility.getDeviceId() ?? ""))"
+       
         
         let otpButton = UIButton(frame: CGRect(x: 0, y: 0, width: 110, height: 25))
         otpButton.setTitle("OTP", for: .normal)
@@ -97,7 +129,14 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     
     
     @objc func clickedOtp() {
-        presenter.getInitialToken(callFrom: Constant.INITIAL_TOKEN)
+        if(Utility.isValidPhone(phoneStr: edtMobileNo.text ?? "")){
+            Utility.showMessage(title: "Invalid", msg: "Please enter mobile number")
+        }else if(btnTermsNCondition.isSelected){
+            presenter.getInitialToken(callFrom: Constant.INITIAL_TOKEN)
+        }else{
+            Utility.showMessage(title: "Invalid", msg: "Please check terms and conditions box to proceed")
+        }
+        
     }
     
     
@@ -142,6 +181,7 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
         vwOtpMain.didFinishCallback = didFinishEnteringPin(pin:)
         vwOtpMain.didChangeCallback = { pin in
             print("The entered pin is \(pin)")
+            self.enteredOtp = pin
         }
     }
     
@@ -220,13 +260,23 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     func generatePayload(isOtpResend: Bool, retryCount: Int?) {
         
         
-        authPayloadObj = AuthPayloadObj(un: textFieldUserName.text ?? "", dm: "device model", os: "OS VER", cc: "Country Code", em: textFieldMobileNo.text ?? "", l: "lang code", it: true, r: isOtpResend, eot: "OTP", s: "Country Code", t: retryCount)// Retry count
+        authPayloadObj = AuthPayloadObj(un: textFieldUserName.text ?? "", dm: deviceDetail, os: Utility.getOSVersion() ?? "", cc: countryPhoneCode, em: textFieldMobileNo.text ?? "", l: "EN", it: true, r: isOtpResend, eot: "", s: countryCode, t: otpCount)// Retry count
         
         print("Auth obj - - - - ",authPayloadObj)
-        
-        
+    
     }
+    
+    
+    @IBAction func clicked_terms(_ sender: UIButton) {
+        if(!btnTermsNCondition.isSelected)
+        {
+            btnTermsNCondition.isSelected = true
+            btnTermsNCondition.isSelected = false
+        }
+    }
+    
    
+    
 }
 
 extension LoginController : AuthPresentable {
@@ -235,10 +285,24 @@ extension LoginController : AuthPresentable {
     }
     
     func didLoadData(callFrom:String){
-        initialToken = presenter.initialToken
-        print("** ** Init Token Response ** ** - - - ",initialToken)
+        if(callFrom == Constant.INITIAL_TOKEN){
+            initialToken = presenter.initialToken
+            print("** ** Init Token Response ** ** - - - ",initialToken)
+            
+            if(initialToken.count > 0){
+                initAccessToken = initialToken[0].accessToken ?? ""
+                generatePayload(isOtpResend: false, retryCount: otpCount)
+                
+                if(authPayloadObj != nil){
+                    presenter.sendSMS(payload: authPayloadObj!, token: initAccessToken, callFrom: Constant.SEND_SMS)
+                }
+                
+            }
+        }
         
-      
+        if(callFrom == Constant.SEND_SMS){
+            vwOTP.isHidden = false
+        }
         
     }
     

@@ -27,22 +27,22 @@ enum ResourceType {
     case getTeamRank(mid: Int)
     case getLeaderBoard(mid: Int,lid: Int)
     case getTeamPoints(mid: Int,teamid: Int)
-    case sendSMS(teamDetail:[playerDetailObj])
-    case verifyOtp(teamDetail:[playerDetailObj])
+    case sendSMS(payload:AuthPayloadObj,token:String)
+    case verifyOtp(payload:AuthPayloadObj)
     case initialToken
-    case refreshToken
+    case refreshToken(phone:String,device:String)
     
 }
 
 
 extension ResourceType: TargetType {
-    
+  
     var baseURL: URL {
         
         switch self {
-        case .sendSMS(let loginObj):
+        case .sendSMS(_):
             return URL(string:Constant.AUTH_URL)!
-        case .verifyOtp(let loginObj):
+        case .verifyOtp(_):
             return URL(string:Constant.AUTH_URL)!
         case .initialToken:
             return URL(string:Constant.REFRESH_TOKEN_URL)!
@@ -52,7 +52,7 @@ extension ResourceType: TargetType {
             return URL(string:Constant.BASE_URL)!
         }
     }
-    
+   
     var path: String {
         switch self {
         case .matches(let mid):
@@ -102,38 +102,38 @@ extension ResourceType: TargetType {
             
             
             
-            //            @POST()
-            //            suspend fun sendSms(
-            //                @Header("authorization") token: String?,
-            //                    @Url url : String? = AUTH_URL,
-            //                    @Body payload: JsonObject?,
-            //            ): Response<SmsResponse>
-            //
-            //            @POST()
-            //            suspend fun verifyOtp(
-            //                    @Header("authorization") token: String?,
-            //                    @Url url : String? = AUTH_URL,
-            //                    @Body payload: JsonObject?,
-            //            ): Response<SmsResponse?>
-            //            @FormUrlEncoded
-            //            @POST()
-            //            suspend fun initialToken(
-            //                    @Field("grant_type") grantType: String,
-            //                    @Field("client_id") clientId: String,
-            //                    @Field("client_secret") clientSecret: String,
-            //                    @Url url : String? = REFRESH_TOKEN_URL,
-            //            ): Response<RefreshTokenResponse>
-            //
-            //            @FormUrlEncoded
-            //            @POST()
-            //            suspend fun refreshToken(
-            //                    @Field("grant_type") grantType: String,
-            //                    @Field("username") mobileNo: String?,
-            //                    @Field("password") deviceId: String?,
-            //                    @Field("client_id") clientId: String,
-            //                    @Field("client_secret") clientSecret: String,
-            //                    @Url url : String? = REFRESH_TOKEN_URL,
-            //            ): Response<RefreshTokenResponse>
+//            @POST()
+//            suspend fun sendSms(
+//                @Header("authorization") token: String?,
+//                    @Url url : String? = AUTH_URL,
+//                    @Body payload: JsonObject?,
+//            ): Response<SmsResponse>
+//
+//            @POST()
+//            suspend fun verifyOtp(
+//                    @Header("authorization") token: String?,
+//                    @Url url : String? = AUTH_URL,
+//                    @Body payload: JsonObject?,
+//            ): Response<SmsResponse?>
+//            @FormUrlEncoded
+//            @POST()
+//            suspend fun initialToken(
+//                    @Field("grant_type") grantType: String,
+//                    @Field("client_id") clientId: String,
+//                    @Field("client_secret") clientSecret: String,
+//                    @Url url : String? = REFRESH_TOKEN_URL,
+//            ): Response<RefreshTokenResponse>
+//
+//            @FormUrlEncoded
+//            @POST()
+//            suspend fun refreshToken(
+//                    @Field("grant_type") grantType: String,
+//                    @Field("username") mobileNo: String?,
+//                    @Field("password") deviceId: String?,
+//                    @Field("client_id") clientId: String,
+//                    @Field("client_secret") clientSecret: String,
+//                    @Url url : String? = REFRESH_TOKEN_URL,
+//            ): Response<RefreshTokenResponse>
             
             
         }
@@ -146,33 +146,33 @@ extension ResourceType: TargetType {
             return .get
         case .updateTeam,.sendSMS,.verifyOtp,.initialToken,.refreshToken:
             return.post
-        }
+    }
     }
     
     var task: Task {
         switch self {
-        case .matches,.myTeam,.getMatchAllPlayer,.getLiveScore,.getSelectedTeamList,.getLeaguesForMatch,.getMatchRules,.getMatchScoreCard,.aboutMatch,.getTeamRank,.joinLeague,.getMyJoinedLeaguesDetail,.getMyJoinedLeagues,.getLeagueEntryDetails,.getLeaderBoard,.getTeamPoints,.initialToken:
+        case .matches,.myTeam,.getMatchAllPlayer,.getLiveScore,.getSelectedTeamList,.getLeaguesForMatch,.getMatchRules,.getMatchScoreCard,.aboutMatch,.getTeamRank,.joinLeague,.getMyJoinedLeaguesDetail,.getMyJoinedLeagues,.getLeagueEntryDetails,.getLeaderBoard,.getTeamPoints:
             return .requestPlain
             
         case let .updateTeam(_,_,teamDetail):
             return .requestJSONEncodable(teamDetail)
             
-        case let .sendSMS(teamDetail):
-            return .requestJSONEncodable(teamDetail)
+        case let .sendSMS(payload,_):
+            return .requestJSONEncodable(payload)
             
         case let .verifyOtp(teamDetail):
             return .requestJSONEncodable(teamDetail)
             
-            //        case .initialToken:
-            //            return .requestParameters(parameters: ["grant_type": Constant.INITIAL_GRANT_TYPE, "client_id": Constant.INITIAL_CLIENT_ID,"client_secret": Constant.INITIAL_CLIENT_SECRET], encoding: JSONEncoding.default)
+        case .initialToken:
+            return .requestParameters(parameters: ["grant_type": Constant.INITIAL_GRANT_TYPE, "client_id": Constant.INITIAL_CLIENT_ID,"client_secret": Constant.INITIAL_CLIENT_SECRET], encoding: URLEncoding.httpBody)
+
+        case let .refreshToken(phone,device):
+            return .requestParameters(parameters: ["grant_type": Constant.INITIAL_GRANT_TYPE,"username": phone,"password": device, "client_id": Constant.INITIAL_CLIENT_ID,"client_secret": Constant.INITIAL_CLIENT_SECRET], encoding: URLEncoding.httpBody)
             
-        case .refreshToken:
-            return .requestParameters(parameters: ["grant_type": Constant.INITIAL_GRANT_TYPE, "client_id": Constant.INITIAL_CLIENT_ID,"client_secret": Constant.INITIAL_CLIENT_SECRET], encoding: JSONEncoding.default)
-            
-            //        case let .updateUser(_, firstName, lastName):  // Always sends parameters in URL, regardless of which HTTP method is used
-            //                    return .requestParameters(parameters: ["first_name": firstName, "last_name": lastName], encoding: URLEncoding.queryString)
-            //                case let .createUser(firstName, lastName): // Always send parameters as JSON in request body
-            //                    return .requestParameters(parameters: ["first_name": firstName, "last_name": lastName], encoding: JSONEncoding.default)
+//        case let .updateUser(_, firstName, lastName):  // Always sends parameters in URL, regardless of which HTTP method is used
+//                    return .requestParameters(parameters: ["first_name": firstName, "last_name": lastName], encoding: URLEncoding.queryString)
+//                case let .createUser(firstName, lastName): // Always send parameters as JSON in request body
+//                    return .requestParameters(parameters: ["first_name": firstName, "last_name": lastName], encoding: JSONEncoding.default)
             
             
         }
@@ -181,9 +181,9 @@ extension ResourceType: TargetType {
     
     var headers: [String : String]? {
         switch self {
-        case .sendSMS(let loginObj):
-            return ["Authorization":"Bearer \(Constant.AUTH_TOKEN)"]
-        case .verifyOtp(let loginObj):
+        case let .sendSMS(_,token):
+            return ["Authorization":"Bearer \(token)"]
+        case .verifyOtp(_):
             return ["Authorization":"Bearer \(Constant.AUTH_TOKEN)"]
         case .initialToken:
             return ["Content-Type": "application/x-www-form-urlencoded"]
@@ -193,15 +193,9 @@ extension ResourceType: TargetType {
             return ["Authorization":"Bearer \(Constant.AUTH_TOKEN)"]
         }
     }
-    
+ 
     var sampleData: Data {
-        switch self {
-        case .initialToken:
-            return "{\"grant_type\": \(Constant.INITIAL_GRANT_TYPE), \"client_id\": \(Constant.INITIAL_CLIENT_ID), \"client_secret\": \(Constant.INITIAL_CLIENT_SECRET)}".utf8
-            
-        default:
-            return Data()
-        }
-    }
-    
+        return Data()
+      }
+   
 }
