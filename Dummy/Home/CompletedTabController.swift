@@ -6,14 +6,23 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class CompletedTabController: UIViewController {
+class CompletedTabController: UIViewController,IndicatorInfoProvider  {
     @IBOutlet weak var tableView : UITableView!
     private var presenter: iMatchesPresenter!
     private var matchesList: [Match] = []
     private var myTeamRank: [TeamRankData] = []
     
     var mid = Int()
+    var itemInfo: IndicatorInfo = "COMPLETED"
+    var pagerStrip = PagerTabStripViewController()
+
+    // MARK: - XLPagerTabStrip
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        pagerStrip = pagerTabStripController
+        return itemInfo
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,11 +66,13 @@ extension CompletedTabController : MatchesPresentable {
                 vcLeague.mid = mid
                 vcLeague.myTeamRank = myTeamRank
                 self.navigationController!.pushViewController(vcLeague, animated: true)
+             //   self.present(vcLeague, animated: true)
             }else{
                 let storyBoard: UIStoryboard = UIStoryboard(name: "Scorecard", bundle: nil)
                 let vcLeague = storyBoard.instantiateViewController(withIdentifier: "CompletedMatchDetailController") as! CompletedMatchDetailController
                 vcLeague.mid = mid
                 self.navigationController!.pushViewController(vcLeague, animated: true)
+              //  self.present(vcLeague, animated: true)
             }
             
             print("** ** myTeamRank data ** ** - - - ",myTeamRank)
@@ -91,8 +102,8 @@ extension CompletedTabController : UITableViewDataSource,UITableViewDelegate {
         cell.lblLeague.text = matchesList[indexPath.row].season
         cell.lblMatch.text = matchesList[indexPath.row].groupName
         
-        cell.imvTeamALogo.sd_setImage(with: URL(string: Constant.WEBSITE_URL + (matchesList[indexPath.row].teamALogo ?? "")), placeholderImage: UIImage(named: Constant.NO_IMAGE_ICON))
-        cell.imvTeamBLogo.sd_setImage(with: URL(string: Constant.WEBSITE_URL + (matchesList[indexPath.row].teamBLogo ?? "")), placeholderImage: UIImage(named: Constant.NO_IMAGE_ICON))
+        cell.imvTeamALogo.sd_setImage(with: URL(string: Constant.WEBSITE_URL + (matchesList[indexPath.row].teamALogo ?? "")), placeholderImage: UIImage(named: Constant.NO_IMAGE_HOME_ICON))
+        cell.imvTeamBLogo.sd_setImage(with: URL(string: Constant.WEBSITE_URL + (matchesList[indexPath.row].teamBLogo ?? "")), placeholderImage: UIImage(named: Constant.NO_IMAGE_AWAY_ICON))
         
         if(matchesList[indexPath.row].teamAScore?.contains(",") == true){
             let teamA = matchesList[indexPath.row].teamAScore?.split(separator: ",")

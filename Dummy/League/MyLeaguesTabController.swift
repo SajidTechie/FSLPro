@@ -6,8 +6,8 @@
 //
 //AKSHAY SHETTY
 import UIKit
-
-class MyLeaguesTabController: UIViewController {
+import XLPagerTabStrip
+class MyLeaguesTabController: UIViewController,IndicatorInfoProvider {
     @IBOutlet weak var tableView : UITableView!
     private var presenter: iLeaguePresenter!
     private var myJoinedLeagues: [MyJoinedLeagueData] = []
@@ -16,6 +16,15 @@ class MyLeaguesTabController: UIViewController {
     private var myJoinedLeagueDetailMain: [LeagueDetailData] = []
     public var mid = Int()
     public var lid = Int()
+    var pagerStrip = PagerTabStripViewController()
+    var itemInfo: IndicatorInfo = "MY LEAGUES"
+    
+    // MARK: - XLPagerTabStrip
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        pagerStrip = pagerTabStripController
+        return itemInfo
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,12 +108,12 @@ extension MyLeaguesTabController : UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeagueCell", for: indexPath) as! LeagueCell
         
-        cell.lblEntryFees.text = String(myJoinedLeagueDetailMain[indexPath.row].lEntryFees ?? 0.0)
-        cell.lblLeagueName.text = myJoinedLeagueDetailMain[indexPath.row].lName
-        cell.lblWinningAmnt.text = String(myJoinedLeagueDetailMain[indexPath.row].winningAmt ?? 0.0)
+        cell.btnEntryFees.setTitle(String(myJoinedLeagueDetailMain[indexPath.row].LEntryFees ?? 0.0), for: .normal)
+        cell.lblLeagueName.text = myJoinedLeagueDetailMain[indexPath.row].LName
+        cell.lblWinningAmnt.text = String(myJoinedLeagueDetailMain[indexPath.row].WinningAmt ?? 0.0)
         
-        let entriesSize = myJoinedLeagueDetailMain[indexPath.row].lMaxSize ?? 0
-        let entriesJoined = myJoinedLeagueDetailMain[indexPath.row].lCurSize ?? 0
+        let entriesSize = myJoinedLeagueDetailMain[indexPath.row].LMaxSize ?? 0
+        let entriesJoined = myJoinedLeagueDetailMain[indexPath.row].LCurSize ?? 0
         let entriesLeft = entriesSize - entriesJoined
         
         cell.lblEntriesLeft.text = "\(entriesLeft)/\(entriesSize) LEFT"
@@ -113,7 +122,7 @@ extension MyLeaguesTabController : UITableViewDataSource,UITableViewDelegate {
             cell.vwProgress.setProgress(Float(Float(entriesJoined)/Float(entriesSize)), animated: true)
         }
         
-        if (myJoinedLeagueDetailMain[indexPath.row].isElastic ?? false) {
+        if (myJoinedLeagueDetailMain[indexPath.row].IsElastic ?? false) {
             cell.vwJoin.backgroundColor = UIColor.red
         }else{
             cell.vwJoin.backgroundColor = UIColor.blue
@@ -130,7 +139,7 @@ extension MyLeaguesTabController : UITableViewDataSource,UITableViewDelegate {
         let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
         let vcLeagueEntry = storyBoard.instantiateViewController(withIdentifier: "LeagueEntryDetailController") as! LeagueEntryDetailController
         vcLeagueEntry.mid = mid
-        vcLeagueEntry.lid = myJoinedLeagueDetailMain[indexPath.row].lgId ?? -1
+        vcLeagueEntry.lid = myJoinedLeagueDetailMain[indexPath.row].LgId ?? -1
         self.present(vcLeagueEntry, animated: true)
     }
     

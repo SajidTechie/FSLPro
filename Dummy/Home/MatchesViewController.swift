@@ -15,10 +15,6 @@ class MatchesViewController: UIViewController {
     
     override func loadView() {
         
-        let newView = UIView()
-        newView.backgroundColor = UIColor.white
-        
-        view = newView
     }
     
     override func viewDidLoad() {
@@ -48,9 +44,6 @@ extension MatchesViewController: ViewPagerDataSource {
     
     func viewControllerAtPosition(position:Int) -> UIViewController {
 
-        
-        
-        
         var vc = UIViewController()
         
         let homeSB: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)

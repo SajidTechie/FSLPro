@@ -144,6 +144,16 @@
             return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
         }
         
+        class func currencyFormat(amount: Double) -> String{
+                let numberFormatter = NumberFormatter()
+                numberFormatter.groupingSeparator = ","
+                numberFormatter.groupingSize = 3
+                numberFormatter.usesGroupingSeparator = true
+                numberFormatter.numberStyle = .none
+                numberFormatter.maximumFractionDigits = 0
+                return numberFormatter.string(from: amount as NSNumber)!
+            }
+        
         
         // - - - -  - - - - - function to get current date  - -  - - - - - - --
         class func currDate() -> String
@@ -327,6 +337,12 @@
           }
         }
         
+        
+        static func getToken() -> String {
+            let token =  UserDefaults.standard.value(forKey: "Token") as? String ?? ""
+            return token
+        }
+        
 
        
         
@@ -350,7 +366,7 @@
                return button
            }
         
-        
+      
         class func getTopMostViewController() -> UIViewController? {
             var topMostViewController = UIApplication.shared.keyWindow?.rootViewController
 

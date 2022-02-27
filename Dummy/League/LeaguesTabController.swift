@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class LeaguesTabController: UIViewController {
+class LeaguesTabController: UIViewController,IndicatorInfoProvider {
     @IBOutlet weak var tableView : UITableView!
     private var presenter: iLeaguePresenter!
     private var leagueForMatch: [LeagueDetailData] = []
@@ -16,6 +17,15 @@ class LeaguesTabController: UIViewController {
     public var mid = Int()
     public var tid = Int()
     public var lid = Int()
+    var pagerStrip = PagerTabStripViewController()
+    var itemInfo: IndicatorInfo = "LEAGUES"
+    
+    // MARK: - XLPagerTabStrip
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        pagerStrip = pagerTabStripController
+        return itemInfo
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,33 +104,119 @@ extension LeaguesTabController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       /* txtWinningAmt.text = currencyFormat(data?.WinningAmt?.toString() ?: "0")
+                  txtLeagueName.text = data?.LName
+
+                  when (data?.ltype) {
+                      GlobalConstant.NORMAL_LEAGUE_TYPE -> {
+                          bindLeagueCards(viewBinding)
+                      }
+
+                      GlobalConstant.SPONSOR_LEAGUE_TYPE -> {
+                          beautifyForSponsorLeagues(viewBinding)
+                      }
+                      else -> {
+                          bindLeagueCards(viewBinding)
+                      }
+                  }
+
+                  if (data?.j == 0) {
+                      btnEntryFees.text = currencyFormat(data.LEntryFees?.toString() ?: "0")
+                      btnEntryFees.setTextSize(
+                              TypedValue.COMPLEX_UNIT_PX,
+                              context.resources.getDimension(R.dimen.dp_22))
+
+                  } else {
+
+                      btnEntryFees.text = context.resources.getString(R.string.str_joined)
+                      btnEntryFees.setTextSize(
+                              TypedValue.COMPLEX_UNIT_PX,
+                              context.resources.getDimension(R.dimen.dp_18))
+                  }
+
+
+                  val entriesSize: Int = data?.LMaxSize ?: 0
+                  val entriesJoined = data?.LCurSize ?: 0
+                  val entriesLeft = entriesSize.minus(entriesJoined)
+
+                  txtEntriesLeft.text = "$entriesLeft/$entriesSize"
+
+
+      //            slider.valueFrom = 0f
+                  if (entriesSize > 0) {
+                      slider.max = entriesSize
+                  }
+                  slider.progress = entriesJoined
+*/
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LeagueCell", for: indexPath) as! LeagueCell
-        cell.lblEntryFees.text = String(leagueForMatch[indexPath.row].lEntryFees ?? 0.0)
-        cell.lblLeagueName.text = leagueForMatch[indexPath.row].lName
-        cell.lblWinningAmnt.text = String(leagueForMatch[indexPath.row].winningAmt ?? 0.0)
+        let type = leagueForMatch[indexPath.row].ltype ?? 1
+     
+        switch type
+        {
+        case Constant.NORMAL_LEAGUE_TYPE:
+            let normalCell = tableView.dequeueReusableCell(withIdentifier: "LeagueCell", for: indexPath) as! LeagueCell
+            normalCell.btnEntryFees.setTitle(Utility.currencyFormat(amount: leagueForMatch[indexPath.row].LEntryFees ?? 0.0), for: .normal)
+            normalCell.lblLeagueName.text = leagueForMatch[indexPath.row].LName
+            normalCell.lblWinningAmnt.text = Utility.currencyFormat(amount: leagueForMatch[indexPath.row].WinningAmt ?? 0.0)
+            
+            let entriesSize = leagueForMatch[indexPath.row].LMaxSize ?? 0
+            let entriesJoined = leagueForMatch[indexPath.row].LCurSize ?? 0
+            let entriesLeft = entriesSize - entriesJoined
+            
+            normalCell.lblEntriesLeft.text = "\(entriesLeft)/\(entriesSize)"
+            
+            if (entriesSize > 0) {
+                normalCell.vwProgress.setProgress(Float(entriesJoined/entriesSize), animated: true)
+            }
+            
+            normalCell.delegate = self
+            return normalCell
+            break
         
-        let entriesSize = leagueForMatch[indexPath.row].lMaxSize ?? 0
-        let entriesJoined = leagueForMatch[indexPath.row].lCurSize ?? 0
-        let entriesLeft = entriesSize - entriesJoined
-        
-        cell.lblEntriesLeft.text = "\(entriesLeft)/\(entriesSize) LEFT"
-        
-        if (entriesSize > 0) {
-            cell.vwProgress.setProgress(Float(entriesJoined/entriesSize), animated: true)
+        case Constant.UNLIMITED_LEAGUE_TYPE:
+            let unlimitedCell = tableView.dequeueReusableCell(withIdentifier: "UnlimitedLeagueCell", for: indexPath) as! UnlimitedLeagueCell
+            unlimitedCell.btnEntryFees.setTitle(Utility.currencyFormat(amount:leagueForMatch[indexPath.row].LEntryFees ?? 0.0), for: .normal)
+            unlimitedCell.lblLeagueName.text = leagueForMatch[indexPath.row].LName
+            unlimitedCell.lblWinningAmnt.text = Utility.currencyFormat(amount:leagueForMatch[indexPath.row].WinningAmt ?? 0.0)
+            
+            let entriesSize = leagueForMatch[indexPath.row].LMaxSize ?? 0
+            let entriesJoined = leagueForMatch[indexPath.row].LCurSize ?? 0
+            let entriesLeft = entriesSize - entriesJoined
+            
+            unlimitedCell.lblEntriesLeft.text = "\(entriesLeft)/\(entriesSize)"
+            
+            if (entriesSize > 0) {
+                unlimitedCell.vwProgress.setProgress(Float(entriesJoined/entriesSize), animated: true)
+            }
+            
+            unlimitedCell.delegate = self
+            return unlimitedCell
+            break
+                               
+        case Constant.SPONSOR_LEAGUE_TYPE:
+            let sponsorCell = tableView.dequeueReusableCell(withIdentifier: "SpecialLeagueCell", for: indexPath) as! SpecialLeagueCell
+            sponsorCell.btnEntryFees.setTitle(Utility.currencyFormat(amount:leagueForMatch[indexPath.row].LEntryFees ?? 0.0), for: .normal)
+            sponsorCell.lblLeagueName.text = leagueForMatch[indexPath.row].LName
+             
+            let entriesSize = leagueForMatch[indexPath.row].LMaxSize ?? 0
+            let entriesJoined = leagueForMatch[indexPath.row].LCurSize ?? 0
+            let entriesLeft = entriesSize - entriesJoined
+            
+            sponsorCell.lblEntriesLeft.text = "\(entriesLeft)/\(entriesSize)"
+           
+            sponsorCell.delegate = self
+            return sponsorCell
+            break
+            
+        default:
+            return UITableViewCell()
+            break
         }
-        
-        if (leagueForMatch[indexPath.row].isElastic ?? false) {
-            cell.vwJoin.backgroundColor = UIColor.red
-        }else{
-            cell.vwJoin.backgroundColor = UIColor.blue
-        }
-        cell.delegate = self
-        return cell
+       
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 130
+        return UITableView.automaticDimension
     }
     
     
@@ -133,7 +229,7 @@ extension LeaguesTabController : UITableViewDelegate{
     }
 }
 extension LeaguesTabController : LeaguesDelegate {
-    func showInfo(cell: LeagueCell) {
+    func showInfo(cell: UITableViewCell) {
         let indexPath = self.tableView.indexPath(for: cell)
         let position = indexPath?.row ?? -1
         
@@ -146,11 +242,11 @@ extension LeaguesTabController : LeaguesDelegate {
         
     }
     
-    func joinLeague(cell: LeagueCell) {
+    func joinLeague(cell: UITableViewCell) {
         let indexPath = self.tableView.indexPath(for: cell)
         let position = indexPath?.row ?? -1
         if(position != -1){
-            lid  = leagueForMatch[position].lgId ?? -1
+            lid  = leagueForMatch[position].LgId ?? -1
             presenter.getMyTeam(mid: mid, callFrom: Constant.MY_TEAM)//154
         }
         

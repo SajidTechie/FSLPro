@@ -8,12 +8,12 @@
 import UIKit
 
 protocol LeaguesDelegate: AnyObject {
-    func joinLeague(cell: LeagueCell)
-    func showInfo(cell: LeagueCell)
+    func joinLeague(cell: UITableViewCell)
+    func showInfo(cell: UITableViewCell)
 }
 
 class LeagueCell: UITableViewCell {
-    @IBOutlet weak var lblEntryFees : UILabel!
+    @IBOutlet weak var btnEntryFees : UIButton!
     @IBOutlet weak var lblWinningAmnt : UILabel!
     @IBOutlet weak var lblEntriesLeft : UILabel!
     @IBOutlet weak var lblLeagueName : UILabel!

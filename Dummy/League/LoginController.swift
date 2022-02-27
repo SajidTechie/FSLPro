@@ -23,9 +23,9 @@ struct AuthPayloadObj:Codable{
     var r: Bool
     var eot: String
     var s: String
-    var t: Int? = 0
+   var t: Int = -1
     
-    init(un:String,dm:String,os:String,cc:String,em:String,l:String,it:Bool,r:Bool,eot:String,s:String,t:Int?)
+    init(un:String,dm:String,os:String,cc:String,em:String,l:String,it:Bool,r:Bool,eot:String,s:String,t:Int) //,?
     {
         self.un = un
         self.dm = dm
@@ -37,22 +37,22 @@ struct AuthPayloadObj:Codable{
         self.r = r
         self.eot = eot
         self.s = s
-        self.t = t ?? 0
+        self.t = t
     }
     
-//    init(un:String,dm:String,os:String,cc:String,em:String,l:String,it:Bool,r:Bool,eot:String,s:String)
-//    {
-//        self.un = un
-//        self.dm = dm
-//        self.os = os
-//        self.cc = cc
-//        self.em = em
-//        self.l = l
-//        self.it = it
-//        self.r = r
-//        self.eot = eot
-//        self.s = s
-//    }
+    //    init(un:String,dm:String,os:String,cc:String,em:String,l:String,it:Bool,r:Bool,eot:String,s:String)
+    //    {
+    //        self.un = un
+    //        self.dm = dm
+    //        self.os = os
+    //        self.cc = cc
+    //        self.em = em
+    //        self.l = l
+    //        self.it = it
+    //        self.r = r
+    //        self.eot = eot
+    //        self.s = s
+    //    }
 }
 
 
@@ -62,7 +62,10 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     @IBOutlet weak var textFieldMobileNo: UITextField!
     
     @IBOutlet weak var vwSelectCountry: UIView!
+    @IBOutlet weak var vwUserInput: UIView!
     @IBOutlet weak var edtMobileNo: UITextField!
+    
+    @IBOutlet weak var lblTimer: UILabel!
     
     @IBOutlet weak var btnTermsNCondition: UIButton!
     @IBOutlet weak var vwOTP: UIView!
@@ -75,6 +78,8 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     
     private var presenter: iAuthPresenter!
     private var initialToken: [InitialToken] = []
+    private var smsData: [SmsData] = []
+    private var refreshToken: [InitialToken] = []
     
     var authPayloadObj : AuthPayloadObj? = nil
     
@@ -86,6 +91,10 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     var deviceDetail = ""
     var enteredOtp = ""
     
+    var countdownTimer: Timer!
+    var totalTime = 10
+    var countDownStopped = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -94,6 +103,7 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
         
         btnTermsNCondition.isSelected = true
         vwOTP.isHidden = true
+        vwUserInput.isHidden = false
         
         let cp = CountryPickerView(frame: CGRect(x: 10, y: 0, width: 110, height: 20))
         edtMobileNo.leftView = cp
@@ -101,11 +111,11 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
         edtMobileNo.leftViewMode = .always
         self.cpvTextField = cp
         
-         countryCode = self.cpvTextField.selectedCountry.code
-         countryPhoneCode = self.cpvTextField.selectedCountry.phoneCode
-         langCode = "EN"
-         deviceDetail = "\(UIDevice().type.rawValue) (\(Utility.getDeviceId() ?? ""))"
-       
+        countryCode = self.cpvTextField.selectedCountry.code
+        countryPhoneCode = self.cpvTextField.selectedCountry.phoneCode
+        langCode = "EN"
+        deviceDetail = "\(UIDevice().type.rawValue) (\(Utility.getDeviceId() ?? ""))"
+        
         
         let otpButton = UIButton(frame: CGRect(x: 0, y: 0, width: 110, height: 25))
         otpButton.setTitle("OTP", for: .normal)
@@ -124,12 +134,72 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCountryAction(sender:)))
         cpvTextField.addGestureRecognizer(tapGesture)
         
+        let resendOtp = UITapGestureRecognizer(target: self, action: #selector(self.tapResendOtp))
+        lblTimer.addGestureRecognizer(resendOtp)
+        
         self.configurePinView()
     }
     
     
+    
+    @objc func tapResendOtp(sender:UITapGestureRecognizer) {
+        print("tap working",countDownStopped)
+        
+        if countDownStopped
+        {
+            lblTimer.text = "05:00"
+            totalTime = 300
+            startTimer()
+            
+            generatePayload(isOtpResend: true, retryCount: -1)
+            
+            if(authPayloadObj != nil){
+                presenter.sendSMS(payload: authPayloadObj!, token: initAccessToken, callFrom: Constant.SEND_SMS)
+            }
+        }
+    }
+    
+    func startTimer() {
+        lblTimer.textColor = UIColor.black
+        countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+        countDownStopped = false
+    }
+    
+    @objc func updateTime() {
+
+        lblTimer.text = "\(timeFormatted(totalTime))"
+        
+        if totalTime != 0 {
+            totalTime -= 1
+        } else {
+            endTimer()
+        }
+    }
+    
+    func endTimer() {
+        countdownTimer.invalidate()
+        lblTimer.text = "Resend OTP"
+        countDownStopped = true
+        if #available(iOS 11.0, *) {
+            lblTimer.textColor = UIColor.init(named: "ColorRed")
+        } else {
+           lblTimer.textColor = UIColor.red
+        }
+    }
+    
+    
+    
+    func timeFormatted(_ totalSeconds: Int) -> String {
+        let seconds: Int = totalSeconds % 60
+        let minutes: Int = (totalSeconds / 60) % 60
+        //     let hours: Int = totalSeconds / 3600
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
+    
+    
+    
     @objc func clickedOtp() {
-        if(Utility.isValidPhone(phoneStr: edtMobileNo.text ?? "")){
+        if(!Utility.isValidPhone(phoneStr: edtMobileNo.text ?? "")){
             Utility.showMessage(title: "Invalid", msg: "Please enter mobile number")
         }else if(btnTermsNCondition.isSelected){
             presenter.getInitialToken(callFrom: Constant.INITIAL_TOKEN)
@@ -232,22 +302,23 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     }
     
     func didFinishEnteringPin(pin:String) {
-        //    self.mpin = pin
-        //   showAlert(title: "Success", message: "The Pin entered is \(pin)")
+        self.enteredOtp = pin
+        
         if (Utility.isConnectedToNetwork()) {
-            //    self.apiCheckMpin()
+            
         }else{
             var alert = UIAlertView(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                exit(0)
-            }
+            //            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            //                exit(0)
+            //            }
         }
     }
     
     func countryPickerView(_ countryPickerView: CountryPickerView, didSelectCountry country: Country) {
-        
+        countryCode = country.code
+        countryPhoneCode = country.phoneCode
     }
     
     //  @objc func clicked_compare(sender: UIButton){
@@ -260,10 +331,10 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     func generatePayload(isOtpResend: Bool, retryCount: Int?) {
         
         
-        authPayloadObj = AuthPayloadObj(un: textFieldUserName.text ?? "", dm: deviceDetail, os: Utility.getOSVersion() ?? "", cc: countryPhoneCode, em: textFieldMobileNo.text ?? "", l: "EN", it: true, r: isOtpResend, eot: "", s: countryCode, t: otpCount)// Retry count
+        authPayloadObj = AuthPayloadObj(un: textFieldUserName.text ?? "", dm: deviceDetail, os: Utility.getOSVersion() ?? "", cc: countryPhoneCode, em: textFieldMobileNo.text ?? "", l: "EN", it: true, r: isOtpResend, eot: enteredOtp, s: countryCode, t: otpCount)// Retry count //
         
         print("Auth obj - - - - ",authPayloadObj)
-    
+        
     }
     
     
@@ -271,11 +342,26 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
         if(!btnTermsNCondition.isSelected)
         {
             btnTermsNCondition.isSelected = true
+        }else{
             btnTermsNCondition.isSelected = false
         }
     }
     
-   
+    
+    @IBAction func validate_otp(_ sender: UIButton) {
+        if(enteredOtp.count == 6) {
+            generatePayload(isOtpResend: false, retryCount: otpCount)
+            
+            if(authPayloadObj != nil){
+                presenter.verifyOtp(payload: authPayloadObj!, initialToken: initAccessToken, callFrom: Constant.VERIFY_OTP)
+            }
+        }else{
+            Utility.showMessage(title: "Invalid", msg: "Enter OTP")
+        }
+        
+    }
+    
+    
     
 }
 
@@ -291,7 +377,8 @@ extension LoginController : AuthPresentable {
             
             if(initialToken.count > 0){
                 initAccessToken = initialToken[0].accessToken ?? ""
-                generatePayload(isOtpResend: false, retryCount: otpCount)
+                
+                generatePayload(isOtpResend: false, retryCount: -1)
                 
                 if(authPayloadObj != nil){
                     presenter.sendSMS(payload: authPayloadObj!, token: initAccessToken, callFrom: Constant.SEND_SMS)
@@ -301,7 +388,61 @@ extension LoginController : AuthPresentable {
         }
         
         if(callFrom == Constant.SEND_SMS){
-            vwOTP.isHidden = false
+            
+            smsData = presenter.sendSMS
+            
+            let errorMsg = smsData[0].error ?? ""
+            otpCount = smsData[0].t ?? 0
+            
+            if (errorMsg.isEmpty) {
+                
+                if (otpCount > 0) {
+                     startTimer()
+                    vwUserInput.isHidden = true
+                    vwOTP.isHidden = false
+                    //                               binding.txtMaskedMobileNo.text = "${resources.getString(R.string.verification_code_subtext)} ${binding.ccp.selectedCountryCodeWithPlus}${getLoginMobileNo().replace("[^0-9]".toRegex(), "").replace(MASK_MOBILE_NO_REGEX.toRegex(), "*")}"
+                    //
+                    //                               binding.otpView.requestFocus()
+                } else {
+                    Utility.showMessage(title: "Failed", msg: "SMS delivery failed..please try again later...")
+                }
+            } else if (errorMsg.lowercased().elementsEqual(Constant.USER_ALREADY_EXISTS)) {
+                
+                presenter.refreshToken(phoneNo: edtMobileNo.text ?? "", deviceId: deviceDetail, callFrom: Constant.TOKEN_REFRESH)
+                
+            } else {
+                Utility.showMessage(title: "Error", msg: errorMsg)
+            }
+            
+        }
+        
+        
+        if(callFrom == Constant.VERIFY_OTP){
+            
+            presenter.refreshToken(phoneNo: edtMobileNo.text ?? "", deviceId: deviceDetail, callFrom: Constant.TOKEN_REFRESH)
+        }
+        
+        
+        if(callFrom == Constant.TOKEN_REFRESH){
+            refreshToken = presenter.refreshToken
+            var token = refreshToken[0].accessToken ?? ""
+            var time = refreshToken[0].expiresIn ?? 0 // - - - -  incase if we need to call this in splash
+            var mobileNo = edtMobileNo.text ?? ""
+            
+            UserDefaults.standard.set(token, forKey: "Token")
+            UserDefaults.standard.set(mobileNo, forKey: "MobileNumber")
+            
+            
+         
+            weak var pvc = self.presentingViewController
+            self.dismiss(animated: false, completion: {
+                let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
+                let vcDashboard = storyBoard.instantiateViewController(withIdentifier: "DashboardViewController") as! DashboardViewController
+                
+                let navVc = UINavigationController(rootViewController: vcDashboard)
+                pvc?.present(navVc, animated: false, completion: nil)
+            })
+      
         }
         
     }

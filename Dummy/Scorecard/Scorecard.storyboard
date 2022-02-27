@@ -1567,7 +1567,7 @@
         <!--Live Score Main Controller-->
         <scene sceneID="CEK-Hv-cWC">
             <objects>
-                <viewController storyboardIdentifier="LiveScoreMainController" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FoH-jl-thk" customClass="LiveScoreMainController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LiveScoreMainController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FoH-jl-thk" customClass="LiveScoreMainController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="llj-Va-efV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1615,7 +1615,7 @@
         <!--Completed Match Detail Controller-->
         <scene sceneID="JHP-Hn-xuL">
             <objects>
-                <viewController storyboardIdentifier="CompletedMatchDetailController" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GeB-zm-wph" customClass="CompletedMatchDetailController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CompletedMatchDetailController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GeB-zm-wph" customClass="CompletedMatchDetailController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tjh-vt-G2a">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1671,7 +1671,7 @@
         <!--Leaderboard Rank Controller-->
         <scene sceneID="9lG-3O-W9l">
             <objects>
-                <viewController storyboardIdentifier="LeaderboardRankController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FZm-3S-LLG" customClass="LeaderboardRankController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LeaderboardRankController" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FZm-3S-LLG" customClass="LeaderboardRankController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="psC-OB-3qv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

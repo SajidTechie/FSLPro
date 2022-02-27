@@ -9,22 +9,34 @@ import Foundation
 class Constant {
 
     
+    static let UAT_BASE_URL = "http://data.fslpro.in/" //match/111/league
+    static let UAT_AUTH_URL = "http://data.fslpro.in/register"
+    static let UAT_REFRESH_TOKEN_URL = "http://security.fslpro.in/connect/token"
+    static let UAT_WEBSITE_URL = "http://fslpro.in"
+    static let POINTS_WEB_URL = "https://fslpro.com/home/points"
+    static let TERMS_WEB_URL = "https://fslpro.com/home/terms"
+    static let HOW_TO_PLAY_WEB_URL = "https://fslpro.com/home/how"
+    
     static let AUTH_URL = "https://data.fslpro.com/register"
     static let REFRESH_TOKEN_URL = "https://security.fslpro.com/connect/token"
     
-    static let AUTH_TOKEN = "6FADF6215DF05CF8533D67274CDE6F7D81D7EA05BD0672A35980D4410088C129"
+   // static let AUTH_TOKEN = "6FADF6215DF05CF8533D67274CDE6F7D81D7EA05BD0672A35980D4410088C129"
     static let TYPE_NO_DATA = 10000
   //  static let BASE_URL = "https://fslpro.com/api"
     static let BASE_URL = "https://data.fslpro.com"
     static let SUCCESS_CODE = "200"
     static let NO_DATA_CODE = "2002"
     static let WEBSITE_URL = "https://fslpro.com"
-    static let NO_IMAGE_ICON = "flag_default_1.png"
-    static let NO_IMAGE_HOME_ICON = "flag_default_1.png"
-    static let NO_IMAGE_AWAY_ICON = "flag_default_2.png"
+    static let NO_IMAGE_ICON = "flagHome.png"
+    static let NO_IMAGE_HOME_ICON = "flagHome.png"
+    static let NO_IMAGE_AWAY_ICON = "flagAway.png"
     // ------- ---------------- -------------------------- --------------------------------
     static let LIVE_REFRESH_RATE = 20000 //20 secs
     static let TICK_TOCK_INTERVAL = 1000
+    
+    static let NORMAL_LEAGUE_TYPE = 1
+    static let UNLIMITED_LEAGUE_TYPE = 10
+    static let SPONSOR_LEAGUE_TYPE = 100
     
     
     static let MY_TEAM = "MY_TEAM"
@@ -58,6 +70,6 @@ class Constant {
     static let INITIAL_CLIENT_ID = "FSL.MOBILE"
     static let INITIAL_CLIENT_SECRET = "snPi((jv1f7d#P0PfXxZ5ix60*Toz1"
 
-
+    static let USER_ALREADY_EXISTS = "duplicate phone"
 }
 

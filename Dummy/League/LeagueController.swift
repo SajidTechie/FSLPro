@@ -6,145 +6,52 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class LeagueController: UIViewController {
+class LeagueController: PagerStripController {
     
     //ViewPagerControllerDelegate
-  
+    @IBOutlet weak var header : Header!
     var mid = Int()
-    
-    let tabs = [
-        ViewPagerTab(title: "LEAGUES", image: UIImage(named: "")),
-        ViewPagerTab(title: "MY TEAM", image: UIImage(named: "")),
-        ViewPagerTab(title: "MY LEAGUES", image: UIImage(named: ""))
-    ]
-    var options: ViewPagerOptionsNew?
-    var pager:ViewPager?
-    
-    override func loadView() {
-        
-        let newView = UIView()
-        newView.backgroundColor = UIColor.white
-        
-        view = newView
-    }
-    
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let options = ViewPagerOptionsNew()
-        options.tabType = .basic
-        options.distribution = .segmented
-        options.isTabHighlightAvailable = true
-        options.tabViewHeight = 30
-        options.tabViewPaddingLeft = 20
-        options.tabViewPaddingRight = 20
-        options.tabIndicatorViewBackgroundColor = .white
-        options.tabViewTextDefaultColor = UIColor.init(named: "unselectedTabBlue") ?? UIColor.blue
-        options.tabViewTextHighlightColor = .white
-        options.tabViewTextFont = UIFont(name:"UbuntuMedium",size:14) ?? UIFont.systemFont(ofSize: 14, weight: .medium)
-     
-        
-        
-        //guard let options = self.options else { return }
-        
-        pager = ViewPager(viewController: self)
-        pager?.setOptions(options: options)
-        pager?.setDataSource(dataSource: self)
-        pager?.setDelegate(delegate: self)
-        pager?.build()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(leagueUpdate(_:)), name: NSNotification.Name("LEAGUE_TAB"), object: nil)
-        
-//        let controller = LeagueViewPagerController()
-//        controller.options = options
-//        controller.tabs = tabs
-//        self.navigationController?.pushViewController(controller, animated: true)
-        
+
+        header.delegate = self
     }
+    
 
     @objc func leagueUpdate(_ notification:Notification){
-        if(pager != nil){
-            pager?.displayViewController(atIndex: 1)
-        }
-    }
-
-}
-
-
-extension LeagueController: ViewPagerDataSource {
-    
-    func numberOfPages() -> Int {
-        return tabs.count
+        moveToViewController(at: 1)
     }
     
-    // Provide ViewController for each page
-    func viewControllerAtPosition(position:Int) -> UIViewController {
-        var vc = UIViewController()
-        
+    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
+        let storyBoardTeam: UIStoryboard = UIStoryboard(name: "Team", bundle: nil)
+        let leaguesTab = storyBoard.instantiateViewController(withIdentifier: "LeaguesTabController") as! LeaguesTabController
+        leaguesTab.mid = mid
+        let myTeam = storyBoardTeam.instantiateViewController(withIdentifier: "MyTeamTabController") as! MyTeamTabController
+        myTeam.mid = mid
+        let myLeagues = storyBoard.instantiateViewController(withIdentifier: "MyLeaguesTabController") as! MyLeaguesTabController
+        myLeagues.mid = mid
         
-        if position == 0
-        {
-            
-            vc = storyBoard.instantiateViewController(withIdentifier: "LeaguesTabController") as! LeaguesTabController
-            let vcLeague = vc as! LeaguesTabController
-            vcLeague.mid = mid
-        }
-        else if position == 1
-        {
-            let teamStoryBoard: UIStoryboard = UIStoryboard(name: "Team", bundle: nil)
-            vc = teamStoryBoard.instantiateViewController(withIdentifier: "MyTeamTabController") as! MyTeamTabController
-            let vcMyTeam = vc as! MyTeamTabController
-            vcMyTeam.mid = mid
-        }
-        else if position == 2
-        {
-            vc = storyBoard.instantiateViewController(withIdentifier: "MyLeaguesTabController") as! MyLeaguesTabController
-            let vcMyLeague = vc as! MyLeaguesTabController
-           vcMyLeague.mid = mid
-        }
-        
-        return vc
-    }
-    
-    func tabsForPages() -> [ViewPagerTab] {
-        return tabs
-    }
-    
-    func startViewPagerAtIndex() -> Int {
-        return 0
-    }
-}
+        let childViewControllers = [leaguesTab, myTeam, myLeagues]
+        let count = childViewControllers.count
 
-extension LeagueController: ViewPagerDelegate {
-    
-    func willMoveToControllerAtIndex(index:Int) {
-        print("Moving to page \(index)")
+        
+        return Array(childViewControllers.prefix(Int(count)))
         
     }
-    
-    
-    
-    func didMoveToControllerAtIndex(index: Int) {
-        print("Moved to page \(index)")
-        
-        
-        if(pager?.tabsViewList.count ?? 0 > 0){
-            for i in 0..<pager!.tabsViewList.count {
-                if(index == i){
-                    pager!.tabsViewList[i].adjustFontSize(fontSize: 14.0)
-                }else{
-                    pager!.tabsViewList[i].adjustFontSize(fontSize: 12.0)
-                }
-          
-            }
-        }
-    }
+
 }
 
 
-
-
-
+extension LeagueController:HandleHeaderBack{
+    func onBackClick() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+}

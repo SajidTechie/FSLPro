@@ -212,6 +212,42 @@ public class NoDataView : UIView {
             lblNoData.text = ""
         }
     }
-    
+
 }
 
+
+// - - - -  For header - - - -
+public class HeaderView : UIView {
+
+    @IBOutlet weak var vwHeader: UIView!
+    @IBOutlet weak var imvBack: UIImageView!
+
+    
+    override init (frame : CGRect) {
+        super.init(frame : frame)
+    }
+    
+    convenience init (from:String) {
+        self.init(frame:CGRect.zero)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        let _ = loadHeaderViewFromNib()
+        
+    }
+    
+    
+    func loadHeaderViewFromNib() -> UIView {
+        
+        let bundle = Bundle.init(for: type(of: self))
+        let nib = UINib(nibName: "HeaderView", bundle: bundle)
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
+        view.frame = bounds
+        view.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth,UIView.AutoresizingMask.flexibleHeight]
+        addSubview(view)
+        
+        return view
+        
+    }
+}

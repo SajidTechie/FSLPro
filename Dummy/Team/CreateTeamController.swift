@@ -279,13 +279,13 @@ class CreateTeamController: UIViewController, Presentable, TeamSelectionDelegate
     @IBAction func clickPreview(_ sender: UIButton) {
        print("preview clicked")
         
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Team", bundle: nil)
-        let vcPreview = storyBoard.instantiateViewController(withIdentifier: "PreviewPopupController") as! PreviewPopupController
-        var selectedPlayerList =  allTeamList.filter { it in
-            (it.selected ?? false)
-        }
-        vcPreview.selectedPlayerList = selectedPlayerList
-        self.present(vcPreview, animated: true)
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "Team", bundle: nil)
+//        let vcPreview = storyBoard.instantiateViewController(withIdentifier: "PreviewPopupController") as! PreviewPopupController
+//        var selectedPlayerList =  allTeamList.filter { it in
+//            (it.selected ?? false)
+//        }
+//        vcPreview.selectedPlayerList = selectedPlayerList
+      //  self.present(vcPreview, animated: true)
         
     }
     

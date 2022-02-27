@@ -57,7 +57,7 @@ extension LeagueInfoViewPopup : UITableViewDataSource,UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeagueInfoCell", for: indexPath) as! LeagueInfoCell
 
         cell.lblRank.text = leagueInfoArray?[indexPath.row].o ?? "-"
-        cell.lblPrice.text = String(leagueInfoArray?[indexPath.row].prz ?? 0)
+        cell.lblPrice.text = String(leagueInfoArray?[indexPath.row].coin ?? 0)
         
         if (indexPath.row % 2 == 0) {
             cell.vwMain.backgroundColor = UIColor.lightGray

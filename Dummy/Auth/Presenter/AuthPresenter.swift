@@ -16,13 +16,13 @@ protocol iAuthPresenter: iPresenter {
     func getInitialToken(callFrom:String)
     var initialToken: [InitialToken] {get set}
     
-    func refreshToken(callFrom:String)
+    func refreshToken(phoneNo:String,deviceId:String,callFrom:String)
     var refreshToken: [InitialToken] {get set}
     
     func sendSMS(payload: AuthPayloadObj,token:String,callFrom:String)
     var sendSMS: [SmsData] {get set}
     
-    func verifyOtp(payload: AuthPayloadObj,callFrom:String)
+    func verifyOtp(payload: AuthPayloadObj,initialToken:String,callFrom:String)
     var verifyOtp: [SmsData] {get set}
 
 }
@@ -66,11 +66,11 @@ class AuthPresenter: iAuthPresenter {
     }
  
     
-    func refreshToken(callFrom:String)  {
+    func refreshToken(phoneNo:String,deviceId:String,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.refreshToken(callFrom:callFrom)
+                try interactor.refreshToken(phoneNo:phoneNo,deviceId:deviceId,callFrom:callFrom)
             }
             catch
                 CustomError.DatabaseError {
@@ -105,11 +105,11 @@ class AuthPresenter: iAuthPresenter {
     
  
     
-    func verifyOtp(payload: AuthPayloadObj,callFrom:String)  {
+    func verifyOtp(payload: AuthPayloadObj,initialToken:String,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
         if (Reachability.isConnectedToNetwork()) {
             do {
-                try interactor.verifyOtp(payload: payload,callFrom: callFrom)
+                try interactor.verifyOtp(payload: payload,initialToken:initialToken,callFrom: callFrom)
             }
             catch
                 CustomError.DatabaseError {

@@ -46,9 +46,7 @@ class RemoteClient {
                                 let decoder = JSONDecoder()
                                 let object: K = try decoder.decode(K.self, from: response.data)
                                 convertToArray.append(object)
-                               
                                 print("RESPONSE ** ** \(convertToArray)")
-                               
                                 successCallBack(.success((strJson == "{}") ? [] : convertToArray))
                                 
                             } catch let jsonError{

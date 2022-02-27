@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="o3g-7g-c8R">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="o3g-7g-c8R">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,16 +27,32 @@
         <!--View Controller-->
         <scene sceneID="QKs-Ko-jKm">
             <objects>
-                <viewController id="mjh-RG-AuZ" customClass="ViewController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="VaE-d5-VDp">
+                <viewController modalPresentationStyle="fullScreen" id="mjh-RG-AuZ" customClass="ViewController" customModule="Dummy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VaE-d5-VDp" customClass="ThreeShadeGradientView" customModule="Dummy" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fsl_login" translatesAutoresizingMaskIntoConstraints="NO" id="OPb-d6-E6Q">
+                                <rect key="frame" x="143" y="384" width="130" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="IoE-nS-YnF"/>
+                                    <constraint firstAttribute="width" constant="130" id="YOY-zT-5zK"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="hAO-NY-cXj"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="OPb-d6-E6Q" firstAttribute="centerX" secondItem="VaE-d5-VDp" secondAttribute="centerX" constant="1" id="7JR-Lr-4Er"/>
+                            <constraint firstItem="OPb-d6-E6Q" firstAttribute="centerY" secondItem="VaE-d5-VDp" secondAttribute="centerY" constant="1" id="gYr-Wz-Dy5"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="diagonalMode" value="NO"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" id="d1b-0R-Syf"/>
                     <connections>
                         <segue destination="q0g-Fk-PCK" kind="show" id="OMc-EF-Lzz"/>
+                        <segue destination="6gn-dK-Tv6" kind="showDetail" id="g3f-Qj-cO1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HdE-ef-Ykh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -51,12 +67,20 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hFw-GR-tre" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="858" y="190"/>
+            <point key="canvasLocation" x="842" y="101"/>
+        </scene>
+        <!--Auth-->
+        <scene sceneID="wFb-NL-kY0">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Auth" id="6gn-dK-Tv6" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="4oN-Ht-NXA"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pzd-8m-lzn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="847" y="240"/>
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="fsl_login" width="96" height="96"/>
     </resources>
 </document>

@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class LiveTabController: UIViewController {
+class LiveTabController: UIViewController,IndicatorInfoProvider   {
     
     @IBOutlet weak var tableView : UITableView!
     
@@ -19,7 +20,14 @@ class LiveTabController: UIViewController {
     var timer: Timer?
     
     var callLiveMatch = false
-    
+    var itemInfo: IndicatorInfo = "LIVE"
+    var pagerStrip = PagerTabStripViewController()
+
+    // MARK: - XLPagerTabStrip
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        pagerStrip = pagerTabStripController
+        return itemInfo
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         

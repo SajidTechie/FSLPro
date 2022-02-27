@@ -16,6 +16,7 @@ target 'Dummy' do
    pod 'Tabman', '~> 2.11'
    pod 'XLPagerTabStrip', '~> 9.0'
    pod 'CountryPickerView'
+   pod 'XLPagerTabStrip', '~> 9.0'
    pod 'SVPinView', '~> 1.0'
    
   target 'DummyTests' do

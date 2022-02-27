@@ -6,8 +6,8 @@
 //
 
 import UIKit
-
-class MyTeamTabController: UIViewController {
+import XLPagerTabStrip
+class MyTeamTabController: UIViewController,IndicatorInfoProvider {
     
     @IBOutlet weak var btnEdit: UIButton!
     @IBOutlet weak var btnPreview: UIButton!
@@ -22,7 +22,16 @@ class MyTeamTabController: UIViewController {
     
     public var mid = Int()
     public var tid = -1
-  
+    var pagerStrip = PagerTabStripViewController()
+    var itemInfo: IndicatorInfo = "MY TEAM"
+    
+    // MARK: - XLPagerTabStrip
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        pagerStrip = pagerTabStripController
+        return itemInfo
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,18 +62,21 @@ class MyTeamTabController: UIViewController {
         let vcCreateTeam = storyBoard.instantiateViewController(withIdentifier: "CreateTeamController") as! CreateTeamController
         vcCreateTeam.mid = mid
         vcCreateTeam.tid = tid
-        self.navigationController!.pushViewController(vcCreateTeam, animated: true)
+       // self.present(vcCreateTeam, animated: true)
+       self.navigationController!.pushViewController(vcCreateTeam, animated: true)
     }
     
     @IBAction func editTeam(_ sender: UIButton) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Team", bundle: nil)
         let vcCreateTeam = storyBoard.instantiateViewController(withIdentifier: "CreateTeamController") as! CreateTeamController
+     //   self.present(vcCreateTeam, animated: true)
         self.navigationController!.pushViewController(vcCreateTeam, animated: true)
     }
     
     @IBAction func previewTeam(_ sender: UIButton) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Team", bundle: nil)
         let vcCreateTeam = storyBoard.instantiateViewController(withIdentifier: "CreateTeamController") as! CreateTeamController
+       // self.present(vcCreateTeam, animated: true)
         self.navigationController!.pushViewController(vcCreateTeam, animated: true)
     }
     

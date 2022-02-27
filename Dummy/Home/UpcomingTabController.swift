@@ -7,8 +7,9 @@
 
 import UIKit
 import SDWebImage
+import XLPagerTabStrip
 
-class UpcomingTabController: UIViewController  {
+class UpcomingTabController: UIViewController,IndicatorInfoProvider  {
     
     @IBOutlet weak var tableView : UITableView!
     private var presenter: iMatchesPresenter!
@@ -20,7 +21,14 @@ class UpcomingTabController: UIViewController  {
     var currentDate = Date()
     var matchDate = Date()
     let calendar = Calendar.current
-    
+    var itemInfo: IndicatorInfo = "UPCOMING"
+    var pagerStrip = PagerTabStripViewController()
+
+    // MARK: - XLPagerTabStrip
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        pagerStrip = pagerTabStripController
+        return itemInfo
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -129,15 +137,30 @@ extension UpcomingTabController : UITableViewDataSource,UITableViewDelegate {
         let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
         let vcLeague = storyBoard.instantiateViewController(withIdentifier: "LeagueController") as! LeagueController
         vcLeague.mid = self.matchesList[indexPath.row].mID ?? 0
-        
+
         if(cell?.countdownTimer != nil){
             cell?.countdownTimer?.invalidate()
             cell?.countdownTimer = nil
         }
-        
+      //  self.present(vcLeague, animated: true, completion: nil)
         self.navigationController!.pushViewController(vcLeague, animated: true)
         
-        // self.navigationController!.pushViewController(vcLeague, animated: true)
+        
+//        weak var pvc = self.presentingViewController
+//        self.dismiss(animated: false, completion: {
+//            let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
+//            let vcLeague = storyBoard.instantiateViewController(withIdentifier: "LeagueController") as! LeagueController
+//            vcLeague.mid = self.matchesList[indexPath.row].mID ?? 0
+//
+//            if(cell?.countdownTimer != nil){
+//                cell?.countdownTimer?.invalidate()
+//                cell?.countdownTimer = nil
+//            }
+//
+//            let navVc = UINavigationController(rootViewController: vcLeague)
+//            pvc?.present(navVc, animated: false, completion: nil)
+//        })
+      
     }
     
 }
