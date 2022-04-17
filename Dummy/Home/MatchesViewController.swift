@@ -9,9 +9,9 @@ import UIKit
 
 class MatchesViewController: UIViewController {
 
-    var tabs = [ViewPagerTab]()
-    var options: ViewPagerOptionsNew?
-    var pager:ViewPager?
+//    var tabs = [ViewPagerTab]()
+//    var options: ViewPagerOptionsNew?
+//    var pager:ViewPager?
     
     override func loadView() {
         
@@ -20,22 +20,22 @@ class MatchesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let options = self.options else { return }
-        
-        pager = ViewPager(viewController: self)
-        pager?.setOptions(options: options)
-        pager?.setDataSource(dataSource: self)
-        pager?.setDelegate(delegate: self)
-        pager?.build()
+//        guard let options = self.options else { return }
+//
+//        pager = ViewPager(viewController: self)
+//        pager?.setOptions(options: options)
+//        pager?.setDataSource(dataSource: self)
+//        pager?.setDelegate(delegate: self)
+//        pager?.build()
         
     }
     
     
-    deinit {
-        print("Memory Deallocation")
+    deinit{
+        NotificationCenter.default.removeObserver(self)
     }
 }
-
+/*
 extension MatchesViewController: ViewPagerDataSource {
     
     func numberOfPages() -> Int {
@@ -103,4 +103,4 @@ extension MatchesViewController: ViewPagerDelegate {
         }
     }
 }
-
+*/

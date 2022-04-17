@@ -70,6 +70,53 @@
             }
         }
         
+        /*fun convertUtc2Local(utcTime: String?,outputFormat: String): String? {
+         var time = ""
+         if (utcTime != null) {
+             val utcFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+             utcFormatter.timeZone = TimeZone.getTimeZone("UTC")
+             var gpsUTCDate: Date? = null
+             try {
+                 gpsUTCDate = utcFormatter.parse(utcTime)
+             } catch (e: ParseException) {
+                 e.printStackTrace()
+             }
+             val localFormatter = SimpleDateFormat(outputFormat, Locale.getDefault())
+             localFormatter.timeZone = TimeZone.getDefault()
+
+             gpsUTCDate?.let {  time = localFormatter.format(gpsUTCDate.time) }
+
+         }
+         return time
+     }
+*/
+        
+       class func UTCToLocal(utcTime:String, outputFormat: String) -> String {
+           
+           let dateFormatter = DateFormatter()
+               dateFormatter.dateFormat = "YYYY-MM-DDThh:mm:ssTZD" //Input Format
+                dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+               let UTCDate = dateFormatter.date(from: utcTime)
+               dateFormatter.dateFormat = outputFormat // Output Format
+               dateFormatter.timeZone = TimeZone.current
+               let UTCToCurrentFormat = dateFormatter.string(from: UTCDate!)
+               return UTCToCurrentFormat
+           //1997-07-16T19:20:30+01:00
+           //2022-03-21T05:00:00+00:00
+//              let dateFormatter = DateFormatter()
+//         //  "2022-03-21T05:00:00+00:00"
+//              dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssTZD"
+//              dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+//
+//              let UTCDate = dateFormatter.date(from: utcTime)
+//              dateFormatter.dateFormat = outputFormat
+//              dateFormatter.timeZone = TimeZone.current
+//              let UTCToCurrentFormat = dateFormatter.string(from: UTCDate!)
+//
+//              return UTCToCurrentFormat
+        }
+        
+        
         // - - - - - -  function to format date - - - - - -  - -
         class func formattedDateFromString(dateString: String, withFormat format: String) -> String? {
             
@@ -134,8 +181,9 @@
             }
             return false
         }
-        
-        
+//
+//    android:startColor="#96F84E"
+//          android:endColor="#BCFF6E"
         
         func timeFormatted(_ totalSeconds: Int) -> String {
             let seconds: Int = totalSeconds % 60
@@ -313,17 +361,17 @@
         static func showMessage(title: String, msg: String) {
             let alert = UIAlertController(title: title, message: msg, preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-            getTopMostViewController()?.present(alert, animated: true, completion: nil)
+            getTopMostViewController()?.present(alert, animated: false, completion: nil)
         }
         
         static func showMessageWithDismiss(title: String, msg: String) {
             let alert = UIAlertController(title: title, message: msg, preferredStyle: UIAlertController.Style.alert)
             
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(action:UIAlertAction!) in
-                UIApplication.topViewController()?.dismiss(animated: true, completion: nil)
+                UIApplication.topViewController()?.dismiss(animated: false, completion: nil)
             }))
             
-            UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
+            UIApplication.topViewController()?.present(alert, animated: false, completion: nil)
         }
         
        
@@ -342,6 +390,22 @@
             let token =  UserDefaults.standard.value(forKey: "Token") as? String ?? ""
             return token
         }
+        
+        static func getUserName() -> String {
+            let UserName =  UserDefaults.standard.value(forKey: "UserName") as? String ?? ""
+            return UserName
+        }
+        
+        static func getReferralCode() -> String {
+            let ReferralCode =  UserDefaults.standard.value(forKey: "ReferralCode") as? String ?? ""
+            return ReferralCode
+        }
+        
+        static func getWalletBalance() -> String {
+            let WalletBalance =  UserDefaults.standard.value(forKey: "WalletBalance") as? String ?? ""
+            return Utility.currencyFormat(amount: Double(WalletBalance) ?? 0.0)
+        }
+        
         
 
        
@@ -377,10 +441,43 @@
             return topMostViewController
         }
 
-       
-        
-        
+       // - - - - - Function to refresh token - - - - - -
+        class func refereshTokenApi(){
+             var presenter: iAuthPresenter!
+             var refreshToken: [InitialToken] = []
+            var phoneNo = String()
+            var deviceId = String()
+            
+            phoneNo = UserDefaults.standard.value(forKey: "MobileNumber") as? String ?? ""
+            deviceId = "\(UIDevice().type.rawValue) (\(Utility.getDeviceId() ?? ""))"
+            
+            RemoteClient.request(of: InitialToken.self, target: ResourceType.refreshToken(phone: phoneNo, device: deviceId), success: { result in
+              //  guard let ws = self else {return}
+                switch result {
+                case .success(let data):
+                  //  ws.presenter?.didFinishFetchingData(list: data, callFrom: callFrom)
+                    refreshToken = data
+                    var token = refreshToken[0].accessToken ?? ""
+                    UserDefaults.standard.set(token, forKey: "Token")
+                case .failure(let error):
+                  //  ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+                    Utility.showMessage(title: "Error", msg: "Token Error")
+                }
+                }, error: { error in
+                    Utility.showMessage(title: "Exception Error", msg: "Token Error")
+//                    guard let ws = self else {return}
+//                    ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+            }) { error in
+                Utility.showMessage(title: "Server Error", msg: "Token Error")
+//                guard let ws = self else {return}
+//                ws.presenter?.didFailFetchingData(error: error,callFrom: callFrom)
+            }
+            
+        }
+     
     }
+
+
     
     
     extension UIApplication {
@@ -418,4 +515,3 @@
             }
         }
     }
-

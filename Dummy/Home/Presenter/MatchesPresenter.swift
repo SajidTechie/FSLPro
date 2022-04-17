@@ -16,7 +16,7 @@ protocol iMatchesPresenter: iPresenter {
     var view: MatchesPresentable? {get set}
     
     func getTeamRank(mid:Int,callFrom:String)
-    var myTeamRank: [TeamRankData] {get set}
+    var myTeamRank: [TeamRank] {get set}
     
     func getRules(callFrom:String)
     var rules: [GetRulesData] {get set}
@@ -39,7 +39,7 @@ class MatchesPresenter: iMatchesPresenter {
     var matches: [Match] = []
     var liveMatches: [Match] = []
     var liveScore: [LiveScoreData] = []
-    var myTeamRank: [TeamRankData] = []
+    var myTeamRank: [TeamRank] = []
     
     weak var view: MatchesPresentable?
     var interactor: iMatchesInteractor!
@@ -55,7 +55,7 @@ class MatchesPresenter: iMatchesPresenter {
     
     func getMatches(mid:Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+       
             do {
                 try interactor.fetchAllMatches(mid: mid,callFrom:callFrom)
             }
@@ -67,14 +67,14 @@ class MatchesPresenter: iMatchesPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
      
     }
     
     
     func getTeamRank(mid:Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+    
             do {
                 try interactor.getTeamRank(mid: mid,callFrom:callFrom)
             }
@@ -86,14 +86,14 @@ class MatchesPresenter: iMatchesPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     
     }
     
     
     func getLiveMatches(mid:Int,position:Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+    
             do {
                 try interactor.fetchAllLiveMatches(mid: mid, position: position,callFrom:callFrom)
             }
@@ -105,14 +105,14 @@ class MatchesPresenter: iMatchesPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
      
     }
     
     
     func getRules(callFrom:String) {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+   
             do {
                 try interactor.getMatchRules(callFrom:callFrom)
             }
@@ -124,14 +124,14 @@ class MatchesPresenter: iMatchesPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     }
     
     
     
     func getLiveScore(mid: Int,position:Int,callFrom:String) {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+      
             do {
                 try interactor.fetchLiveScore(mid: mid,position:position,callFrom:callFrom)
             }
@@ -143,7 +143,7 @@ class MatchesPresenter: iMatchesPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     }
  
 
@@ -161,7 +161,7 @@ extension MatchesPresenter: MatchesInteractable {
     func didFinishFetchingData(list: [Any],callFrom:String) {
         matches = list as? [Match] ?? []
         rules = list as? [GetRulesData] ?? []
-        myTeamRank = list as? [TeamRankData] ?? []
+        myTeamRank = list as? [TeamRank] ?? []
         view?.didLoadData(callFrom: callFrom)
     }
     

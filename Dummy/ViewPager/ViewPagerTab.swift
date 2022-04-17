@@ -28,4 +28,3 @@ public struct ViewPagerTab {
         self.image = image
     }
 }
-

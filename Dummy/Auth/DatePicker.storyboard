@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="53x-hl-rTy">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="ConthraxSB.ttf">
+            <string>ConthraxSb-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Date Picker Controller-->
+        <scene sceneID="mRb-F4-ziE">
+            <objects>
+                <viewController modalPresentationStyle="overCurrentContext" id="53x-hl-rTy" customClass="DatePickerController" customModule="Dhanbarse" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="huB-r9-38B">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ai-e4-nJ8">
+                                <rect key="frame" x="20" y="244.5" width="374" height="409"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lhm-Dp-gDT">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DATE OF BIRTH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6k8-fU-hkE">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="ConthraxSb-Regular" family="Conthrax" pointSize="18"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="0eh-7V-eUX"/>
+                                            <constraint firstItem="6k8-fU-hkE" firstAttribute="top" secondItem="lhm-Dp-gDT" secondAttribute="top" id="9Hl-8k-zJ2"/>
+                                            <constraint firstAttribute="trailing" secondItem="6k8-fU-hkE" secondAttribute="trailing" id="M2Q-Nj-V0Z"/>
+                                            <constraint firstItem="6k8-fU-hkE" firstAttribute="leading" secondItem="lhm-Dp-gDT" secondAttribute="leading" id="tu8-dw-Pja"/>
+                                            <constraint firstAttribute="bottom" secondItem="6k8-fU-hkE" secondAttribute="bottom" id="uoQ-CM-k7k"/>
+                                        </constraints>
+                                    </view>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="riK-cY-Fx1">
+                                        <rect key="frame" x="0.0" y="50" width="374" height="309"/>
+                                        <date key="minimumDate" timeIntervalSinceReferenceDate="441802800">
+                                            <!--2015-01-01 11:00:00 +0000-->
+                                        </date>
+                                    </datePicker>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DfH-lo-94z">
+                                        <rect key="frame" x="0.0" y="359" width="374" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8R3-8l-dkM">
+                                                <rect key="frame" x="0.0" y="0.0" width="187" height="50"/>
+                                                <state key="normal" title="CANCEL"/>
+                                                <connections>
+                                                    <action selector="cancel_clicked:" destination="53x-hl-rTy" eventType="touchUpInside" id="b7M-L4-vtD"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ye-VF-sGi">
+                                                <rect key="frame" x="187" y="0.0" width="187" height="50"/>
+                                                <state key="normal" title="OK"/>
+                                                <connections>
+                                                    <action selector="ok_clicked:" destination="53x-hl-rTy" eventType="touchUpInside" id="zXo-Kd-9g8"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="3ye-VF-sGi" firstAttribute="leading" secondItem="8R3-8l-dkM" secondAttribute="trailing" id="Ihm-Qq-5gP"/>
+                                            <constraint firstAttribute="bottom" secondItem="3ye-VF-sGi" secondAttribute="bottom" id="OWl-YH-GCw"/>
+                                            <constraint firstItem="8R3-8l-dkM" firstAttribute="top" secondItem="DfH-lo-94z" secondAttribute="top" id="Pr3-7C-rTR"/>
+                                            <constraint firstItem="3ye-VF-sGi" firstAttribute="top" secondItem="DfH-lo-94z" secondAttribute="top" id="SVg-5E-5x9"/>
+                                            <constraint firstAttribute="height" constant="50" id="SfD-T4-3jb"/>
+                                            <constraint firstItem="8R3-8l-dkM" firstAttribute="leading" secondItem="DfH-lo-94z" secondAttribute="leading" id="ber-PL-NSP"/>
+                                            <constraint firstAttribute="trailing" secondItem="3ye-VF-sGi" secondAttribute="trailing" id="cqq-Hg-ZUv"/>
+                                            <constraint firstAttribute="bottom" secondItem="8R3-8l-dkM" secondAttribute="bottom" id="mNO-Ca-jP2"/>
+                                            <constraint firstItem="3ye-VF-sGi" firstAttribute="width" secondItem="8R3-8l-dkM" secondAttribute="width" id="rFh-Au-Beg"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="lhm-Dp-gDT" firstAttribute="leading" secondItem="4Ai-e4-nJ8" secondAttribute="leading" id="5iS-ap-Em8"/>
+                                    <constraint firstAttribute="bottom" secondItem="DfH-lo-94z" secondAttribute="bottom" id="64n-SK-leG"/>
+                                    <constraint firstItem="riK-cY-Fx1" firstAttribute="top" secondItem="lhm-Dp-gDT" secondAttribute="bottom" id="CbZ-5A-6po"/>
+                                    <constraint firstAttribute="trailing" secondItem="lhm-Dp-gDT" secondAttribute="trailing" id="Ika-kr-KfV"/>
+                                    <constraint firstAttribute="trailing" secondItem="DfH-lo-94z" secondAttribute="trailing" id="ZQ3-rN-36I"/>
+                                    <constraint firstItem="DfH-lo-94z" firstAttribute="leading" secondItem="4Ai-e4-nJ8" secondAttribute="leading" id="acc-Ma-A96"/>
+                                    <constraint firstItem="lhm-Dp-gDT" firstAttribute="top" secondItem="4Ai-e4-nJ8" secondAttribute="top" id="iA0-hr-0qt"/>
+                                    <constraint firstItem="riK-cY-Fx1" firstAttribute="leading" secondItem="4Ai-e4-nJ8" secondAttribute="leading" id="ja7-Gi-eIW"/>
+                                    <constraint firstAttribute="trailing" secondItem="riK-cY-Fx1" secondAttribute="trailing" id="jyP-pq-hWC"/>
+                                    <constraint firstAttribute="bottom" secondItem="riK-cY-Fx1" secondAttribute="bottom" constant="50" id="zpS-Dl-Bed"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="aq6-8A-saQ"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.30190978720772971" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="4Ai-e4-nJ8" firstAttribute="height" secondItem="aq6-8A-saQ" secondAttribute="height" multiplier="0.5" id="UvI-fd-yWm"/>
+                            <constraint firstItem="4Ai-e4-nJ8" firstAttribute="centerY" secondItem="huB-r9-38B" secondAttribute="centerY" constant="1" id="jGA-cS-Xh5"/>
+                            <constraint firstItem="4Ai-e4-nJ8" firstAttribute="leading" secondItem="aq6-8A-saQ" secondAttribute="leading" constant="20" id="n6z-mG-jaI"/>
+                            <constraint firstItem="aq6-8A-saQ" firstAttribute="trailing" secondItem="4Ai-e4-nJ8" secondAttribute="trailing" constant="20" id="yDP-tg-2dp"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="btnCancel" destination="8R3-8l-dkM" id="KvN-zB-PnP"/>
+                        <outlet property="btnOK" destination="3ye-VF-sGi" id="HDY-lL-d91"/>
+                        <outlet property="datePicker" destination="riK-cY-Fx1" id="an0-Dd-wst"/>
+                        <outlet property="lblDateHeader" destination="6k8-fU-hkE" id="QkG-A0-oRp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dhj-BN-daY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="0.80000000000000004" y="142.57871064467767"/>
+        </scene>
+    </scenes>
+</document>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="UbuntuMedium.ttf">
+            <string>Ubuntu-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HeaderWithTabs" customModule="Dummy" customModuleProvider="target">
+            <connections>
+                <outlet property="imvBack" destination="9gl-7Y-hGN" id="ejj-tO-7mW"/>
+                <outlet property="lblHeader" destination="0Lw-nT-Ws5" id="Gsw-nq-mJG"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="D1s-HD-Mny">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQZ-Tv-qxc">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="common_header" translatesAutoresizingMaskIntoConstraints="NO" id="ugg-ds-8MB">
+                            <rect key="frame" x="-2" y="-2" width="418" height="122"/>
+                        </imageView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PC5-oe-iz0" userLabel="vwDetail">
+                            <rect key="frame" x="16" y="16" width="382" height="88"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back" translatesAutoresizingMaskIntoConstraints="NO" id="9gl-7Y-hGN">
+                                    <rect key="frame" x="0.0" y="34" width="25" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="YZd-hD-kk4"/>
+                                        <constraint firstAttribute="width" constant="25" id="tF8-Wo-vPQ"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lw-nT-Ws5">
+                                    <rect key="frame" x="30" y="36" width="322" height="16"/>
+                                    <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="14"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="0Lw-nT-Ws5" firstAttribute="centerY" secondItem="PC5-oe-iz0" secondAttribute="centerY" id="7fY-xp-Hnc"/>
+                                <constraint firstItem="9gl-7Y-hGN" firstAttribute="leading" secondItem="PC5-oe-iz0" secondAttribute="leading" id="Afx-hC-UOP"/>
+                                <constraint firstItem="0Lw-nT-Ws5" firstAttribute="leading" secondItem="9gl-7Y-hGN" secondAttribute="trailing" constant="5" id="QrG-wh-PvJ"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0Lw-nT-Ws5" secondAttribute="trailing" constant="20" id="RP5-7f-BQx"/>
+                                <constraint firstItem="9gl-7Y-hGN" firstAttribute="centerY" secondItem="PC5-oe-iz0" secondAttribute="centerY" id="hc5-WG-Clq"/>
+                                <constraint firstItem="0Lw-nT-Ws5" firstAttribute="centerX" secondItem="PC5-oe-iz0" secondAttribute="centerX" id="kwK-Jd-Kbn"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="PC5-oe-iz0" secondAttribute="bottom" constant="16" id="32M-OJ-LtL"/>
+                        <constraint firstItem="PC5-oe-iz0" firstAttribute="leading" secondItem="eQZ-Tv-qxc" secondAttribute="leading" constant="16" id="4nW-bc-mBm"/>
+                        <constraint firstItem="PC5-oe-iz0" firstAttribute="top" secondItem="eQZ-Tv-qxc" secondAttribute="top" constant="16" id="Ife-eb-UWa"/>
+                        <constraint firstAttribute="trailing" secondItem="ugg-ds-8MB" secondAttribute="trailing" constant="-2" id="Qt7-hb-3Px"/>
+                        <constraint firstAttribute="trailing" secondItem="PC5-oe-iz0" secondAttribute="trailing" constant="16" id="aAv-eI-GhN"/>
+                        <constraint firstItem="ugg-ds-8MB" firstAttribute="leading" secondItem="eQZ-Tv-qxc" secondAttribute="leading" constant="-2" id="chx-bu-8dQ"/>
+                        <constraint firstAttribute="height" constant="120" id="dtX-3P-Dj5"/>
+                        <constraint firstAttribute="bottom" secondItem="ugg-ds-8MB" secondAttribute="bottom" id="hCg-hJ-Zdu"/>
+                        <constraint firstItem="ugg-ds-8MB" firstAttribute="top" secondItem="eQZ-Tv-qxc" secondAttribute="top" constant="-2" id="tnx-QL-mqj"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="CMb-qc-Vl7"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="CMb-qc-Vl7" firstAttribute="trailing" secondItem="eQZ-Tv-qxc" secondAttribute="trailing" id="3Fr-hI-AOv"/>
+                <constraint firstItem="eQZ-Tv-qxc" firstAttribute="top" secondItem="D1s-HD-Mny" secondAttribute="top" id="BCY-yI-Vpm"/>
+                <constraint firstItem="eQZ-Tv-qxc" firstAttribute="leading" secondItem="CMb-qc-Vl7" secondAttribute="leading" id="Y2r-6L-BVG"/>
+            </constraints>
+            <point key="canvasLocation" x="131.8840579710145" y="63.616071428571423"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="back" width="23" height="19"/>
+        <image name="common_header" width="412.5" height="130"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

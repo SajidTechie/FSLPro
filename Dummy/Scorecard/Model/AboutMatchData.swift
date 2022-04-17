@@ -96,20 +96,25 @@ struct MatchVt : Codable {
     
     let name : String?
     let score : String?
+    let bench : [String]?
+    let playing : [String]?
     
     enum CodingKeys: String, CodingKey {
+        case bench = "bench"
         case name = "name"
         case score = "score"
+        case playing = "playing"
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         name = try values.decodeIfPresent(String.self, forKey: .name)
         score = try values.decodeIfPresent(String.self, forKey: .score)
+        bench = try values.decodeIfPresent([String].self, forKey: .bench)
+        playing = try values.decodeIfPresent([String].self, forKey: .playing)
     }
     
 }
-
 
 
 struct MatchVenue : Codable {
@@ -247,16 +252,22 @@ struct MatchLt : Codable {
     
     let name : String?
     let score : String?
+    let bench : [String]?
+    let playing : [String]?
     
     enum CodingKeys: String, CodingKey {
+        case bench = "bench"
         case name = "name"
         case score = "score"
+        case playing = "playing"
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         name = try values.decodeIfPresent(String.self, forKey: .name)
         score = try values.decodeIfPresent(String.self, forKey: .score)
+        bench = try values.decodeIfPresent([String].self, forKey: .bench)
+        playing = try values.decodeIfPresent([String].self, forKey: .playing)
     }
     
 }

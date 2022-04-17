@@ -14,8 +14,8 @@ class LeaderboardDetailController: UIViewController {
         ViewPagerTab(title: "SCORECARD", image: UIImage(named: "")),
     ]
     
-    var options: ViewPagerOptionsNew?
-    var pager:ViewPager?
+//    var options: ViewPagerOptionsNew?
+//    var pager:ViewPager?
   
     var mid = Int()
     var lid = Int()
@@ -30,7 +30,7 @@ class LeaderboardDetailController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let options = ViewPagerOptionsNew()
+     /*   let options = ViewPagerOptionsNew()
         options.tabType = .basic
         options.distribution = .segmented
         options.isTabHighlightAvailable = true
@@ -46,13 +46,13 @@ class LeaderboardDetailController: UIViewController {
         pager?.setOptions(options: options)
         pager?.setDataSource(dataSource: self)
         pager?.setDelegate(delegate: self)
-        pager?.build()
+        pager?.build()*/
     
     }
    
 }
 
-
+/*
 extension LeaderboardDetailController: ViewPagerDataSource {
     
     func numberOfPages() -> Int {
@@ -122,4 +122,4 @@ extension LeaderboardDetailController: ViewPagerDelegate {
         }
     }
 }
-
+*/

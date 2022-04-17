@@ -19,7 +19,7 @@ class CaptainSelectionCell: UITableViewCell {
     @IBOutlet weak var lblPlayerName : UILabel!
     @IBOutlet weak var lblTeamName : UILabel!
     @IBOutlet weak var lblPlayerSkill : UILabel!
-    @IBOutlet weak var switchCaptain : UISwitch!
+    @IBOutlet weak var btnSwitch : UIButton!
   
     weak var delegate: CaptainSelectionDelegate?
     

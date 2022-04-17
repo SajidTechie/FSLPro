@@ -6,8 +6,18 @@
 //
 
 import Foundation
-enum CustomError: Error {
-
+enum CustomError: Error,Equatable {
+  
+    static func == (lhs: CustomError, rhs: CustomError) -> Bool {
+//        if(lhs == rhs){
+            return true
+//        }else{
+//            return false
+//        }
+//
+    }
+    
+  
     case UnableToConnect
     case NoNetwork //1009
     case HTTPError(err:Error)
@@ -16,26 +26,53 @@ enum CustomError: Error {
     case ParsingError
     case BadRequest
     case DatabaseError
+    case TokenError
   
     
     var localizedDescription: String {
         switch  self {
         case .UnableToConnect:
-            return "Unable to Connect to server"
+            return StringConstants.server_error
         case .NoNetwork:
-            return "No Network"
+            return StringConstants.no_internet
         case .HTTPError(let error):
-            return "Response Error: \(error.localizedDescription)"
+            return StringConstants.server_error
         case .TimeOut:
-            return "The request has timed out."
+            return StringConstants.server_error
         case .ParsingError:
-            return "Unable to Serialize."
+            return StringConstants.no_data
         case .BadRequest:
-            return "Something went wrong, network failure!"
+            return StringConstants.server_error
         case .ServerError:
-            return "Server Error."
+            return StringConstants.server_error
         case .DatabaseError:
-            return "Local storage error, try again!"
+            return StringConstants.no_data
+        case .TokenError:
+            return StringConstants.token_expired
         }
     }
 }
+
+
+//var localizedDescription: String {
+//    switch  self {
+//    case .UnableToConnect:
+//        return "Unable to Connect to server"
+//    case .NoNetwork:
+//        return "No Network"
+//    case .HTTPError(let error):
+//        return "Response Error: \(error.localizedDescription)"
+//    case .TimeOut:
+//        return "The request has timed out."
+//    case .ParsingError:
+//        return "Unable to Serialize."
+//    case .BadRequest:
+//        return "Something went wrong, network failure!"
+//    case .ServerError:
+//        return "Server Error."
+//    case .DatabaseError:
+//        return "Local storage error, try again!"
+//    case .TokenError:
+//        return StringConstants.token_expired
+//    }
+//}

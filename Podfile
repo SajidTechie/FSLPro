@@ -1,15 +1,20 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+# platform :ios, '11.0'
 
 target 'Dummy' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
   # Pods for Dummy
-
-   pod 'Moya', '~> 15.0'
+   pod 'Firebase/Auth'
+   pod 'Firebase/Database'
+   pod 'Firebase/Storage'
    pod 'Firebase'
    pod 'Firebase/Core'
+   pod 'Firebase/Analytics'
+   pod 'Firebase/Crashlytics'
+   pod 'Firebase/Messaging'
+   pod 'Moya', '~> 15.0'
    pod 'SDWebImage', '~> 4.0'
    pod 'IQKeyboardManagerSwift'
    pod 'ReachabilitySwift'
@@ -17,15 +22,13 @@ target 'Dummy' do
    pod 'XLPagerTabStrip', '~> 9.0'
    pod 'CountryPickerView'
    pod 'XLPagerTabStrip', '~> 9.0'
-   pod 'SVPinView', '~> 1.0'
+   pod 'SVPinView'
+   pod 'HGRippleRadarView'
+   pod 'AppsFlyerFramework'
    
-  target 'DummyTests' do
-    inherit! :search_paths
-    # Pods for testing
+   target 'DummyTests' do
+   pod 'Firebase'
+        inherit! :search_paths
   end
 
-  target 'DummyUITests' do
-    # Pods for testing
   end
-
-end

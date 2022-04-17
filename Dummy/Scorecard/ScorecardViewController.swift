@@ -8,9 +8,11 @@
 import UIKit
 
 class ScorecardViewController: UIViewController {
+    @IBOutlet weak var noDataView : NoDataView!
     @IBOutlet weak var lblExtras : UILabel!
+    @IBOutlet weak var lblYetToBat : UILabel!
     @IBOutlet weak var lblTotal : UILabel!
-    
+    @IBOutlet weak var scrollMain : UIScrollView!
     @IBOutlet weak var tblBatsman : UITableView!
     @IBOutlet weak var tblBowler : UITableView!
     @IBOutlet weak var tblFow : UITableView!
@@ -22,15 +24,17 @@ class ScorecardViewController: UIViewController {
     @IBOutlet weak var vwHorizontalStrip: UIView!
     
     private var presenter: iScorecardListPresenter!
-    private var scorecard: [ScorecardMain] = []
+    var scorecard: [ScorecardMain] = []
     
     private var scorecardBat : [ScorecardBat]? = []
     private var scorecardBowl : [ScorecardBol]? = []
     private var fallOfWickets : [ScorecardBat]? = []
+    private var yetToBatArr : [String] = []
     
     var tabs = [ViewPagerTab]()
-    var viewPager:ViewPagerController!
-    var options:ViewPagerOptions!
+    var pager:ViewPager?
+    let options = ViewPagerOptions()
+    
     var arrInningsTabs = [String]()
     var initPosition = 0
     
@@ -46,17 +50,89 @@ class ScorecardViewController: UIViewController {
     var totalRuns = 0
     var totalOvers = 0.0
     var totalWickets = 0
+    var inningsCount = 0
     
     public var mid = Int()
+    var apiCall = false
+    
+    lazy var refreshControl: UIRefreshControl = {
+            let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+            refreshControl.tintColor = UIColor.black
+            return refreshControl
+        }()
+
+    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            refreshControl.endRefreshing()
+            if(self.callFrom.elementsEqual("LIVE")){
+                print("Call from live and no api is called")
+            }else{
+                self.presenter.getScorecard(mid: self.mid,callFrom: Constant.SCORECARD)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        // - - - - creating desfault tab here
+        tabs = [
+           ViewPagerTab(title: "", image: UIImage(named: "")),
+           ViewPagerTab(title: "", image: UIImage(named: ""))
+       ]
+        
+        options.tabType = ViewPagerTabType.basic
+        options.tabViewTextFont = UIFont(name: "Ubuntu Regular", size:12) ?? UIFont.systemFont(ofSize: 12)
+        options.tabViewTextDefaultColor = UIColor.gray
+        options.tabViewTextHighlightColor = UIColor.black
+        options.distribution = .segmented
+        options.tabViewBackgroundDefaultColor = UIColor.clear
+        options.tabViewBackgroundHighlightColor = UIColor.clear
+        options.isTabHighlightAvailable = true
+        options.isTabIndicatorAvailable = true
+        options.tabViewPaddingLeft = 20
+        options.tabIndicatorViewBackgroundColor = UIColor.init(named: "darkRed") ?? UIColor.red
+        options.tabIndicatorViewHeight = 2
+        options.tabViewPaddingRight = 20
+        options.tabViewHeight = 40
+        
+        pager = ViewPager(viewController: self, containerView: self.vwHorizontalStrip)
+        pager?.setOptions(options: options)
+        pager?.setDataSource(dataSource: self)
+        pager?.setDelegate(delegate: self)
+        pager?.build()
         
         self.tblBatsman.tag = 1
         self.tblBowler.tag = 2
         self.tblFow.tag = 3
         
+        if #available(iOS 10.0, *){
+            scrollMain.refreshControl = refreshControl
+        }else{
+            scrollMain.addSubview(refreshControl)
+        }
+        
         if(callFrom.elementsEqual("LIVE")){
+            
+            if(scorecard.count>0)
+            {inningsCount = scorecard[0].score?.count ?? 0}
+            
+            if(inningsCount > 1){
+                self.vwHorizontalStrip.isUserInteractionEnabled = true
+            }else{
+                self.vwHorizontalStrip.isUserInteractionEnabled = false
+            }
+            
+            
+            if(scorecard.count > 0 && inningsCount > 0){
+                
+                createTabs(inning: inningsCount)
+                setData()
+            }
+            
             NotificationCenter.default.addObserver(self, selector: #selector(liveScoreUpdate(_:)), name: NSNotification.Name("LIVE_SCORE"), object: nil)
         }else{
             presenter = ScorecardListPresenter(view: self)
@@ -71,44 +147,59 @@ class ScorecardViewController: UIViewController {
         self.tblBatsman.delegate = self
         self.tblBowler.delegate = self
         self.tblFow.delegate = self
-        
+      
     }
     
+    deinit{
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+   
     
     @objc func liveScoreUpdate(_ notification:Notification){
         
         let scorecardObj = notification.userInfo as! Dictionary<String,AnyObject>
         
         scorecard = scorecardObj["scorecard"] as? [ScorecardMain] ?? []
-        print("LIVE SCORECARD - - - - - ",scorecard)
+        print("LIVE SCORECARD 99- - - - - ",scorecard)
         
-        if(scorecard.count > 0){
-            if(scorecard[0].score?.count ?? 0 > 0){
-                createTabs(isDynamic: true)
-            }else{
-                createTabs(isDynamic: false)
-            }
-            
+        if(scorecard.count>0)
+        {inningsCount = scorecard[0].score?.count ?? 0}
+       
+        if(scorecard.count > 0 && inningsCount > 0){
+            createTabs(inning: inningsCount)
             setData()
         }
       
     }
     
     
-    // - - -  -  create innings tabs dynamically - - - -
-    func createTabs(isDynamic:Bool){
+    // - - -  -  create innings tabs dynamically if count -> 0 (static 0 inning) , 1 -> (yet to bat static for 2nd inning), 2 -> dyn - - - -
+    func createTabs(inning:Int){
         arrInningsTabs = []
-        if(isDynamic){
+        
+        if(inning > 1){
+            self.vwHorizontalStrip.isUserInteractionEnabled = true
+        }else{
+            self.vwHorizontalStrip.isUserInteractionEnabled = false
+        }
+        
+        if(inning > 1){
             
             for i in 0...((scorecard[0].score?.count ?? 1)-1) {
                 arrInningsTabs.append("\(scorecard[0].score?[i].bat?[0].t ?? "")\n\(String(scorecard[0].score?[i].total ?? 0))/\(String(scorecard[0].score?[i].wickets ?? 0))(\(String(scorecard[0].score?[i].overs ?? 0)))")
             }
-        }else{
-            arrInningsTabs.append("\(scorecard[0].info?.lt?.name ?? "")\n(\(scorecard[0].info?.lt?.score ?? "")")
-            arrInningsTabs.append("\(scorecard[0].info?.vt?.name ?? "")\n(\(scorecard[0].info?.vt?.score ?? "")")
+        }
+        else if(inning == 1){
+            arrInningsTabs.append("\(scorecard[0].score?[0].bat?[0].t ?? "")\n\(String(scorecard[0].score?[0].total ?? 0))/\(String(scorecard[0].score?[0].wickets ?? 0))(\(String(scorecard[0].score?[0].overs ?? 0)))")
+            arrInningsTabs.append("\(scorecard[0].score?[0].bol?[0].t ?? "")\nYet To bat")
+        }
+        else if(inning == 0){
+            arrInningsTabs.append("\(scorecard[0].info?.lt?.name ?? "")\n(\(scorecard[0].info?.lt?.score ?? ""))")
+            arrInningsTabs.append("\(scorecard[0].info?.vt?.name ?? "")\n(\(scorecard[0].info?.vt?.score ?? ""))")
         }
         
-        tabs.removeAll()
+      tabs.removeAll()
         
         if(arrInningsTabs.count>0){
             for i in 0...(arrInningsTabs.count-1) {
@@ -116,49 +207,14 @@ class ScorecardViewController: UIViewController {
             }
         }
         
-        if(viewPager != nil)
-        { viewPager.invalidateTabs() }
-        
-        self.edgesForExtendedLayout = UIRectEdge.init(rawValue: 4)
-        
-        options = ViewPagerOptions(viewPagerWithFrame: self.view.bounds)
-        options.tabType = ViewPagerTabType.imageWithText
-        options.tabViewImageSize = CGSize(width: 20, height: 20)
-        options.tabViewTextFont = UIFont.systemFont(ofSize: 13)
-        options.isEachTabEvenlyDistributed = true
-        options.tabViewBackgroundDefaultColor = UIColor.white
-        
-        
-        
-        
-        if #available(iOS 11.0, *) {
-            options.tabIndicatorViewBackgroundColor = UIColor.init(named: "ColorRed") ?? UIColor.red
-        } else {
-            options.tabIndicatorViewBackgroundColor = UIColor.red
-        }
-        
-        options.fitAllTabsInView = true
-        options.tabViewPaddingLeft = 20
-        options.tabViewPaddingRight = 20
-        options.isTabHighlightAvailable = false
-        
-        viewPager = ViewPagerController()
-        viewPager.options = options
-        viewPager.dataSource = self
-        viewPager.delegate = self
-        
-        //        self.addChild(viewPager)
-        //        self.view.addSubview(viewPager.view)
-        //        viewPager.didMove(toParent: self)
-        
-        self.addChild(viewPager)
-        self.vwHorizontalStrip.addSubview(viewPager.view)
-        viewPager.didMove(toParent: self)
+        if(pager != nil)
+        { pager?.invalidateCurrentTabs() }
         
     }
     
     
     func setData(){
+       
         scorecardBat = scorecard[0].score?[initPosition].bat
         scorecardBowl = scorecard[0].score?[initPosition].bol
         
@@ -173,14 +229,31 @@ class ScorecardViewController: UIViewController {
         tblFowHeight.constant = CGFloat((fallOfWickets?.count ?? 0) * 40)
         
         setExtraDetails(data: scorecard[0].score?[initPosition])
+    
+        if(scorecardBat?.count ?? 0 > 0){
+            if(scorecard[0].info?.vt?.name?.contains(scorecardBat?[0].t ?? "") == true){
+                yetToBatArr = scorecard[0].info?.vt?.playing ?? []
+            }else if(scorecard[0].info?.lt?.name?.contains(scorecardBat?[0].t ?? "") == true){
+                yetToBatArr = scorecard[0].info?.lt?.playing ?? []
+            }
+        }
         
+        let batArr = scorecardBat?.map({$0.fn})
+        let temp = yetToBatArr.filter{
+            !(batArr?.contains($0) ?? false)
+        }.joined(separator: ",")
+
+        lblYetToBat.text = "(\(temp))"
+    
         self.tblBatsman.reloadData()
         self.tblBowler.reloadData()
         self.tblFow.reloadData()
+       
     }
     
     
     func setExtraDetails(data: ScorecardScore?) {
+        
         bye = data?.xtra?.bye ?? 0
         lb = data?.xtra?.legBye ?? 0
         wide = data?.xtra?.wide ?? 0
@@ -203,7 +276,7 @@ class ScorecardViewController: UIViewController {
 
 extension ScorecardViewController : ScorecardListPresentable {
     func willLoadData(callFrom:String) {
-        
+         noDataView.showView(view: noDataView, from: "LOADER", msg: "")
     }
     
     func didLoadData(callFrom:String){
@@ -213,18 +286,31 @@ extension ScorecardViewController : ScorecardListPresentable {
         print("scorecard - - - ",scorecard)
         
         if(scorecard.count > 0){
-            if(scorecard[0].score?.count ?? 0 > 0){
-                createTabs(isDynamic: true)
-            }else{
-                createTabs(isDynamic: false)
-            }
-            setData()
+            inningsCount = scorecard[0].score?.count ?? 0
         }
-        
+    
+        if(scorecard.count > 0 && inningsCount > 0){
+            
+            createTabs(inning: inningsCount)
+            
+            setData()
+            noDataView.hideView(view: noDataView)
+        }else{
+            noDataView.showView(view: noDataView, from: "", msg: "")
+        }
+      
     }
     
     func didFail(error: CustomError,callFrom:String) {
+        print("API error  -- - - -",error)
         
+        if error.localizedDescription.elementsEqual(StringConstants.token_expired) {
+            print("TOKEN ERROR")
+            //Refresh API
+            presenter.getScorecard(mid: mid,callFrom: Constant.SCORECARD)
+       }else{
+           noDataView.showView(view: self.noDataView, from: "", msg: error.localizedDescription)
+       }
     }
 }
 
@@ -368,7 +454,7 @@ extension ScorecardViewController : UITableViewDataSource,UITableViewDelegate {
     
 }
 
-extension ScorecardViewController: ViewPagerControllerDataSource {
+extension ScorecardViewController: ViewPagerDataSource {
     
     func numberOfPages() -> Int {
         return tabs.count
@@ -381,7 +467,8 @@ extension ScorecardViewController: ViewPagerControllerDataSource {
         {
             initPosition = position
             
-            setData()
+            if(scorecard.count > 0 && inningsCount > 0)
+          {  setData()}
             
         }
         
@@ -398,7 +485,7 @@ extension ScorecardViewController: ViewPagerControllerDataSource {
     
 }
 
-extension ScorecardViewController: ViewPagerControllerDelegate {
+extension ScorecardViewController: ViewPagerDelegate {
     
     func willMoveToControllerAtIndex(index:Int) {
         print("Moving to page \(index)")

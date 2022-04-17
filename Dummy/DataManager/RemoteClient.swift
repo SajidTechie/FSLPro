@@ -15,6 +15,7 @@ import Reachability
 enum DResult<T> {
     case success([T])
     case failure(CustomError)
+
 }
 
 class RemoteClient {
@@ -58,6 +59,15 @@ class RemoteClient {
                         }
                         
                         
+                    }
+                    else if response.statusCode == 401 {
+                        
+                      print("TOKEN ERROR - - - CREATE NEW TOKEN")
+                        DispatchQueue.global(qos: .utility).sync {
+                            Utility.refereshTokenApi()
+                            errorCallBack(CustomError.TokenError)
+                        }
+                       
                     }
                     else if response.statusCode >= 400 && response.statusCode <= 499 {
                         

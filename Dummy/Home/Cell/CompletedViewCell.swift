@@ -13,6 +13,7 @@ class CompletedViewCell: UITableViewCell {
     @IBOutlet weak var lblTeamB : UILabel!
     @IBOutlet weak var lblLeague : UILabel!
     @IBOutlet weak var lblMatch : UILabel!
+    @IBOutlet weak var lblResult : UILabel!
     @IBOutlet weak var imvTeamALogo : UIImageView!
     @IBOutlet weak var imvTeamBLogo : UIImageView!
     @IBOutlet weak var lblTeamAScore1 : UILabel!

@@ -8,23 +8,39 @@
 import Foundation
 import UIKit
 
-protocol HandleHeaderBack{
-    func onBackClick()
+ protocol HandleHeaderBack{
+   func onBackClick()
+   func onAboutMatch()
+   func onTimeOut()
+}
+
+extension HandleHeaderBack{
+    func onAboutMatch(){
+        
+    }
+    
+    func onTimeOut(){
+        
+    }
 }
 
 
 @IBDesignable class Header: BaseCustomView {
     @IBOutlet weak var imvBack : UIImageView!
     @IBOutlet weak var lblHeader : UILabel!
+    
     var delegate: HandleHeaderBack?
     
     override func xibSetup() {
         super.xibSetup()
         
-        
         let tabBackImage = UITapGestureRecognizer(target: self, action: #selector(self.tapFunction))
         imvBack.addGestureRecognizer(tabBackImage)
 
+    }
+    
+    func bindData(strTitle:String){
+        lblHeader.text = strTitle
     }
     
     

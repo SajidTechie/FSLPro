@@ -8,8 +8,8 @@
 import UIKit
 
 class LiveScoreTabController: UIViewController {
-    
-    
+    @IBOutlet weak var noDataView : NoDataView!
+    @IBOutlet weak var scrollMain : UIScrollView!
     @IBOutlet weak var lblBattingText1 : UILabel!
     @IBOutlet weak var lblBattingRuns1 : UILabel!
     @IBOutlet weak var lblBattingBalls1 : UILabel!
@@ -40,16 +40,48 @@ class LiveScoreTabController: UIViewController {
     @IBOutlet weak var lblOtherRunrate : UILabel!
     
     var callFrom = ""
-    private var scorecard: [ScorecardMain] = []
+    var scorecard: [ScorecardMain] = []
+    
+    
+    lazy var refreshControl: UIRefreshControl = {
+            let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+            refreshControl.tintColor = UIColor.black
+            return refreshControl
+        }()
+
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            refreshControl.endRefreshing()
+            print("Call from live score and no api is called")
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if #available(iOS 10.0, *){
+            scrollMain.refreshControl = refreshControl
+        }else{
+            scrollMain.addSubview(refreshControl)
+        }
         
-        // Do any additional setup after loading the view.
+        if(!scorecard.isEmpty)
+        {bindUI()}
+        
         if(callFrom.elementsEqual("LIVE")){
             NotificationCenter.default.addObserver(self, selector: #selector(liveScoreUpdate(_:)), name: NSNotification.Name("LIVE_SCORE"), object: nil)
         }
+    }
+   
+    deinit{
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // Do any additional setup after loading the view.
+       
     }
     
     
@@ -89,17 +121,17 @@ class LiveScoreTabController: UIViewController {
         
         if (scorecardList?.count == 1) {
             lblActiveTeamName.text = scorecardList?[0].bat?[0].t
-            lblActiveScore.text = "\(String(scorecardList?[0].total ?? 0))/\(scorecardList?[0].wickets ?? 0))(\(scorecardList?[0].overs ?? 0)"
+            lblActiveScore.text = "\(String(scorecardList?[0].total ?? 0))/\(scorecardList?[0].wickets ?? 0)(\(scorecardList?[0].overs ?? 0))"
         }
         
         if (scorecardList?.count == 2) {
             
             lblActiveTeamName.text = scorecardList?[1].bat?[0].t
-            lblActiveScore.text = "\(String(scorecardList?[1].total ?? 0))/\(scorecardList?[1].wickets ?? 0))(\(scorecardList?[1].overs ?? 0)"
+            lblActiveScore.text = "\(String(scorecardList?[1].total ?? 0))/\(scorecardList?[1].wickets ?? 0)(\(scorecardList?[1].overs ?? 0))"
             
             lblOtherTeamName.text =
                 scorecardList?[0].bat?[0].t
-            lblOtherScore.text = "\(String(scorecardList?[0].total ?? 0))/\(scorecardList?[0].wickets ?? 0))(\(scorecardList?[0].overs ?? 0)"
+            lblOtherScore.text = "\(String(scorecardList?[0].total ?? 0))/\(scorecardList?[0].wickets ?? 0)(\(scorecardList?[0].overs ?? 0))"
         }
         
         let checkInning: Bool
@@ -111,27 +143,27 @@ class LiveScoreTabController: UIViewController {
             
             if (scorecardList?.count ?? 0 == 3) {
                 lblActiveTeamName.text = scorecardList?[2].bat?[0].t
-                lblActiveScore.text = "\(String(scorecardList?[2].total ?? 0))/\(scorecardList?[2].wickets ?? 0))(\(scorecardList?[2].overs ?? 0)"
+                lblActiveScore.text = "\(String(scorecardList?[2].total ?? 0))/\(scorecardList?[2].wickets ?? 0)(\(scorecardList?[2].overs ?? 0))"
                 
                 if (checkInning) {
                     lblOtherTeamName.text = scorecardList?[1].bat?[0].t
-                    lblOtherScore.text = "\(String(scorecardList?[1].total ?? 0))/\(scorecardList?[1].wickets ?? 0))(\(scorecardList?[1].overs ?? 0)"
+                    lblOtherScore.text = "\(String(scorecardList?[1].total ?? 0))/\(scorecardList?[1].wickets ?? 0)(\(scorecardList?[1].overs ?? 0))"
                 } else {
                     lblOtherTeamName.text = scorecardList?[0].bat?[0].t
-                    lblOtherScore.text = "\(String(scorecardList?[0].total ?? 0))/\(scorecardList?[0].wickets ?? 0))(\(scorecardList?[0].overs ?? 0)"
+                    lblOtherScore.text = "\(String(scorecardList?[0].total ?? 0))/\(scorecardList?[0].wickets ?? 0)(\(scorecardList?[0].overs ?? 0))"
                 }
             }
             
             if (scorecardList?.count ?? 0 == 4) {
                 lblActiveTeamName.text = scorecardList?[3].bat?[0].t
-                lblActiveScore.text = "\(String(scorecardList?[3].total ?? 0))/\(scorecardList?[3].wickets ?? 0))(\(scorecardList?[3].overs ?? 0)"
+                lblActiveScore.text = "\(String(scorecardList?[3].total ?? 0))/\(scorecardList?[3].wickets ?? 0)(\(scorecardList?[3].overs ?? 0))"
                 
                 if (checkInning) {
                     lblOtherTeamName.text = scorecardList?[2].bat?[0].t
-                    lblOtherScore.text = "\(String(scorecardList?[2].total ?? 0))/\(scorecardList?[2].wickets ?? 0))(\(scorecardList?[2].overs ?? 0)"
+                    lblOtherScore.text = "\(String(scorecardList?[2].total ?? 0))/\(scorecardList?[2].wickets ?? 0)(\(scorecardList?[2].overs ?? 0))"
                 } else {
                     lblOtherTeamName.text = scorecardList?[1].bat?[0].t
-                    lblOtherScore.text = "\(String(scorecardList?[1].total ?? 0))/\(scorecardList?[1].wickets ?? 0))(\(scorecardList?[1].overs ?? 0)"
+                    lblOtherScore.text = "\(String(scorecardList?[1].total ?? 0))/\(scorecardList?[1].wickets ?? 0)(\(scorecardList?[1].overs ?? 0))"
                 }
             }
         }
@@ -153,8 +185,8 @@ class LiveScoreTabController: UIViewController {
         if (bowler.count == 1) {
             bowl1 = bowler[0]
             
-            lblBowlingText.text = bowl1?.fn
-            lblBowlingOvers.text = bowl1?.overs
+            lblBowlingText.text = bowl1?.fn ?? "-"
+            lblBowlingOvers.text = bowl1?.overs ?? "-"
             lblBowlingMaidens.text = String(bowl1?.medians ?? 0)
             lblBowlingRuns.text = String(bowl1?.runs ?? 0)
             lblBowlingWickets.text = String(bowl1?.wickets ?? 0)
@@ -165,7 +197,7 @@ class LiveScoreTabController: UIViewController {
         if (!batsman.isEmpty) {
             let checkActiveIndex = batsman.firstIndex(where: {$0.active == true})
             
-            lblBattingText1.text = (checkActiveIndex == 0) ?"\(batsman[0].fn) *" : "\(batsman[0].fn)"
+            lblBattingText1.text = (checkActiveIndex == 0) ?"\(batsman[0].fn ?? "-") *" : "\(batsman[0].fn ?? "-")"
             lblBattingRuns1.text = String(batsman[0].score ?? 0)
             lblBattingBalls1.text = String(batsman[0].ball ?? 0)
             lblBatting4s1.text = String(batsman[0].four ?? 0)
@@ -173,7 +205,7 @@ class LiveScoreTabController: UIViewController {
             lblBattingSr1.text = String(batsman[0].rate ?? 0.0)
             
             if (batsman.count == 2) {
-                lblBattingText2.text = (checkActiveIndex == 0) ?"\(batsman[1].fn) *" : "\(batsman[1].fn)"
+                lblBattingText2.text = (checkActiveIndex == 0) ?"\(batsman[1].fn ?? "-") *" : "\(batsman[1].fn ?? "-")"
                 lblBattingRuns2.text = String(batsman[1].score ?? 0)
                 lblBattingBalls2.text = String(batsman[1].ball ?? 0)
                 lblBatting4s2.text = String(batsman[1].four ?? 0)

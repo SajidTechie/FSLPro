@@ -39,9 +39,7 @@ class MenuViewController: UIViewController,UIImagePickerControllerDelegate ,UINa
     var itemIndex = -1
     var sectionIndex = -1
     var screen = ""
-    
-    //position 1 - Dealer , 8 - Retailer , 11 - Electrician , 9 - Counter Boy , 10 - Sales Executive
-    
+     
     override func viewDidLoad() {
         super.viewDidLoad()
         tblMenuOptions.tableFooterView = UIView()
@@ -53,9 +51,13 @@ class MenuViewController: UIViewController,UIImagePickerControllerDelegate ,UINa
         // let loginData =  UserDefaults.standard.value(forKey: "loginData") as? Dictionary ?? [:]
         self.tblMenuOptions.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 64, right: 0);
         
+        
+        self.expandData.append(["isCollapsible":"0","isOpen":"1","title":"Profile", "icon":"dashboard","data":[""]])
+        self.expandData.append(["isCollapsible":"0","isOpen":"1","title":"How To Play", "icon":"dashboard","data":[""]])
+        self.expandData.append(["isCollapsible":"0","isOpen":"1","title":"Point System", "icon":"dashboard","data":[""]])
+        self.expandData.append(["isCollapsible":"0","isOpen":"1","title":"Logout", "icon":"dashboard","data":[""]])
+         
     }
-    
-    
     
     
     override func didReceiveMemoryWarning() {
@@ -79,7 +81,7 @@ class MenuViewController: UIViewController,UIImagePickerControllerDelegate ,UINa
         }
         
         UIView.animate(withDuration: 0.3, animations: { () -> Void in
-            self.view.frame = CGRect(x: -UIScreen.main.bounds.size.width, y: 0, width: UIScreen.main.bounds.size.width,height: UIScreen.main.bounds.size.height)
+            self.view.frame = CGRect(x: UIScreen.main.bounds.size.width, y: 120, width: UIScreen.main.bounds.size.width,height: UIScreen.main.bounds.size.height)
             self.view.layoutIfNeeded()
             self.view.backgroundColor = UIColor.clear
         }, completion: { (finished) -> Void in
@@ -115,7 +117,7 @@ extension MenuViewController : UITableViewDelegate,UITableViewDataSource{
         let dataarray = self.expandData[indexPath.section].value(forKey: "data") as! NSArray
         
         let lblTitle : UILabel = cell.contentView.viewWithTag(101) as! UILabel
-        
+
         let vwMainRow : UIView = cell.contentView.viewWithTag(100) as! UIView
         
         lblTitle.text = (dataarray[indexPath.row] as? String)?.capitalized
@@ -128,28 +130,32 @@ extension MenuViewController : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 50))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 30))
         headerView.backgroundColor = UIColor.white
-        let separatorView = UIView(frame: CGRect(x: 10, y: 0, width: tableView.bounds.size.width - 10, height: 1))
-        if #available(iOS 11.0, *) {
-            separatorView.backgroundColor = UIColor.init(named: "Primary")
-        } else {
-            separatorView.backgroundColor = UIColor.gray
-        }
-        if section != 0 {
-            headerView.addSubview(separatorView)
-        }
         
-        let imgIcon = UIImageView(frame: CGRect(x: 15, y: 15, width: 20, height: 20))
-        let imageIcon = UIImage(named: self.expandData[section].value(forKey: "icon") as! String);
-        imgIcon.image = imageIcon;
-        headerView.addSubview(imgIcon)
+//        let separatorView = UIView(frame: CGRect(x: 10, y: 0, width: tableView.bounds.size.width - 10, height: 1))
+//        if #available(iOS 11.0, *) {
+//            separatorView.backgroundColor = UIColor.init(named: "Primary")
+//        } else {
+//            separatorView.backgroundColor = UIColor.gray
+//        }
+//        if section != 0 {
+//            headerView.addSubview(separatorView)
+//        }
         
-        let imgDropdownArrow = UIImageView(frame: CGRect(x: headerView.frame.size.width - 25, y: 17.5, width: 15, height: 15))
+//        let imgIcon = UIImageView(frame: CGRect(x: 15, y: 15, width: 20, height: 20))
+//        let imageIcon = UIImage(named: self.expandData[section].value(forKey: "icon") as! String);
+//        imgIcon.image = imageIcon;
+//        headerView.addSubview(imgIcon)
         
-        let label = UILabel(frame: CGRect(x: 50, y: 15, width: headerView.frame.size.width - 50, height: 20))
+     //   let imgDropdownArrow = UIImageView(frame: CGRect(x: headerView.frame.size.width - 25, y: 17.5, width: 15, height: 15))
+        
+        let label = UILabel(frame: CGRect(x: 50, y: 0, width: headerView.frame.size.width - 60, height: 30))
         label.text = (expandData[section]["title"]! as? String)?.capitalized
-        label.font = UIFont(name: "Roboto-Regular", size: 13)
+        label.font = UIFont(name: "Ubuntu Medium", size: 12)
+        label.textAlignment = .right
+        label.isUserInteractionEnabled = false
+        
         headerView.addSubview(label)
         
         headerView.tag = section
@@ -163,7 +169,7 @@ extension MenuViewController : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 30
     }
     
     

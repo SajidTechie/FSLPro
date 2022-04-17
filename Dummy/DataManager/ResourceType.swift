@@ -13,7 +13,7 @@ enum ResourceType {
     case appConfig
     case getADRewards(adid:String)
     case getUserProfile
-    case editUserProfile(payloadprofile:AuthPayloadObj)
+    case editUserProfile(payloadprofile:ProfileObj)
     case getPincode(pincode:Int)
     case matches(mid: Int)
     case myTeam(mid: Int)
@@ -43,6 +43,7 @@ enum ResourceType {
     case sponsor(payloadsponsor:AuthPayloadObj)
     
 }
+
 
 
 extension ResourceType: TargetType {
@@ -113,7 +114,7 @@ extension ResourceType: TargetType {
             return "rewards/ads/\(adid)"
         case .getUserProfile:
             return "profile"
-        case .editUserProfile(payloadprofile: let payloadprofile):
+        case .editUserProfile:
             return "profile"
         case .getPincode(pincode: let pincode):
             return "zip/\(pincode)"

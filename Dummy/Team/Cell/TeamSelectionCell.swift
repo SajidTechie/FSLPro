@@ -6,13 +6,15 @@
 //
 
 import UIKit
+import HGRippleRadarView
 
 protocol TeamSelectionDelegate: AnyObject {
     func selectPlayer(cell: TeamSelectionCell,modelItem:MatchAllPlayerData)
 }
 
 class TeamSelectionCell: UITableViewCell {
-    @IBOutlet weak var vwPlayer : UIView!
+    @IBOutlet weak var vwHighlightPlayer : RadarView!
+    @IBOutlet weak var vwPlayer : GradientRoundView!
     @IBOutlet weak var imvJersey : UIImageView!
     @IBOutlet weak var lblPlayerName : UILabel!
     @IBOutlet weak var lblTeamName : UILabel!

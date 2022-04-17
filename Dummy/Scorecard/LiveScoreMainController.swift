@@ -8,15 +8,14 @@
 import UIKit
 
 
-class LiveScoreMainController: UIViewController, ViewPagerControllerDelegate {
+class LiveScoreMainController: UIViewController {
     
     var mid = Int()
-    
-    var viewPager:ViewPagerController!
-    var options:ViewPagerOptions!
-    
+
     private var presenter: iScorecardListPresenter!
     private var scorecard: [ScorecardMain] = []
+    
+    weak var timer: Timer?
  
     var callFrom = "LIVE"
     
@@ -29,48 +28,30 @@ class LiveScoreMainController: UIViewController, ViewPagerControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.edgesForExtendedLayout = UIRectEdge.init(rawValue: 4)
-        
-        options = ViewPagerOptions(viewPagerWithFrame: self.view.bounds)
-        options.tabType = ViewPagerTabType.imageWithText
-        options.tabViewImageSize = CGSize(width: 20, height: 20)
-        options.tabViewTextFont = UIFont.systemFont(ofSize: 13)
-        options.isEachTabEvenlyDistributed = true
-        options.tabViewBackgroundDefaultColor = UIColor.white
-        if #available(iOS 11.0, *) {
-            options.tabIndicatorViewBackgroundColor = UIColor.init(named: "ColorRed") ?? UIColor.red
-        } else {
-            options.tabIndicatorViewBackgroundColor = UIColor.red
-        }
-        options.fitAllTabsInView = true
-        options.tabViewPaddingLeft = 20
-        options.tabViewPaddingRight = 20
-        options.isTabHighlightAvailable = false
-        
-        viewPager = ViewPagerController()
-        viewPager.options = options
-        viewPager.dataSource = self
-        viewPager.delegate = self
-        
-        self.addChild(viewPager)
-        self.view.addSubview(viewPager.view)
-        viewPager.didMove(toParent: self)
-        
         presenter = ScorecardListPresenter(view: self)
         presenter.initInteractor()
         
-        Timer.scheduledTimer(timeInterval: 5,
+        if(timer == nil){
+        timer = Timer.scheduledTimer(timeInterval: Constant.LIVE_REFRESH_RATE,
                              target: self,
                              selector: #selector(self.update),
                              userInfo: nil,
                              repeats: true)
+        }
         
+    }
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        print("** ** ** deinit LiveScoreMainController ** ** **")
+        timer?.invalidate()
+        NotificationCenter.default.removeObserver(self)
     }
     
     // @objc selector expected for Timer
     @objc func update() {
         // do what should happen when timer triggers an event
-      
+        print("** ** ** LiveScoreMainController ** ** **")
         presenter.getScorecard(mid: mid, callFrom: Constant.SCORECARD)
         
     }
@@ -78,6 +59,34 @@ class LiveScoreMainController: UIViewController, ViewPagerControllerDelegate {
     
 }
 
+extension LiveScoreMainController : ScorecardListPresentable {
+    func willLoadData(callFrom:String) {
+        self.view.activityStartAnimating()
+    }
+    
+    func didLoadData(callFrom:String){
+        
+        scorecard = presenter.scorecard
+        
+        print("scorecard - - - ",scorecard)
+        let scorecardDataDict:[String: [ScorecardMain]] = ["scorecard": scorecard]
+        NotificationCenter.default.post(name: NSNotification.Name("LIVE_SCORE"), object: nil, userInfo: scorecardDataDict)
+        self.view.activityStopAnimating()
+    }
+    
+    func didFail(error: CustomError,callFrom:String) {
+        print("API error  -- - - -",error)
+        
+        if error.localizedDescription.elementsEqual(StringConstants.token_expired) {
+            print("TOKEN ERROR")
+            //Refresh API
+            presenter.getScorecard(mid: mid, callFrom: Constant.SCORECARD)
+        }
+        self.view.activityStopAnimating()
+    }
+}
+
+/*
 extension LiveScoreMainController: ViewPagerControllerDataSource {
     
     func numberOfPages() -> Int {
@@ -121,25 +130,4 @@ extension LiveScoreMainController: ViewPagerControllerDataSource {
         return 0
     }
 }
-
-
-
-extension LiveScoreMainController : ScorecardListPresentable {
-    func willLoadData(callFrom:String) {
-        
-    }
-    
-    func didLoadData(callFrom:String){
-        
-        scorecard = presenter.scorecard
-        
-        print("scorecard - - - ",scorecard)
-        let scorecardDataDict:[String: [ScorecardMain]] = ["scorecard": scorecard]
-        NotificationCenter.default.post(name: NSNotification.Name("LIVE_SCORE"), object: nil, userInfo: scorecardDataDict)
-        
-    }
-    
-    func didFail(error: CustomError,callFrom:String) {
-        
-    }
-}
+ */

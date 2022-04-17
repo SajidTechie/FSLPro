@@ -44,7 +44,7 @@ class ScorecardListPresenter: iScorecardListPresenter {
     
     func getScorecard(mid:Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+ 
             do {
                 try interactor.getScorecard(mid: mid,callFrom:callFrom)
             }
@@ -56,16 +56,13 @@ class ScorecardListPresenter: iScorecardListPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
-        else {
-            
-        }
+  
     }
     
    
     func getMatchInfo(mid:Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+       
             do {
                 try interactor.getMatchInfo(mid: mid,callFrom:callFrom)
             }
@@ -77,16 +74,14 @@ class ScorecardListPresenter: iScorecardListPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
-        else {
-            
-        }
+        
+     
     }
     
     
     func getLeaderboardData(mid:Int,lid:Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+     
             do {
                 try interactor.getLeaderboardData(mid: mid,lid: lid,callFrom:callFrom)
             }
@@ -98,10 +93,7 @@ class ScorecardListPresenter: iScorecardListPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
-        else {
-            
-        }
+      
     }
     
 }

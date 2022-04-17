@@ -37,10 +37,6 @@ private class SVPinViewFlowLayout: UICollectionViewFlowLayout {
 @objcMembers
 public class SVPinView: UIView {
     
-    let startColor = UIColor(red: 153/255, green: 42/255, blue: 62/255, alpha: 1)
-    let middleColor = UIColor(red: 1/255, green: 19/255, blue: 110/255, alpha: 1)
-    let endColor = UIColor(red: 3/255, green: 13/255, blue: 37/255, alpha: 1)
-    
     // MARK: - Private Properties -
     @IBOutlet fileprivate var collectionView: UICollectionView!
     @IBOutlet fileprivate var errorView: UIView!
@@ -341,10 +337,6 @@ extension SVPinView : UICollectionViewDataSource, UICollectionViewDelegate, UICo
         textField.isSecureTextEntry = false
         textField.textColor = self.textColor
         textField.tintColor = self.tintColor
-        
-       
-       setGradientBackground(view: textField, colorTop: startColor,colorMiddle: middleColor, colorBottom: endColor)
-        
         textField.font = self.font
         textField.deleteButtonAction = self.deleteButtonAction
         if #available(iOS 12.0, *), indexPath.row == 0, isContentTypeOneTimeCode {
@@ -462,20 +454,4 @@ extension SVPinView : UITextFieldDelegate
         }
         return true
     }
-    
-    
-    func setGradientBackground(view:UIView, colorTop:UIColor,colorMiddle:UIColor, colorBottom:UIColor) {
-            for layer in view.layer.sublayers! {
-                if layer.name == "gradientLayer" {
-                    layer.removeFromSuperlayer()
-                }
-            }
-            let gradientLayer = CAGradientLayer()
-            gradientLayer.colors = [colorTop.cgColor,colorMiddle.cgColor, colorBottom.cgColor]
-            gradientLayer.locations = [0.0,0.5, 1.0]
-            gradientLayer.frame = view.bounds
-            gradientLayer.name = "gradientLayer"
-            view.layer.insertSublayer(gradientLayer, at: 0)
-        }
-    
 }

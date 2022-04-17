@@ -10,13 +10,15 @@ import UIKit
 class JoinLeagueMsgPopup: UIViewController {
 
     @IBOutlet weak var lblMessage : UILabel!
-    //@IBOutlet weak var btnClose : UIButton!
+    @IBOutlet weak var btnClose : UIButton!
     var joinMsg = String()
-   
+    weak var delegate: CommonDelegate?
     
-
     @IBAction func btnClose(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: false, completion: { [weak self] in
+            self?.delegate?.refreshApi?()
+        })
+        
     }
     
     override func viewDidLoad() {

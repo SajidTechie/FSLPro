@@ -8,7 +8,8 @@
 import UIKit
 import XLPagerTabStrip
 
-class LeaguesTabController: UIViewController,IndicatorInfoProvider {
+class LeaguesTabController: UIViewController,IndicatorInfoProvider,CommonDelegate {
+    @IBOutlet weak var noDataView : NoDataView!
     @IBOutlet weak var tableView : UITableView!
     private var presenter: iLeaguePresenter!
     private var leagueForMatch: [LeagueDetailData] = []
@@ -19,11 +20,31 @@ class LeaguesTabController: UIViewController,IndicatorInfoProvider {
     public var lid = Int()
     var pagerStrip = PagerTabStripViewController()
     var itemInfo: IndicatorInfo = "LEAGUES"
+    var model: Match?
+    
+    var delegate: CommonDelegate?
+    
+    private var presenterMatches: iMatchesPresenter!
+    private var rules: [GetRulesData] = []
     
     // MARK: - XLPagerTabStrip
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         pagerStrip = pagerTabStripController
         return itemInfo
+    }
+    
+    lazy var refreshControl: UIRefreshControl = {
+            let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+            refreshControl.tintColor = UIColor.black
+            return refreshControl
+        }()
+
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        refreshControl.endRefreshing()
+            self.presenter.getLeaguesForMatch(mid: self.mid,callFrom: Constant.LEAGUES_FOR_MATCH)
+        }
     }
     
     
@@ -33,21 +54,39 @@ class LeaguesTabController: UIViewController,IndicatorInfoProvider {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
+        presenterMatches = MatchesPresenter(view: self)
+        presenterMatches.initInteractor()
+        
         presenter = LeaguePresenter(view: self)
         presenter.initInteractor()
         
         presenter.getLeaguesForMatch(mid: mid,callFrom: Constant.LEAGUES_FOR_MATCH)
         
+        if #available(iOS 10.0, *){
+            tableView.refreshControl = refreshControl
+        }else{
+            tableView.addSubview(refreshControl)
+        }
+        
+    }
+   
+    
+    func refreshApi() {
+        presenter.getLeaguesForMatch(mid: mid,callFrom: Constant.LEAGUES_FOR_MATCH)
     }
     
+    deinit{
+        NotificationCenter.default.removeObserver(self)
+    }
     
+   
 }
 
 
 
-extension LeaguesTabController : LeaguePresentable {
+extension LeaguesTabController : LeaguePresentable,MatchesPresentable {
     func willLoadData(callFrom:String) {
-        
+         noDataView.showView(view: noDataView, from: "LOADER", msg: "")
     }
     
     func didLoadData(callFrom:String){
@@ -56,12 +95,14 @@ extension LeaguesTabController : LeaguePresentable {
             leagueForMatch = presenter.leagueForMatch
             if(leagueForMatch.count > 0){
                 self.tableView.reloadData()
+                noDataView.hideView(view: noDataView)
+            }else{
+                noDataView.showView(view: noDataView, from: "", msg: "")
             }
             print("** ** leagueForMatch data ** ** - - - ",leagueForMatch)
         }
         
       
-        
         if(callFrom == Constant.MY_TEAM){
             myTeam = presenter.myTeam
             
@@ -74,24 +115,53 @@ extension LeaguesTabController : LeaguePresentable {
                 print("** ** myTeam switch tab here ** ** - - - ")
                 NotificationCenter.default.post(name: NSNotification.Name("LEAGUE_TAB"), object: nil, userInfo: nil)
             }
+            noDataView.hideView(view: noDataView)
         }
+        
         
         if(callFrom == Constant.JOIN_LEAGUE){
             joinLeague = presenter.joinLeague
             let statusMsg = joinLeague[0].status ?? "-"
             print("** ** Join League data ** ** - - - ",statusMsg)
+    
+            presenterMatches.getRules(callFrom: Constant.RULES)
             
             let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
             let vcJoinMsgPopup = storyBoard.instantiateViewController(withIdentifier: "JoinLeagueMsgPopup") as! JoinLeagueMsgPopup
             vcJoinMsgPopup.joinMsg = statusMsg
-            self.present(vcJoinMsgPopup, animated: true)
+            vcJoinMsgPopup.delegate = self
+            self.present(vcJoinMsgPopup, animated: false)
+            noDataView.hideView(view: noDataView)
+        }
+        
+        if(callFrom == Constant.RULES){
+            rules = presenterMatches.rules
+            if(rules.count > 0){
+                let userName = rules[0].bal?.dN ?? "-"
+                let walletBalance = String(rules[0].bal?.bAL ?? 0)
+                let referralCode = rules[0].bal?.refCode ?? "-"
+                
+                UserDefaults.standard.set(userName, forKey: "UserName")
+                UserDefaults.standard.set(walletBalance, forKey: "WalletBalance")
+                UserDefaults.standard.set(referralCode, forKey: "ReferralCode")
+                
+                delegate?.refreshApi?()
+                
+            }
+            noDataView.hideView(view: noDataView)
         }
         
      
     }
     
     func didFail(error: CustomError,callFrom:String) {
+        print("API error  -- - - -",error)
         
+        if error.localizedDescription.elementsEqual(StringConstants.token_expired) {
+            print("TOKEN ERROR")
+            //Refresh API
+            presenter.getLeaguesForMatch(mid: mid,callFrom: Constant.LEAGUES_FOR_MATCH)
+        }else{ noDataView.showView(view: self.noDataView, from: "", msg: error.localizedDescription)}
     }
 }
 
@@ -104,50 +174,6 @@ extension LeaguesTabController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       /* txtWinningAmt.text = currencyFormat(data?.WinningAmt?.toString() ?: "0")
-                  txtLeagueName.text = data?.LName
-
-                  when (data?.ltype) {
-                      GlobalConstant.NORMAL_LEAGUE_TYPE -> {
-                          bindLeagueCards(viewBinding)
-                      }
-
-                      GlobalConstant.SPONSOR_LEAGUE_TYPE -> {
-                          beautifyForSponsorLeagues(viewBinding)
-                      }
-                      else -> {
-                          bindLeagueCards(viewBinding)
-                      }
-                  }
-
-                  if (data?.j == 0) {
-                      btnEntryFees.text = currencyFormat(data.LEntryFees?.toString() ?: "0")
-                      btnEntryFees.setTextSize(
-                              TypedValue.COMPLEX_UNIT_PX,
-                              context.resources.getDimension(R.dimen.dp_22))
-
-                  } else {
-
-                      btnEntryFees.text = context.resources.getString(R.string.str_joined)
-                      btnEntryFees.setTextSize(
-                              TypedValue.COMPLEX_UNIT_PX,
-                              context.resources.getDimension(R.dimen.dp_18))
-                  }
-
-
-                  val entriesSize: Int = data?.LMaxSize ?: 0
-                  val entriesJoined = data?.LCurSize ?: 0
-                  val entriesLeft = entriesSize.minus(entriesJoined)
-
-                  txtEntriesLeft.text = "$entriesLeft/$entriesSize"
-
-
-      //            slider.valueFrom = 0f
-                  if (entriesSize > 0) {
-                      slider.max = entriesSize
-                  }
-                  slider.progress = entriesJoined
-*/
         
         let type = leagueForMatch[indexPath.row].ltype ?? 1
      
@@ -155,7 +181,7 @@ extension LeaguesTabController : UITableViewDataSource {
         {
         case Constant.NORMAL_LEAGUE_TYPE:
             let normalCell = tableView.dequeueReusableCell(withIdentifier: "LeagueCell", for: indexPath) as! LeagueCell
-            normalCell.btnEntryFees.setTitle(Utility.currencyFormat(amount: leagueForMatch[indexPath.row].LEntryFees ?? 0.0), for: .normal)
+         
             normalCell.lblLeagueName.text = leagueForMatch[indexPath.row].LName
             normalCell.lblWinningAmnt.text = Utility.currencyFormat(amount: leagueForMatch[indexPath.row].WinningAmt ?? 0.0)
             
@@ -163,10 +189,17 @@ extension LeaguesTabController : UITableViewDataSource {
             let entriesJoined = leagueForMatch[indexPath.row].LCurSize ?? 0
             let entriesLeft = entriesSize - entriesJoined
             
-            normalCell.lblEntriesLeft.text = "\(entriesLeft)/\(entriesSize)"
+            if(leagueForMatch[indexPath.row].j == 0){
+                normalCell.btnEntryFees.setTitle(Utility.currencyFormat(amount: leagueForMatch[indexPath.row].LEntryFees ?? 0.0), for: .normal)
+              //change font size to 22dp
+            }else{
+                normalCell.btnEntryFees.setTitle("JOINED", for: .normal)
+            }
             
+            normalCell.lblEntriesLeft.text = "\(entriesLeft)/\(entriesSize)"
+
             if (entriesSize > 0) {
-                normalCell.vwProgress.setProgress(Float(entriesJoined/entriesSize), animated: true)
+                normalCell.vwProgress.setProgress(Float(Float(entriesJoined)/Float(entriesSize)), animated: true)
             }
             
             normalCell.delegate = self
@@ -175,9 +208,34 @@ extension LeaguesTabController : UITableViewDataSource {
         
         case Constant.UNLIMITED_LEAGUE_TYPE:
             let unlimitedCell = tableView.dequeueReusableCell(withIdentifier: "UnlimitedLeagueCell", for: indexPath) as! UnlimitedLeagueCell
-            unlimitedCell.btnEntryFees.setTitle(Utility.currencyFormat(amount:leagueForMatch[indexPath.row].LEntryFees ?? 0.0), for: .normal)
-            unlimitedCell.lblLeagueName.text = leagueForMatch[indexPath.row].LName
+            
+            unlimitedCell.lblLeagueName.text = leagueForMatch[indexPath.row].LName?.uppercased()
             unlimitedCell.lblWinningAmnt.text = Utility.currencyFormat(amount:leagueForMatch[indexPath.row].WinningAmt ?? 0.0)
+
+            
+            if ((leagueForMatch[indexPath.row].awards?.isEmpty) == false) {
+                if ((leagueForMatch[indexPath.row].awards?[0].a?.isEmpty) == false) {
+                    print("imvPrize.isHidden = false")
+                    unlimitedCell.imvPrize.isHidden = false
+                    unlimitedCell.imvPrize.sd_setImage(with: URL(string: Constant.WEBSITE_URL + ("/\(leagueForMatch[indexPath.row].awards?[0].a?[0].img ?? "")").replace(string: " ", replacement: "%20")), placeholderImage: UIImage(named: ""))
+               }else{
+                   print("imvPrize.isHidden")
+                   unlimitedCell.imvPrize.isHidden = true
+                }
+            }else{
+                print("imvPrize.isHidden = true")
+                unlimitedCell.imvPrize.isHidden = true
+            }
+            
+            unlimitedCell.btnEntryFees.setTitle(Utility.currencyFormat(amount:leagueForMatch[indexPath.row].LEntryFees ?? 0.0), for: .normal)
+            
+            if(leagueForMatch[indexPath.row].j == 0){
+                unlimitedCell.btnEntryFees.setTitle(Utility.currencyFormat(amount: leagueForMatch[indexPath.row].LEntryFees ?? 0.0), for: .normal)
+              //change font size to 22dp
+            }else{
+                unlimitedCell.btnEntryFees.setTitle("JOINED", for: .normal)
+            }
+
             
             let entriesSize = leagueForMatch[indexPath.row].LMaxSize ?? 0
             let entriesJoined = leagueForMatch[indexPath.row].LCurSize ?? 0
@@ -186,7 +244,7 @@ extension LeaguesTabController : UITableViewDataSource {
             unlimitedCell.lblEntriesLeft.text = "\(entriesLeft)/\(entriesSize)"
             
             if (entriesSize > 0) {
-                unlimitedCell.vwProgress.setProgress(Float(entriesJoined/entriesSize), animated: true)
+                unlimitedCell.vwProgress.setProgress(Float(Float(entriesJoined)/Float(entriesSize)), animated: true)
             }
             
             unlimitedCell.delegate = self
@@ -195,8 +253,15 @@ extension LeaguesTabController : UITableViewDataSource {
                                
         case Constant.SPONSOR_LEAGUE_TYPE:
             let sponsorCell = tableView.dequeueReusableCell(withIdentifier: "SpecialLeagueCell", for: indexPath) as! SpecialLeagueCell
-            sponsorCell.btnEntryFees.setTitle(Utility.currencyFormat(amount:leagueForMatch[indexPath.row].LEntryFees ?? 0.0), for: .normal)
+          
             sponsorCell.lblLeagueName.text = leagueForMatch[indexPath.row].LName
+            
+            if(leagueForMatch[indexPath.row].j == 0){
+                sponsorCell.btnEntryFees.setTitle(Utility.currencyFormat(amount: leagueForMatch[indexPath.row].LEntryFees ?? 0.0), for: .normal)
+              //change font size to 22dp
+            }else{
+                sponsorCell.btnEntryFees.setTitle("JOINED", for: .normal)
+            }
              
             let entriesSize = leagueForMatch[indexPath.row].LMaxSize ?? 0
             let entriesJoined = leagueForMatch[indexPath.row].LCurSize ?? 0
@@ -228,16 +293,33 @@ extension LeaguesTabController : UITableViewDelegate{
         
     }
 }
+
 extension LeaguesTabController : LeaguesDelegate {
     func showInfo(cell: UITableViewCell) {
         let indexPath = self.tableView.indexPath(for: cell)
         let position = indexPath?.row ?? -1
         
         if(position != -1){
-            let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
-            let vcLeagueInfo = storyBoard.instantiateViewController(withIdentifier: "LeagueInfoViewPopup") as! LeagueInfoViewPopup
-            vcLeagueInfo.leagueForMatch = leagueForMatch[position]
-            self.present(vcLeagueInfo, animated: true)
+            if(leagueForMatch[position].ltype == Constant.NORMAL_LEAGUE_TYPE){
+                let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
+                let vcLeagueInfo = storyBoard.instantiateViewController(withIdentifier: "LeagueInfoViewPopup") as! LeagueInfoViewPopup
+                vcLeagueInfo.leagueForMatch = leagueForMatch[position]
+                self.present(vcLeagueInfo, animated: false)
+            }
+         
+            if(leagueForMatch[position].ltype == Constant.UNLIMITED_LEAGUE_TYPE){
+                let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
+                let vcLeagueInfo = storyBoard.instantiateViewController(withIdentifier: "JumboLeagueInfoPopup") as! JumboLeagueInfoPopup
+                vcLeagueInfo.leagueForMatch = leagueForMatch[position]
+                self.present(vcLeagueInfo, animated: false)
+            }
+            
+            if(leagueForMatch[position].ltype == Constant.SPONSOR_LEAGUE_TYPE){
+                let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
+                let vcLeagueInfo = storyBoard.instantiateViewController(withIdentifier: "JumboLeagueInfoPopup") as! JumboLeagueInfoPopup
+                vcLeagueInfo.leagueForMatch = leagueForMatch[position]
+                self.present(vcLeagueInfo, animated: false)
+            }
         }
         
     }

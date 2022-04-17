@@ -22,18 +22,12 @@ class SpecialLeagueCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        
-        let viewJoinLge = UITapGestureRecognizer(target: self, action: #selector(self.touchJoinLeague))
-        vwJoin.isUserInteractionEnabled = true
-        vwJoin.addGestureRecognizer(viewJoinLge)
-        
-        
         let viewShowInfo = UITapGestureRecognizer(target: self, action: #selector(self.touchShowInfo))
-        vwShowInfo.isUserInteractionEnabled = true
-        vwShowInfo.addGestureRecognizer(viewShowInfo)
+        vwJoin.isUserInteractionEnabled = true
+        vwJoin.addGestureRecognizer(viewShowInfo)
     }
     
-    @objc func touchJoinLeague(sender: UITapGestureRecognizer) {
+    @IBAction func touchJoinLeague(_ sender: UIButton) {
         delegate?.joinLeague(cell: self)
     }
     

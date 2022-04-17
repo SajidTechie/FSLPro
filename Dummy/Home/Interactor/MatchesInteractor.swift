@@ -53,7 +53,7 @@ class MatchesInteractor: iMatchesInteractor {
     
     
     func getTeamRank(mid: Int, callFrom: String) {
-        RemoteClient.request(of: TeamRankData.self, target: ResourceType.getTeamRank(mid: mid), success: { [weak self] result in
+        RemoteClient.request(of: TeamRank.self, target: ResourceType.getTeamRank(mid: mid), success: { [weak self] result in
             guard let ws = self else {return}
             switch result {
             case .success(let data):

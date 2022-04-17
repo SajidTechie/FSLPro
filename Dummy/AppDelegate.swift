@@ -8,27 +8,115 @@
 import UIKit
 import CoreData
 import IQKeyboardManagerSwift
+import AppsFlyerLib
+import Firebase
+import FirebaseMessaging
+import UserNotifications
+import SDWebImage
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
+class AppDelegate: UIResponder, UIApplicationDelegate{
+  
     var window: UIWindow?
+    private let categoryIdentifier = "myNotificationCategory"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+     
         IQKeyboardManager.shared.enable = true
+        
+        if #available(iOS 13.0, *) {
+          window?.overrideUserInterfaceStyle = .light
+        }
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+       
+        
+        AppsFlyerLib.shared().appsFlyerDevKey = "<AF_DEV_KEY>"
+                AppsFlyerLib.shared().appleAppID = "<APPLE_APP_ID>"
+                /* Uncomment the following line to see AppsFlyer debug logs */
+                 AppsFlyerLib.shared().isDebug = true
+                // Must be called AFTER setting appsFlyerDevKey and appleAppID
+           //     AppsFlyerLib.shared().delegate = self
+                // SceneDelegate support
+                NotificationCenter.default.addObserver(self, selector: NSSelectorFromString("sendLaunch"), name: UIApplication.didBecomeActiveNotification, object: nil)
+          
+        
+        FirebaseApp.configure()
+               
+               UNUserNotificationCenter.current().delegate = self
+               let authOptions: UNAuthorizationOptions = [.alert, .sound,.badge]
+               UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { success, error in
+                   if error != nil {
+                       //we are ready to go
+                       print("success - - - -",success)
+                   }
+               }
+        
+        Messaging.messaging().subscribe(toTopic: "FSL.APP") { error in
+          print("Subscribed to FSL APP")
+        }
+
+        
+               application.registerForRemoteNotifications()
+       
         
         return true
     }
     
     
+
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+           Messaging.messaging().apnsToken = deviceToken
+       
+        let tokenParts = deviceToken.map { data -> String in
+
+                    return String(format: "%02.2hhx", data)
+
+                }
+
+       var tokenString = tokenParts.joined()
+
+        // 2. Print device token to use for PNs payloads
+
+        print("Device Token: \(tokenString)")
+       }
+
+       func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+           print("Failed to register: \(error)")
+       }
+    
+
+    
+    
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask(rawValue: UIInterfaceOrientationMask.portrait.rawValue)
     }
+    
+   
+    
+    @objc func sendLaunch() {
+        
+        AppsFlyerLib.shared().waitForATTUserAuthorization(timeoutInterval: 60)
+        
+        AppsFlyerLib.shared().start(completionHandler: { (dictionary, error) in
+                    if (error != nil){
+                        print(error ?? "")
+                        return
+                    } else {
+                        print(dictionary ?? "")
+                        return
+                    }
+                })
+       }
+    
 
+   
+    
+ 
     // MARK: UISceneSession Lifecycle
-
     @available(iOS 13.0, *)
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
@@ -42,9 +130,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
+    
+    
 
     // MARK: - Core Data stack
-
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
@@ -251,5 +340,34 @@ public extension UIDevice {
             return model
         }
         return Model.unrecognized
+    }
+}
+
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+           print("Will gets called when app is in forground and we want to show banner")
+
+           completionHandler([.alert, .sound, .badge])
+       }
+       
+       func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+           print("Will gets called when user tap on notifictaion")
+           
+           defer { completionHandler() }
+                let identity = response.notification.request.content.categoryIdentifier
+                guard identity == "myNotificationCategory" else { return }
+                print("you pressed \(response.actionIdentifier)")
+           
+        //   completionHandler()
+       }
+   }
+
+
+extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print("messaging delegate  - - - -",fcmToken)
+      //  configureCustomActions()
+     //   processPushToken()
     }
 }

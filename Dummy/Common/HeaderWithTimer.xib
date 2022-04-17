@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="ConthraxSB.ttf">
+            <string>ConthraxSb-Regular</string>
+        </array>
+        <array key="OctinPrison.ttf">
+            <string>OctinPrisonRg-Regular</string>
+        </array>
+        <array key="UbuntuRegular.ttf">
+            <string>Ubuntu-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HeaderWithTimer" customModule="Dummy" customModuleProvider="target">
+            <connections>
+                <outlet property="imvBack" destination="rPR-Nn-yca" id="BHd-Ka-0fk"/>
+                <outlet property="lblAboutMatch" destination="nOQ-SO-sV5" id="tJf-ew-X0L"/>
+                <outlet property="lblHeader" destination="stf-pk-WEp" id="O9k-aI-MoD"/>
+                <outlet property="lblTimer" destination="dd1-3r-6GG" id="q2k-7f-qwY"/>
+                <outlet property="lblWalletBal" destination="xiO-tD-JZ3" id="BQ2-2c-K1d"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bh-dG-x8y">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="common_header" translatesAutoresizingMaskIntoConstraints="NO" id="DAe-xk-dgI">
+                            <rect key="frame" x="-2" y="-2" width="418" height="122"/>
+                        </imageView>
+                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back" translatesAutoresizingMaskIntoConstraints="NO" id="rPR-Nn-yca">
+                            <rect key="frame" x="20" y="40" width="25" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="myH-MV-rSv"/>
+                                <constraint firstAttribute="width" constant="25" id="wnr-Sm-z3s"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="stf-pk-WEp" userLabel="lblHeader">
+                            <rect key="frame" x="204" y="40" width="8.5" height="26.5"/>
+                            <fontDescription key="fontDescription" name="ConthraxSb-Regular" family="Conthrax" pointSize="22"/>
+                            <color key="textColor" name="white"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qdh-ci-INp">
+                            <rect key="frame" x="20" y="80" width="374" height="30"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="S4o-BV-8uP">
+                                    <rect key="frame" x="0.0" y="7" width="83" height="16"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallet_icon" translatesAutoresizingMaskIntoConstraints="NO" id="LK0-fg-u0g">
+                                            <rect key="frame" x="0.0" y="0.5" width="15" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="9mY-lK-MOV"/>
+                                                <constraint firstAttribute="width" constant="15" id="acw-WE-bWT"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiO-tD-JZ3">
+                                            <rect key="frame" x="19" y="0.0" width="64" height="16"/>
+                                            <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="14"/>
+                                            <color key="textColor" name="white"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bqX-PM-xtA" customClass="RoundView" customModule="Dummy" customModuleProvider="target">
+                                    <rect key="frame" x="142" y="0.0" width="90" height="30"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- : - : -" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dd1-3r-6GG">
+                                            <rect key="frame" x="0.0" y="0.0" width="90" height="30"/>
+                                            <fontDescription key="fontDescription" name="OctinPrisonRg-Regular" family="Octin Prison" pointSize="16"/>
+                                            <color key="textColor" name="white"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="text" value="dsdsd"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" name="toolbarTimer"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="9NZ-Qh-h21"/>
+                                        <constraint firstAttribute="trailing" secondItem="dd1-3r-6GG" secondAttribute="trailing" id="FCh-1G-HL5"/>
+                                        <constraint firstItem="dd1-3r-6GG" firstAttribute="leading" secondItem="bqX-PM-xtA" secondAttribute="leading" id="LCc-Nz-Zgn"/>
+                                        <constraint firstAttribute="width" constant="90" id="MVG-Ab-uLI"/>
+                                        <constraint firstAttribute="bottom" secondItem="dd1-3r-6GG" secondAttribute="bottom" id="a0p-tI-MYP"/>
+                                        <constraint firstItem="dd1-3r-6GG" firstAttribute="top" secondItem="bqX-PM-xtA" secondAttribute="top" id="cRN-LD-gYy"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="8"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="ABOUT MATCH" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOQ-SO-sV5">
+                                    <rect key="frame" x="291" y="8.5" width="83" height="13.5"/>
+                                    <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="12"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="bqX-PM-xtA" firstAttribute="centerX" secondItem="qdh-ci-INp" secondAttribute="centerX" id="5C0-gm-Mmk"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="rPR-Nn-yca" firstAttribute="leading" secondItem="4bh-dG-x8y" secondAttribute="leading" constant="20" id="5Nc-6E-q6Z"/>
+                        <constraint firstItem="DAe-xk-dgI" firstAttribute="top" secondItem="4bh-dG-x8y" secondAttribute="top" constant="-2" id="Bw5-Oh-IIw"/>
+                        <constraint firstItem="DAe-xk-dgI" firstAttribute="leading" secondItem="4bh-dG-x8y" secondAttribute="leading" constant="-2" id="Cpz-lg-SQQ"/>
+                        <constraint firstAttribute="height" constant="120" id="EsZ-wi-eKe"/>
+                        <constraint firstItem="rPR-Nn-yca" firstAttribute="top" secondItem="4bh-dG-x8y" secondAttribute="top" constant="40" id="HWF-48-HgC"/>
+                        <constraint firstAttribute="trailing" secondItem="DAe-xk-dgI" secondAttribute="trailing" constant="-2" id="J3n-Lp-Cl8"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="stf-pk-WEp" secondAttribute="trailing" constant="16" id="RGH-rp-1Pb"/>
+                        <constraint firstItem="stf-pk-WEp" firstAttribute="top" secondItem="4bh-dG-x8y" secondAttribute="top" constant="40" id="TjS-aQ-rrb"/>
+                        <constraint firstItem="qdh-ci-INp" firstAttribute="leading" secondItem="4bh-dG-x8y" secondAttribute="leading" constant="20" id="fT4-VF-S04"/>
+                        <constraint firstAttribute="trailing" secondItem="qdh-ci-INp" secondAttribute="trailing" constant="20" id="iYL-rv-E4p"/>
+                        <constraint firstItem="stf-pk-WEp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rPR-Nn-yca" secondAttribute="trailing" constant="8" id="jj6-pv-b2P"/>
+                        <constraint firstItem="stf-pk-WEp" firstAttribute="centerX" secondItem="4bh-dG-x8y" secondAttribute="centerX" constant="1" id="mmi-yo-00z"/>
+                        <constraint firstAttribute="bottom" secondItem="DAe-xk-dgI" secondAttribute="bottom" id="n8e-C4-4Cr"/>
+                        <constraint firstAttribute="bottom" secondItem="qdh-ci-INp" secondAttribute="bottom" constant="10" id="v2G-85-5ar"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="4bh-dG-x8y" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="DtO-w0-G2B"/>
+                <constraint firstItem="4bh-dG-x8y" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="GRG-eQ-Oxk"/>
+                <constraint firstItem="4bh-dG-x8y" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="bsQ-Qx-unz"/>
+            </constraints>
+            <point key="canvasLocation" x="394" y="-7"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="back" width="23" height="19"/>
+        <image name="common_header" width="412.5" height="130"/>
+        <image name="wallet_icon" width="16.5" height="15.5"/>
+        <namedColor name="toolbarTimer">
+            <color red="0.78823529411764703" green="0.25098039215686274" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

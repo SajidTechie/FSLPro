@@ -25,13 +25,13 @@ protocol iTeamsPresenter: iPresenter {
     var createEditTeamData: [CreateEditTeamData] {get set}
     
     func selectedTeam(mid: Int, teamid: Int,callFrom:String)
-    var selectedTeamData: [SelectedTeamData] {get set}
+    var selectedTeamData: [MatchAllPlayerData] {get set}
 
     func teamPoints(mid: Int, teamid: Int,callFrom:String)
     var teamPointsData: [TeamPointsData] {get set}
     
     func teamRank(mid:Int,callFrom:String)
-    var teamRankData: [TeamRankData] {get set}
+    var teamRankData: [TeamRank] {get set}
   
 }
 
@@ -43,11 +43,11 @@ class TeamsPresenter: iTeamsPresenter {
     
     var createEditTeamData: [CreateEditTeamData] = []
     
-    var selectedTeamData: [SelectedTeamData] = []
+    var selectedTeamData: [MatchAllPlayerData] = []
     
     var teamPointsData: [TeamPointsData] = []
     
-    var teamRankData: [TeamRankData] = []
+    var teamRankData: [TeamRank] = []
     
   
     weak var view: TeamsPresentable?
@@ -65,7 +65,7 @@ class TeamsPresenter: iTeamsPresenter {
     
     func myTeamName(mid: Int,callFrom:String) {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+    
             do {
                 try interactor.myTeamName(mid: mid,callFrom:callFrom)
             }
@@ -77,13 +77,13 @@ class TeamsPresenter: iTeamsPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     }
     
 
     func matchAllPlayer(mid: Int,callFrom:String) {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+      
             do {
                 try interactor.matchAllPlayer(mid: mid,callFrom:callFrom)
             }
@@ -95,12 +95,12 @@ class TeamsPresenter: iTeamsPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     }
     
     func createEditTeam(mid: Int, teamid: Int, teamDetails: [playerDetailObj],callFrom:String) {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+      
             do {
                 try interactor.createEditTeam(mid: mid, teamid: teamid, teamDetails: teamDetails,callFrom:callFrom)
             }
@@ -112,12 +112,12 @@ class TeamsPresenter: iTeamsPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     }
     
     func selectedTeam(mid: Int, teamid: Int,callFrom:String) {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+       
             do {
                 try interactor.selectedTeam(mid: mid, teamid: teamid,callFrom:callFrom)
             }
@@ -129,12 +129,12 @@ class TeamsPresenter: iTeamsPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     }
     
     func teamPoints(mid: Int, teamid: Int,callFrom:String) {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+      
             do {
                 try interactor.teamPoints(mid: mid, teamid: teamid,callFrom:callFrom)
             }
@@ -146,12 +146,12 @@ class TeamsPresenter: iTeamsPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     }
     
     func teamRank(mid: Int,callFrom:String) {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+      
             do {
                 try interactor.teamRank(mid: mid,callFrom:callFrom)
             }
@@ -163,7 +163,7 @@ class TeamsPresenter: iTeamsPresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     }
     
     
@@ -175,11 +175,11 @@ extension TeamsPresenter: TeamsInteractable {
     func didFinishFetchingData(list: [Any],callFrom:String) {
      
         matchAllPlayerData = list as? [MatchAllPlayerData] ?? []
-        selectedTeamData = list as? [SelectedTeamData] ?? []
+        selectedTeamData = list as? [MatchAllPlayerData] ?? []
         teamPointsData = list as? [TeamPointsData] ?? []
         teamNameData = list as? [MyTeamNameData] ?? []
         createEditTeamData = list as? [CreateEditTeamData] ?? []
-        teamRankData = list as? [TeamRankData] ?? []
+        teamRankData = list as? [TeamRank] ?? []
    
         view?.didLoadData(callFrom: callFrom)
     }

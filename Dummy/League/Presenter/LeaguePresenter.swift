@@ -68,7 +68,7 @@ class LeaguePresenter: iLeaguePresenter {
     
     func getLeaguesForMatch(mid:Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+      
             do {
                 try interactor.leagueForMatch(mid: mid,callFrom:callFrom)
             }
@@ -80,7 +80,7 @@ class LeaguePresenter: iLeaguePresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+       
     }
     
     
@@ -89,7 +89,7 @@ class LeaguePresenter: iLeaguePresenter {
     
     func getMyTeam(mid:Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+     
             do {
                 try interactor.getMyTeam(mid: mid,callFrom:callFrom)
             }
@@ -101,13 +101,13 @@ class LeaguePresenter: iLeaguePresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     
     }
     
     func joinLeague(mid: Int,lid: Int,teamid: Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+      
             do {
                 try interactor.joinLeague(mid: mid,lid:lid,teamid:teamid,callFrom:callFrom)
             }
@@ -119,12 +119,12 @@ class LeaguePresenter: iLeaguePresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     }
     
     func getMyJoinedLeagues(mid:Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+      
             do {
                 try interactor.getMyJoinedLeagues(mid: mid,callFrom:callFrom)
             }
@@ -136,13 +136,13 @@ class LeaguePresenter: iLeaguePresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     
     }
     
     func getMyJoinedLeagueDetail(mid: Int,lid: Int, position: Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+      
             do {
                 try interactor.getMyJoinedLeagueDetail(mid: mid,lid:lid,position: position,callFrom:callFrom)
             }
@@ -154,13 +154,13 @@ class LeaguePresenter: iLeaguePresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     }
     
     
     func getLeagueEntryDetail(mid: Int,lid: Int,callFrom:String)  {
         view?.willLoadData(callFrom:callFrom)
-        if (Reachability.isConnectedToNetwork()) {
+    
             do {
                 try interactor.getLeagueEntryDetail(mid: mid,lid:lid,callFrom:callFrom)
             }
@@ -172,7 +172,7 @@ class LeaguePresenter: iLeaguePresenter {
             catch let err {
                 view?.didFail(error: CustomError.HTTPError(err: err), callFrom: callFrom)
             }
-        }
+        
     }
     
    

@@ -10,7 +10,8 @@ import SDWebImage
 import XLPagerTabStrip
 
 class UpcomingTabController: UIViewController,IndicatorInfoProvider  {
-    
+    @IBOutlet weak var noDataView : NoDataView!
+    var refControl = UIRefreshControl()
     @IBOutlet weak var tableView : UITableView!
     private var presenter: iMatchesPresenter!
     private var matchesList: [Match] = []
@@ -23,12 +24,30 @@ class UpcomingTabController: UIViewController,IndicatorInfoProvider  {
     let calendar = Calendar.current
     var itemInfo: IndicatorInfo = "UPCOMING"
     var pagerStrip = PagerTabStripViewController()
-
+    
+    
     // MARK: - XLPagerTabStrip
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         pagerStrip = pagerTabStripController
         return itemInfo
     }
+    
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        refreshControl.tintColor = UIColor.black
+        return refreshControl
+    }()
+    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        self.noDataView.hideView(view: self.noDataView)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            refreshControl.endRefreshing()
+            self.presenter.getMatches(mid: 0, callFrom: Constant.UPCOMING_MATCHES)
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +62,25 @@ class UpcomingTabController: UIViewController,IndicatorInfoProvider  {
         // - - - To get upcoming data - - - -
         presenter.getMatches(mid: 0, callFrom: Constant.UPCOMING_MATCHES)
         
+        if #available(iOS 10.0, *){
+            tableView.refreshControl = refreshControl
+        }else{
+            tableView.addSubview(refreshControl)
+        }
+        
+    }
+    
+    
+    deinit{
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if(tableView != nil){
+            tableView.reloadData()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -60,11 +98,11 @@ class UpcomingTabController: UIViewController,IndicatorInfoProvider  {
         
         var timeLeft = self.calendar.dateComponents([.second], from:self.currentDate, to:self.matchDate).second
         // print("Difference - - - -",timeLeft)
-        
+       
         if(timeLeft ?? 0 > 0){
             cell.lblTimer.text = Utility.init().timeFormatted(timeLeft ?? 0)
         }else{
-            cell.lblTimer.text = "-:-:-"
+            cell.lblTimer.text = "- : - : -"
         }
         
     }
@@ -76,22 +114,38 @@ class UpcomingTabController: UIViewController,IndicatorInfoProvider  {
 
 extension UpcomingTabController : MatchesPresentable {
     func willLoadData(callFrom:String) {
-        
+        //  noDataView.showView(view: noDataView, from: "LOADER", msg: "")
+        noDataView.showView(view: noDataView, from: "LOADER", msg: "")
     }
     
     func didLoadData(callFrom:String){
         matchesList = presenter.matches
         print("** ** upcoming matches ** ** - - - ",matchesList)
         
-        UIView.performWithoutAnimation {
-            self.tableView.reloadData()
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
+       
+        if(matchesList.count > 0){
+            UIView.performWithoutAnimation {
+                self.tableView.reloadData()
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
+            }
+            noDataView.hideView(view: noDataView)
+        }else{
+            noDataView.showView(view: self.noDataView, from: "", msg: StringConstants.no_upcoming_matches)
         }
-        
     }
     
     func didFail(error: CustomError,callFrom:String) {
+        print("API error  -- - - -",error)
+        
+        if error.localizedDescription.elementsEqual(StringConstants.token_expired) {
+            print("TOKEN ERROR")
+            //Refresh API
+            presenter.getMatches(mid: 0, callFrom: Constant.UPCOMING_MATCHES)
+        }else{
+            noDataView.showView(view: self.noDataView, from: "", msg: error.localizedDescription)
+        }
+        
         
     }
 }
@@ -113,9 +167,10 @@ extension UpcomingTabController : UITableViewDataSource,UITableViewDelegate {
         cell.lblMatch.text = matchesList[indexPath.row].groupName
         
         
-        cell.imvTeamALogo.sd_setImage(with: URL(string: Constant.WEBSITE_URL + (matchesList[indexPath.row].teamALogo ?? "")), placeholderImage: UIImage(named: Constant.NO_IMAGE_HOME_ICON))
+        cell.imvTeamALogo.sd_setImage(with: URL(string: Constant.WEBSITE_URL + (matchesList[indexPath.row].teamALogo ?? "").replace(string: " ", replacement: "%20")), placeholderImage: UIImage(named: Constant.NO_IMAGE_HOME_ICON))
         
-        cell.imvTeamBLogo.sd_setImage(with: URL(string: Constant.WEBSITE_URL + (matchesList[indexPath.row].teamBLogo ?? "")), placeholderImage: UIImage(named: Constant.NO_IMAGE_AWAY_ICON))
+        cell.imvTeamBLogo.sd_setImage(with: URL(string: Constant.WEBSITE_URL + (matchesList[indexPath.row].teamBLogo ?? "").replace(string: " ", replacement: "%20")), placeholderImage: UIImage(named: Constant.NO_IMAGE_AWAY_ICON))
+        
         
         self.setTimer(cell: cell, row: indexPath.row)
         
@@ -137,31 +192,18 @@ extension UpcomingTabController : UITableViewDataSource,UITableViewDelegate {
         let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
         let vcLeague = storyBoard.instantiateViewController(withIdentifier: "LeagueController") as! LeagueController
         vcLeague.mid = self.matchesList[indexPath.row].mID ?? 0
-
+        vcLeague.model = self.matchesList[indexPath.row]
+        
         if(cell?.countdownTimer != nil){
             cell?.countdownTimer?.invalidate()
             cell?.countdownTimer = nil
         }
-      //  self.present(vcLeague, animated: true, completion: nil)
+        //  self.present(vcLeague, animated: true, completion: nil)
+        //            present(viewController, animated: true, completion: nil)
         self.navigationController!.pushViewController(vcLeague, animated: true)
         
-        
-//        weak var pvc = self.presentingViewController
-//        self.dismiss(animated: false, completion: {
-//            let storyBoard: UIStoryboard = UIStoryboard(name: "League", bundle: nil)
-//            let vcLeague = storyBoard.instantiateViewController(withIdentifier: "LeagueController") as! LeagueController
-//            vcLeague.mid = self.matchesList[indexPath.row].mID ?? 0
-//
-//            if(cell?.countdownTimer != nil){
-//                cell?.countdownTimer?.invalidate()
-//                cell?.countdownTimer = nil
-//            }
-//
-//            let navVc = UINavigationController(rootViewController: vcLeague)
-//            pvc?.present(navVc, animated: false, completion: nil)
-//        })
-      
     }
     
 }
+
 

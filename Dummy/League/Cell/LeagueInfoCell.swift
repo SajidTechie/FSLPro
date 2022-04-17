@@ -11,6 +11,7 @@ class LeagueInfoCell: UITableViewCell {
     
     @IBOutlet weak var lblRank : UILabel!
     @IBOutlet weak var lblPrice : UILabel!
+    @IBOutlet weak var lblCoins : UILabel!
     @IBOutlet weak var vwMain : UIView!
     
     override func awakeFromNib() {

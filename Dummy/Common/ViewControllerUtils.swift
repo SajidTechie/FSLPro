@@ -137,8 +137,8 @@ public class NoDataView : UIView {
     @IBOutlet weak var loader: UIActivityIndicatorView!
     @IBOutlet weak var viewNoData: UIView!
     @IBOutlet weak var lblNoData: UILabel!
-    @IBOutlet weak var imvNoData: UIImageView!
-    @IBOutlet weak var btnRetry: UIButton!
+ //   @IBOutlet weak var imvNoData: UIImageView!
+   // @IBOutlet weak var btnRetry: UIButton!
     // var delegate: RetryApi?
     
     override init (frame : CGRect) {
@@ -170,33 +170,44 @@ public class NoDataView : UIView {
     }
     
     
-    func showView(view:UIView,from:String){
+    func showView(view:UIView,from:String,msg:String?){
         DispatchQueue.main.async {
-            view.isHidden = false
             
-            if(from.isEqual("NDA")){
-                self.lblNoData.text = "No Data Available"
-                self.imvNoData.image = UIImage(named:"icon_no_data")
-                self.loader.isHidden = true
-            }else if(from.isEqual("ERR")){
-                self.lblNoData.text = "Server Error"
-                self.imvNoData.image = UIImage(named:"icon_error")
-                self.loader.isHidden = true
-            }else if(from.isEqual("NET")){
-                self.lblNoData.text = "No Internet Connection"
-                self.imvNoData.image = UIImage(named:"icon_no_internet")
-                self.loader.isHidden = true
-            }else if(from.isEqual("LOADER")){
+            view.isHidden = false
+            view.isUserInteractionEnabled = false
+            
+            
+            if(from.isEqual("LOADER")){
                 self.loader.isHidden = false
-                self.imvNoData.image = nil
                 self.lblNoData.text = ""
+            }else{
+                self.loader.isHidden = true
+                self.lblNoData.text = msg ?? "No Data Available"
             }
+//            if(from.isEqual("NDA")){
+//                self.lblNoData.text = "No Data Available"
+//             //   self.imvNoData.image = UIImage(named:"icon_no_data")
+//                self.loader.isHidden = true
+//            }else if(from.isEqual("ERR")){
+//                self.lblNoData.text = "Server Error"
+//             //   self.imvNoData.image = UIImage(named:"icon_error")
+//                self.loader.isHidden = true
+//            }else if(from.isEqual("NET")){
+//                self.lblNoData.text = "No Internet Connection"
+//            //    self.imvNoData.image = UIImage(named:"icon_no_internet")
+//                self.loader.isHidden = true
+//            }else if(from.isEqual("LOADER")){
+//                self.loader.isHidden = false
+//          //      self.imvNoData.image = nil
+//                self.lblNoData.text = ""
+//            }
         }
     }
     
     func hideView(view:UIView){
         DispatchQueue.main.async {
             view.isHidden = true
+            view.isUserInteractionEnabled = false
             self.loader.isHidden = true
         }
     }
@@ -205,10 +216,10 @@ public class NoDataView : UIView {
     func showTransparentView(view:UIView,from:String){
         viewNoData.backgroundColor = UIColor.clear
         view.isHidden = false
-        
+        view.isUserInteractionEnabled = false
         if(from.isEqual("LOADER")){
             loader.isHidden = false
-            imvNoData.image = nil
+         //   imvNoData.image = nil
             lblNoData.text = ""
         }
     }
@@ -249,5 +260,36 @@ public class HeaderView : UIView {
         
         return view
         
+    }
+}
+
+
+
+extension UIView{
+
+    func activityStartAnimating() {
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .clear
+        backgroundView.tag = 123
+        
+        var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+        activityIndicator = UIActivityIndicatorView(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50))
+        activityIndicator.center = self.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .whiteLarge
+        activityIndicator.color = .black
+        activityIndicator.startAnimating()
+        self.isUserInteractionEnabled = false
+        
+        backgroundView.addSubview(activityIndicator)
+        self.addSubview(backgroundView)
+    }
+
+
+    func activityStopAnimating() {
+        if let background = viewWithTag(123){
+            background.removeFromSuperview()
+        }
+        self.isUserInteractionEnabled = true
     }
 }

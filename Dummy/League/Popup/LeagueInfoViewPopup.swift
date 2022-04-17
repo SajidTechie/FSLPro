@@ -8,11 +8,12 @@
 import UIKit
 
 class LeagueInfoViewPopup: UIViewController {
-    
+    @IBOutlet weak var vwMain : UIView!
+    @IBOutlet weak var lblHeader : UILabel!
     @IBOutlet weak var lblEntry : UILabel!
     @IBOutlet weak var lblPrice : UILabel!
     @IBOutlet weak var lblWinner : UILabel!
-    @IBOutlet weak var btnClose : UIButton!
+   
     @IBOutlet weak var viewHeightLayout: NSLayoutConstraint!
     @IBOutlet weak var tblLeagueInfo : UITableView!
     
@@ -26,21 +27,27 @@ class LeagueInfoViewPopup: UIViewController {
         if(leagueForMatch != nil){
             leagueInfoArray = leagueForMatch?.wData?.rnk
             
+            lblHeader.text = leagueForMatch?.LName?.uppercased() ?? ""
             lblPrice.text = String(leagueForMatch?.wData?.prz ?? 0)
             lblEntry.text = String(leagueForMatch?.wData?.ent ?? 0)
             lblWinner.text = String(leagueForMatch?.wData?.w ?? 0)
         }
         
-        viewHeightLayout.constant = CGFloat(((leagueInfoArray?.count ?? 0) * 25) + 170)
+        viewHeightLayout.constant = CGFloat(((leagueInfoArray?.count ?? 0) * 25) + 200)
         
         self.tblLeagueInfo.dataSource = self
         self.tblLeagueInfo.delegate = self
         
     }
     
-    @IBAction func btnClose(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-    }
+   
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+       {
+           let touch = touches.first
+           if touch?.view != self.vwMain
+           { self.dismiss(animated: false, completion: nil) }
+       }
+    
     
 }
 
@@ -57,10 +64,26 @@ extension LeagueInfoViewPopup : UITableViewDataSource,UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LeagueInfoCell", for: indexPath) as! LeagueInfoCell
 
         cell.lblRank.text = leagueInfoArray?[indexPath.row].o ?? "-"
-        cell.lblPrice.text = String(leagueInfoArray?[indexPath.row].coin ?? 0)
+        cell.lblCoins.text = String(leagueInfoArray?[indexPath.row].coin ?? 0)
+        
+//        if (position % 2 == 0) {
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+//                root.setBackgroundColor(context.resources.getColor(R.color.material_grey_200, null))
+//            }
+//        }
+//        else {
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+//                root.setBackgroundColor(context.resources.getColor(R.color.white, null))
+//            }
+//
+//           }
+//
+//        txtRank.text = data?.o ?: "-"
+//        txtCoins.text = java.lang.String.valueOf(data?.coin ?: 0)
+//        txtPrice.text = data?.prz ?: ""
         
         if (indexPath.row % 2 == 0) {
-            cell.vwMain.backgroundColor = UIColor.lightGray
+            cell.vwMain.backgroundColor = UIColor.init(named: "cardBackground") ?? .lightGray
         }
         else {
             cell.vwMain.backgroundColor = UIColor.white

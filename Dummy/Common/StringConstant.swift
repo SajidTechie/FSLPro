@@ -8,6 +8,11 @@
 import Foundation
 struct StringConstants {
     
+    static let token_expired = "Token Expired"
+    static let no_internet = "No Internet"
+    static let no_data = "No Data"
+    static let server_error = "Server Error"
+    
     static let app_name = "FSLPro"
     static let home = "Home"
     static let dashboard_small = "DASHBOARD"
@@ -108,4 +113,7 @@ struct StringConstants {
     static let str_3rd_umpire = "3rd Umpire"
     static let str_referee = "Referee"
     static let str_go_premium = "Go PREMIUM"
+    static let league_not_joined = "You have not joined any league"
+    static let no_upcoming_matches = "No upcoming matches"
+    static let no_live_matches = "Sorry, Currently no live matches are available"
 }

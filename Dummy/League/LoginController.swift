@@ -10,10 +10,9 @@ import SVPinView
 
 import CountryPickerView
 
-
-
 struct AuthPayloadObj:Codable{
     var un:String
+    var rcode:String
     var dm: String
     var os: String
     var cc: String
@@ -23,11 +22,12 @@ struct AuthPayloadObj:Codable{
     var r: Bool
     var eot: String
     var s: String
-   var t: Int = -1
+    var t: Int = 0
     
-    init(un:String,dm:String,os:String,cc:String,em:String,l:String,it:Bool,r:Bool,eot:String,s:String,t:Int) //,?
+    init(un:String,rcode:String,dm:String,os:String,cc:String,em:String,l:String,it:Bool,r:Bool,eot:String,s:String,t:Int) //,?
     {
         self.un = un
+        self.rcode = rcode
         self.dm = dm
         self.os = os
         self.cc = cc
@@ -40,34 +40,23 @@ struct AuthPayloadObj:Codable{
         self.t = t
     }
     
-    //    init(un:String,dm:String,os:String,cc:String,em:String,l:String,it:Bool,r:Bool,eot:String,s:String)
-    //    {
-    //        self.un = un
-    //        self.dm = dm
-    //        self.os = os
-    //        self.cc = cc
-    //        self.em = em
-    //        self.l = l
-    //        self.it = it
-    //        self.r = r
-    //        self.eot = eot
-    //        self.s = s
-    //    }
 }
 
 
-class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPickerViewDataSource {
+class LoginController: BaseViewController ,CountryPickerViewDelegate, CountryPickerViewDataSource {
     
-    @IBOutlet weak var textFieldUserName: UITextField!
+    @IBOutlet weak var textFieldRefCode: UITextField!
     @IBOutlet weak var textFieldMobileNo: UITextField!
     
     @IBOutlet weak var vwSelectCountry: UIView!
     @IBOutlet weak var vwUserInput: UIView!
     @IBOutlet weak var edtMobileNo: UITextField!
     
+    @IBOutlet weak var lblOtpHeader: UILabel!
     @IBOutlet weak var lblTimer: UILabel!
+    @IBOutlet weak var lblResendOtp: UILabel!
+    @IBOutlet weak var lblTermsCondition: UILabel!
     
-    @IBOutlet weak var btnTermsNCondition: UIButton!
     @IBOutlet weak var vwOTP: UIView!
     
     weak var cpvTextField: CountryPickerView!
@@ -91,67 +80,64 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     var deviceDetail = ""
     var enteredOtp = ""
     
-    var countdownTimer: Timer!
-    var totalTime = 10
+    weak var countdownTimer: Timer!
+    var totalTime = Constant.OTP_TIMER
     var countDownStopped = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         presenter = AuthPresenter(view: self)
         presenter.initInteractor()
         
-        btnTermsNCondition.isSelected = true
         vwOTP.isHidden = true
         vwUserInput.isHidden = false
         
-        let cp = CountryPickerView(frame: CGRect(x: 10, y: 0, width: 110, height: 20))
-        edtMobileNo.leftView = cp
         
-        edtMobileNo.leftViewMode = .always
+        let cp = CountryPickerView(frame: CGRect(x: 10, y: 0, width: 100, height: 20))
+        edtMobileNo.rightView = cp
+        
+        edtMobileNo.rightViewMode = .always
         self.cpvTextField = cp
+        
+        cp.setCountryByName("India")
+        cp.setCountryByCode("IN")
+        cp.setCountryByPhoneCode("+91")
         
         countryCode = self.cpvTextField.selectedCountry.code
         countryPhoneCode = self.cpvTextField.selectedCountry.phoneCode
         langCode = "EN"
         deviceDetail = "\(UIDevice().type.rawValue) (\(Utility.getDeviceId() ?? ""))"
         
-        
-        let otpButton = UIButton(frame: CGRect(x: 0, y: 0, width: 110, height: 25))
-        otpButton.setTitle("OTP", for: .normal)
-        otpButton.backgroundColor = UIColor.red
-        
-        edtMobileNo.rightView = otpButton
-        
-        edtMobileNo.rightViewMode = .always
-        self.otpButton = otpButton
-        
-        self.otpButton.addTarget(self, action: #selector(clickedOtp), for: .touchUpInside)
-        
         cpvTextField.delegate = self
         cpvTextField.dataSource = self
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCountryAction(sender:)))
-        cpvTextField.addGestureRecognizer(tapGesture)
+        let tabTermsGesture = UITapGestureRecognizer(target: self, action: #selector(tabTermsTapped(_:)))
+        lblTermsCondition.addGestureRecognizer(tabTermsGesture)
         
-        let resendOtp = UITapGestureRecognizer(target: self, action: #selector(self.tapResendOtp))
-        lblTimer.addGestureRecognizer(resendOtp)
+        let tabResentGesture = UITapGestureRecognizer(target: self, action: #selector(tapResendOtp(_:)))
+        lblResendOtp.addGestureRecognizer(tabResentGesture)
         
         self.configurePinView()
     }
     
     
+    deinit{
+        NotificationCenter.default.removeObserver(self)
+        
+    }
     
-    @objc func tapResendOtp(sender:UITapGestureRecognizer) {
+    
+    @objc func tapResendOtp(_ recognizer:UITapGestureRecognizer) {
         print("tap working",countDownStopped)
         
         if countDownStopped
         {
-            lblTimer.text = "05:00"
-            totalTime = 300
+            lblTimer.text = "01:00"
+            totalTime = Constant.OTP_TIMER
             startTimer()
-            
-            generatePayload(isOtpResend: true, retryCount: -1)
+            print("start timer in tapResendOtp")
+            generatePayload(isOtpResend: true)
             
             if(authPayloadObj != nil){
                 presenter.sendSMS(payload: authPayloadObj!, token: initAccessToken, callFrom: Constant.SEND_SMS)
@@ -159,14 +145,18 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
         }
     }
     
+    
     func startTimer() {
-        lblTimer.textColor = UIColor.black
+        print("start timer in core")
+        lblResendOtp.textColor = UIColor.init(named: "deselectedTabGray") ?? .lightGray
+        lblResendOtp.isUserInteractionEnabled = false
+        
         countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
         countDownStopped = false
     }
     
     @objc func updateTime() {
-
+        
         lblTimer.text = "\(timeFormatted(totalTime))"
         
         if totalTime != 0 {
@@ -177,14 +167,12 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     }
     
     func endTimer() {
-        countdownTimer.invalidate()
-        lblTimer.text = "Resend OTP"
+        totalTime = Constant.OTP_TIMER
+        countdownTimer?.invalidate()
+        // lblTimer.text = "Resend OTP"
+        lblResendOtp.textColor = UIColor.init(named: "blueTextColor") ?? .blue
+        lblResendOtp.isUserInteractionEnabled = true
         countDownStopped = true
-        if #available(iOS 11.0, *) {
-            lblTimer.textColor = UIColor.init(named: "ColorRed")
-        } else {
-           lblTimer.textColor = UIColor.red
-        }
     }
     
     
@@ -197,42 +185,74 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     }
     
     
-    
-    @objc func clickedOtp() {
+    @IBAction func clickNextOtp(_ sender: Any) {
+        
         if(!Utility.isValidPhone(phoneStr: edtMobileNo.text ?? "")){
             Utility.showMessage(title: "Invalid", msg: "Please enter mobile number")
-        }else if(btnTermsNCondition.isSelected){
+        }
+        else{
             presenter.getInitialToken(callFrom: Constant.INITIAL_TOKEN)
+        }
+    }
+    
+    
+    @IBAction func clickBack(_ sender: Any) {
+        clearPin()
+        endTimer()
+        otpCount = 0
+        vwUserInput.isHidden = false
+        vwOTP.isHidden = true
+    }
+    
+    
+    @IBAction func clickValidate(_ sender: Any) {
+        if(enteredOtp.count == 6) {
+            generatePayload(isOtpResend: false)
+            
+            if(authPayloadObj != nil){
+                presenter.verifyOtp(payload: authPayloadObj!, initialToken: initAccessToken, callFrom: Constant.VERIFY_OTP)
+            }
         }else{
-            Utility.showMessage(title: "Invalid", msg: "Please check terms and conditions box to proceed")
+            Utility.showMessage(title: "Invalid", msg: "Enter OTP")
+        }
+    }
+    
+    
+    
+    @objc func tabTermsTapped(_ recognizer:UITapGestureRecognizer) {
+        
+        guard let url = URL(string: Constant.TERMS_WEB_URL) else {
+            Utility.showMessage(title: "Error", msg: "Invalid Url")
+            return
+        }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
         
     }
     
     
     func configurePinView() {
+       
         
         vwOtpMain.pinLength = 6
         vwOtpMain.interSpace = 5
-        vwOtpMain.textColor = UIColor.white
-        //               vwOtpMain.borderLineColor = UIColor.white
-        //               vwOtpMain.activeBorderLineColor = UIColor.white
-        vwOtpMain.borderLineThickness = 1
+        vwOtpMain.textColor = UIColor.black
+        vwOtpMain.borderLineColor = UIColor.white
+        vwOtpMain.activeBorderLineColor = UIColor.white
+        vwOtpMain.borderLineThickness = 0
         vwOtpMain.shouldSecureText = false
         vwOtpMain.allowsWhitespaces = false
         vwOtpMain.style = .none
-        //   vwOtpMain.fieldBackgroundColor = UIColor.gray.withAlphaComponent(0.3)
-        //   vwOtpMain.activeFieldBackgroundColor = UIColor.gray.withAlphaComponent(0.5)
-        vwOtpMain.fieldCornerRadius = 0
-        vwOtpMain.activeFieldCornerRadius = 0
-        vwOtpMain.deleteButtonAction = .deleteCurrentAndMoveToPrevious
-        vwOtpMain.keyboardAppearance = .default
-        vwOtpMain.tintColor = .white
+        vwOtpMain.fieldBackgroundColor = UIColor.gray.withAlphaComponent(0.3)
+        vwOtpMain.activeFieldBackgroundColor = UIColor.gray.withAlphaComponent(0.5)
+        vwOtpMain.fieldCornerRadius = 15
+        vwOtpMain.activeFieldCornerRadius = 15
+        vwOtpMain.placeholder = ""
         vwOtpMain.becomeFirstResponderAtIndex = 0
-        vwOtpMain.shouldDismissKeyboardOnEmptyFirstField = false
-        
-        vwOtpMain.font = UIFont.systemFont(ofSize: 15)
+        vwOtpMain.font = UIFont.systemFont(ofSize: 14)
         vwOtpMain.keyboardType = .phonePad
+        
         vwOtpMain.pinInputAccessoryView = { () -> UIView in
             let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
             doneToolbar.barStyle = UIBarStyle.default
@@ -273,8 +293,9 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     }
     
     @IBAction func toggleStyle() {
+
         var nextStyle = vwOtpMain.style.rawValue + 1
-        if nextStyle == 3 {nextStyle = 0}
+        if nextStyle == 3 { nextStyle = 0 }
         let style = SVPinViewStyle(rawValue: nextStyle)!
         switch style {
         case .none:
@@ -297,6 +318,7 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
             vwOtpMain.fieldCornerRadius = 0
             vwOtpMain.activeFieldCornerRadius = 0
             vwOtpMain.style = style
+        @unknown default: break
         }
         clearPin()
     }
@@ -309,10 +331,7 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
         }else{
             var alert = UIAlertView(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", delegate: nil, cancelButtonTitle: "OK")
             alert.show()
-            
-            //            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            //                exit(0)
-            //            }
+       
         }
     }
     
@@ -328,46 +347,24 @@ class LoginController: UIViewController ,CountryPickerViewDelegate, CountryPicke
     }
     
     
-    func generatePayload(isOtpResend: Bool, retryCount: Int?) {
+    func generatePayload(isOtpResend: Bool) {
         
+        if(isOtpResend){
+            otpCount = 0
+        }
         
-        authPayloadObj = AuthPayloadObj(un: textFieldUserName.text ?? "", dm: deviceDetail, os: Utility.getOSVersion() ?? "", cc: countryPhoneCode, em: textFieldMobileNo.text ?? "", l: "EN", it: true, r: isOtpResend, eot: enteredOtp, s: countryCode, t: otpCount)// Retry count //
+        authPayloadObj = AuthPayloadObj(un: "", rcode:textFieldRefCode.text ?? "", dm: deviceDetail, os: Utility.getOSVersion() ?? "", cc: countryPhoneCode, em: textFieldMobileNo.text ?? "", l: "EN", it: true, r: isOtpResend, eot: enteredOtp, s: countryCode, t: otpCount)
         
         print("Auth obj - - - - ",authPayloadObj)
         
     }
     
     
-    @IBAction func clicked_terms(_ sender: UIButton) {
-        if(!btnTermsNCondition.isSelected)
-        {
-            btnTermsNCondition.isSelected = true
-        }else{
-            btnTermsNCondition.isSelected = false
-        }
-    }
-    
-    
-    @IBAction func validate_otp(_ sender: UIButton) {
-        if(enteredOtp.count == 6) {
-            generatePayload(isOtpResend: false, retryCount: otpCount)
-            
-            if(authPayloadObj != nil){
-                presenter.verifyOtp(payload: authPayloadObj!, initialToken: initAccessToken, callFrom: Constant.VERIFY_OTP)
-            }
-        }else{
-            Utility.showMessage(title: "Invalid", msg: "Enter OTP")
-        }
-        
-    }
-    
-    
-    
 }
 
 extension LoginController : AuthPresentable {
     func willLoadData(callFrom:String) {
-        
+        self.view.activityStartAnimating()
     }
     
     func didLoadData(callFrom:String){
@@ -378,12 +375,14 @@ extension LoginController : AuthPresentable {
             if(initialToken.count > 0){
                 initAccessToken = initialToken[0].accessToken ?? ""
                 
-                generatePayload(isOtpResend: false, retryCount: -1)
+                generatePayload(isOtpResend: false)
                 
                 if(authPayloadObj != nil){
                     presenter.sendSMS(payload: authPayloadObj!, token: initAccessToken, callFrom: Constant.SEND_SMS)
                 }
                 
+            }else{
+                Utility.showMessage(title: "Failed", msg: "Token Error")
             }
         }
         
@@ -397,12 +396,19 @@ extension LoginController : AuthPresentable {
             if (errorMsg.isEmpty) {
                 
                 if (otpCount > 0) {
-                     startTimer()
-                    vwUserInput.isHidden = true
-                    vwOTP.isHidden = false
-                    //                               binding.txtMaskedMobileNo.text = "${resources.getString(R.string.verification_code_subtext)} ${binding.ccp.selectedCountryCodeWithPlus}${getLoginMobileNo().replace("[^0-9]".toRegex(), "").replace(MASK_MOBILE_NO_REGEX.toRegex(), "*")}"
-                    //
-                    //                               binding.otpView.requestFocus()
+                    if(countdownTimer == nil){
+                        startTimer()
+                        print("start timer in SEND_SMS")
+                        clearPin()
+                        vwUserInput.isHidden = true
+                        vwOTP.isHidden = false
+                        
+                        let mobile = (edtMobileNo.text ?? "").removeWhitespace()
+                        if(mobile.isEmpty == false){
+                            lblOtpHeader.text = "Enter the OTP sent to \(countryPhoneCode) \(mobile.maskPhoneNumber)"
+                        }
+                     
+                    }
                 } else {
                     Utility.showMessage(title: "Failed", msg: "SMS delivery failed..please try again later...")
                 }
@@ -432,24 +438,29 @@ extension LoginController : AuthPresentable {
             UserDefaults.standard.set(token, forKey: "Token")
             UserDefaults.standard.set(mobileNo, forKey: "MobileNumber")
             
+            self.openViewControllerBasedOnIdentifier("DashboardViewController", "Home")
             
-         
-            weak var pvc = self.presentingViewController
-            self.dismiss(animated: false, completion: {
-                let storyBoard: UIStoryboard = UIStoryboard(name: "Home", bundle: nil)
-                let vcDashboard = storyBoard.instantiateViewController(withIdentifier: "DashboardViewController") as! DashboardViewController
-                
-                let navVc = UINavigationController(rootViewController: vcDashboard)
-                pvc?.present(navVc, animated: false, completion: nil)
-            })
-      
         }
-        
+        self.view.activityStopAnimating()
     }
     
     func didFail(error: CustomError,callFrom:String) {
+        print("API error  -- - - -",error)
         
+        if error.localizedDescription.elementsEqual(StringConstants.token_expired) {
+            print("TOKEN ERROR")
+            //Refresh API
+            presenter.sendSMS(payload: authPayloadObj!, token: initAccessToken, callFrom: Constant.SEND_SMS)
+        }
+        self.view.activityStopAnimating()
     }
 }
 
-
+extension String {
+var maskPhoneNumber: String {
+   return String(self.enumerated().map { index, char in
+       return [self.count - 1, self.count - 2,self.count - 3,self.count - 4].contains(index) ?
+   char : "*"
+   })
+    }
+}

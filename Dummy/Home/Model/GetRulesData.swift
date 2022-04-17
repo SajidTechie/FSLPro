@@ -28,18 +28,21 @@ struct GetRulesData : Codable {
 
 struct GetRules1 : Codable {
 
-        let bAL : Int?
-        let dN : String?
+        let bAL : Double?
+        let dN,refCode : String?
 
         enum CodingKeys: String, CodingKey {
                 case bAL = "BAL"
                 case dN = "DN"
+            case refCode = "refCode"
+     
         }
     
         init(from decoder: Decoder) throws {
                 let values = try decoder.container(keyedBy: CodingKeys.self)
-                bAL = try values.decodeIfPresent(Int.self, forKey: .bAL)
+                bAL = try values.decodeIfPresent(Double.self, forKey: .bAL)
                 dN = try values.decodeIfPresent(String.self, forKey: .dN)
+            refCode = try values.decodeIfPresent(String.self, forKey: .refCode)
         }
 
 }
